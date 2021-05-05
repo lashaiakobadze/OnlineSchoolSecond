@@ -1,0 +1,47 @@
+:host {
+  width: 60%;
+  background-color: lightcyan;
+
+  @media (max-width: 1024px) {
+    width: 80%;
+  }
+
+  @media (max-width: 576px) {
+    width: 100%;
+  }
+
+  margin-bottom: 80px;
+}
+
+.blog-item {
+  width: 100%;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  // align-items: flex-start;
+  // justify-content: center;
+
+  &_title {
+    text-align: center;
+    font-size: 30px;
+  }
+
+  &_img {
+    margin: 20px 0;
+    border-radius: 10px;
+  }
+
+  &_info {
+    padding: 20px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 70%;
+    white-space: nowrap;
+  }
+
+  &_button {
+    outline: none;
+  }
+}

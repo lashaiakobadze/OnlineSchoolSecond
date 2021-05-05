@@ -1,0 +1,26 @@
+.slide {
+  min-height: 350px;
+  text-align: center;
+}
+
+.blog {
+  width: 100%;
+  padding: 50px 80px;
+  display: flex;
+  flex-direction: column;
+
+  &_header {
+    font-size: 50px;
+    margin: auto;
+    color: #777;
+  }
+
+  &_items {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}

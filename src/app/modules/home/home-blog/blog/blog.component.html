@@ -1,0 +1,11 @@
+<div class="backdrop"(click)="onCloseAlert()"></div>
+<div class="blog-box">
+  <div class="sticky">
+    <div class="blog-item_title">{{ blogNews.title }}</div>
+    <img class="blog-item_img" [src]="blogNews.imgPath" alt="news-post">
+    <p class="blog-item_info">{{ blogNews.info }}</p>
+    <div class="blog-box-actions">
+      <button class="btn btn-primary" (click)="onCloseAlert()">Close</button>
+    </div>
+  </div>
+</div>

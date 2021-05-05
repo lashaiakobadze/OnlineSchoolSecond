@@ -1,0 +1,15 @@
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  &_navigation {
+    width: 30%;
+
+    &_items {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

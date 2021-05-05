@@ -1,0 +1,138 @@
+@mixin  flexCenter($justCont: center, $alignIte: center) {
+  display: flex;
+  justify-content: $justCont;
+  align-items: $alignIte;
+}
+
+
+@mixin flexColumn($justCont: flex-start, $alignIte: center) {
+  display: flex;
+  flex-direction: column;
+  justify-content: $justCont;
+  align-items: $alignIte;
+}
+
+
+@mixin content-size($width: 100%, $height: 100%) {
+  width: $width;
+  height: $height;
+}
+
+
+@mixin  response($breakpoint) {
+  @if($breakpoint == xl){
+    @media(max-width: 1440px) {
+      @content;
+    }
+  }
+
+  @if($breakpoint == lg){
+    @media(max-width: 900px) {
+      @content;
+    }
+  }
+
+  @if($breakpoint == md){
+    @media(max-width: 540px) {
+      @content;
+    }
+  }
+
+  @if($breakpoint == sm){
+    @media(max-width: 320px) {
+      @content;
+    }
+  }
+}
+
+@mixin paragrap {
+  p {
+    font-size: 15px;
+    line-height: 1.7;
+    padding: 0;
+  }
+}
+
+
+@mixin scroll {
+  ::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #1d1e21;
+    opacity: 0.4;
+    transition: all .9s linear;
+  }
+}
+
+@mixin shadowTitle {
+  margin-top: 90px;
+  font-family: 'Poppins';
+  font-size: 110px;
+  font-weight: 900;
+  letter-spacing: .04em;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: .05;
+
+  @media (max-width: 1200px) {
+    font-size: 75px;
+}
+
+  @include response(md) {
+    font-size: size(lg);
+  }
+}
+
+
+@mixin sectionTitle {
+  font-size: size(xs);
+  line-height: size(xs);
+  margin-top: 10px;
+  padding-left: 20px;
+  font-family: 'Poppins', sans-serif;  
+
+  b {
+      color: color(focusCol);
+  }
+
+  strong {
+      color: #fff;
+  }
+}
+
+
+@mixin colorBox {
+  background: rgba(255,255,255,.05);
+  box-shadow: 0 0 50px rgb(0 0 0 / 20%);
+  border-radius: 18px;
+  transition: all .3s ease 0s;
+}
+
+
+@mixin hoverBox {
+  box-shadow: 0 15px 55px rgb(0 0 0 / 30%);
+}
+
+
+@mixin hoverImg {
+  opacity: .5;
+  overflow: hidden;
+  transform: scale(1.08); 
+  transition: all .3s ease 0s;
+  border-radius: 18px 18px 0 0;
+}
+
+@mixin contentImg($min-width: 40%) {
+  min-width: $min-width;
+  overflow: hidden;
+  background: #181818;
+  opacity: .4;
+
+  @include response(lg) {
+    display: none;
+  }
+}

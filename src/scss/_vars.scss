@@ -1,0 +1,26 @@
+////
+$colors: (
+    fontCol: #a9a9a9,
+    backgroundCol: #242425,
+    hoverCol: #E6E6FA,
+    focusCol: #5ac24e,
+);
+
+@function color($color-name) {
+    @return map-get($colors, $color-name);
+};
+
+$font-sizes: (
+    xxl: 70px,
+    xl: 50px,
+    lg: 35px,
+    md: 30px,
+    sm: 25px,
+    xs: 20px,
+    xxs: 15px
+);
+
+@function size($size) {
+    @return map-get($font-sizes, $size)
+};
+

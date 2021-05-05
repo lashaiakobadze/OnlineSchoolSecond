@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-xs-12 col-md-6 col-md-offset-3">
+    <div class="alert alert-danger" *ngIf='authService.error'>
+      <p>{{ authService.error }}</p>
+    </div>
+    <div *ngIf="authService.isLoading" class="spinner">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <form #signUpForm="ngForm" (ngSubmit)="onSignUp(signUpForm)" *ngIf="!authService.isLoading">
+      <div class="form-group">
+        <label for="email">E-Mail</label>
+        <input
+         type="email"
+         class="form-control"
+         name="email"
+         ngModel
+         email
+         required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+         type="password"
+         id="password"
+         class="form-control"
+         ngModel
+         name="password"
+         minlength='6'
+         required>
+      </div>
+      <div class="form-group">
+        <button
+         type="submit"
+         class="btn btn-primary"
+         [disabled]="!signUpForm.valid"
+         >Sign up</button>
+      </div>
+    </form>
+  </div>
+</div>
