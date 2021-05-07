@@ -37,8 +37,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.authObs.subscribe(
       resData => {
         // console.log(resData);
-        this.authService.isLoading = false;
         this.router.navigate(['/home']);
+        this.authService.isLoading = false;
       },
       errorMessage => {
         this.authService.error = errorMessage;

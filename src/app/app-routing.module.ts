@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
+import { RegistrationResolverService } from './auth/registration/registration-resolver.service';
 
 import { ProfileComponent } from './modules/profile/profile.component';
 
@@ -11,6 +12,7 @@ const appRoutes: Routes = [
   // { path: 'home', loadChildren: './modules/home/home.module#HomeModule' },
   { path: 'profile',
     component: ProfileComponent,
+    resolve: [RegistrationResolverService],
     canActivate: [AuthGuard],
    },
 ];

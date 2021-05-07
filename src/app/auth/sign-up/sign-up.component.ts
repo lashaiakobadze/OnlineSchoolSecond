@@ -33,8 +33,8 @@ export class SignUpComponent implements OnInit {
     this.authService.authObs.subscribe(
       resData => {
         // console.log(resData);
+        this.router.navigate(['../registration'], {relativeTo: this.route});
         this.authService.isLoading = false;
-        this.router.navigate(['../'], {relativeTo: this.route});
       },
       errorMessage => {
         this.authService.error = errorMessage;

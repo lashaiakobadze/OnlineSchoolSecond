@@ -12,6 +12,7 @@ export class HomeBlogComponent implements OnInit {
   @Input() news: News;
   @Output() modalData = new EventEmitter<News>();
   @Output() isOpenModal: boolean;
+  
   constructor(
     private router: Router,
     private route: ActivatedRoute) { }

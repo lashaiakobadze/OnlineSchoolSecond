@@ -5,6 +5,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { User } from './user.model';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { Registration } from './registration/registration.model';
 
 export interface AuthResponseData {
   kind: string,
@@ -25,6 +26,7 @@ export class AuthService {
   authObs: Observable<AuthResponseData>;
   private tokenExpirationTime: unknown;
   user = new BehaviorSubject<User>(null);  // Use BehaviorSubject because we always have access to the last value.
+
 
   constructor(
     private http: HttpClient , private router: Router) { }
@@ -159,4 +161,37 @@ export class AuthService {
     // console.log(errorRes);
     return throwError(errorMessage);
   }
+
+
+  // Profiles registration methods
+  profiles: Registration[] = [];
+
+
+  fetchProfiles() {
+    return this.http
+    .get<Registration[]>(
+      'https://onlineschool-bee89-default-rtdb.firebaseio.com/profiles.json'
+    )
+    .pipe(
+      tap(
+        (profilesObj: Registration[]) => {
+          this.profiles = profilesObj;
+          this.profiles = this.getProfiles();
+      })
+    )
+  }
+
+
+  getProfiles() {
+    return this.profiles.slice();
+  }
+
+
+  addProfile(profiles: Registration[]) {
+    this.http.put<Registration[]>('https://onlineschool-bee89-default-rtdb.firebaseio.com/profiles.json', profiles)
+      .subscribe(resData => {
+        console.log(resData);
+      })
+  }
+
 }

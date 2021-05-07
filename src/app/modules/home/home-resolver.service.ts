@@ -12,7 +12,7 @@ export class HomeResolverService implements Resolve<News[]> {
 
   resolve(router: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const news = this.homeService.getNewsData();
-    
+
     // To prevent update bugs
     if(news.length === 0) {
       return this.homeService.fetchNews();

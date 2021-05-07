@@ -12,12 +12,9 @@
   align-items: $alignIte;
 }
 
-
-@mixin content-size($width: 100%, $height: 100%) {
-  width: $width;
-  height: $height;
+@mixin conatiner {
+  
 }
-
 
 @mixin  response($breakpoint) {
   @if($breakpoint == xl){
@@ -93,7 +90,7 @@
   line-height: size(xs);
   margin-top: 10px;
   padding-left: 20px;
-  font-family: 'Poppins', sans-serif;  
+  font-family: 'Poppins', sans-serif;
 
   b {
       color: color(focusCol);
@@ -121,7 +118,7 @@
 @mixin hoverImg {
   opacity: .5;
   overflow: hidden;
-  transform: scale(1.08); 
+  transform: scale(1.08);
   transition: all .3s ease 0s;
   border-radius: 18px 18px 0 0;
 }

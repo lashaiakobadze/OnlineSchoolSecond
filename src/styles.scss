@@ -5,10 +5,14 @@
 @import "./scss/vars";
 @import "./scss/mixins";
 
+
 * {
-  outline: none;
   margin: 0;
   padding: 0;
+  outline: none;
+  box-sizing: border-box;
+  border: none;
+  font-family: 'Rubik', sans-serif;
 }
 
 li {
@@ -25,7 +29,20 @@ html, body {
   width: 100%;
 }
 
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+.section {
+  width: 100%;
+  padding: 10px 20px;
+}
+
+.container {
+  max-width: 1024px;
+  height: max-content;
+  min-height: 100vh;
+  margin: auto;
+}
+
+.img-center {
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
 }

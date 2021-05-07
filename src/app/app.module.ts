@@ -12,7 +12,6 @@ import { HomeModule } from './modules/home/home.module';
 import { ProfileModule } from './modules/profile/profile.module';
 import { AuthModule } from './auth/auth.module';
 
-
 @NgModule({
   declarations: [
     AppComponent,

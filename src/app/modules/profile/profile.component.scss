@@ -1,0 +1,33 @@
+@import '../../../styles.scss';
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  padding-top: 50px;
+
+  &_info {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+
+    &_img {
+      width: 40%;
+      height: max-content;
+      border-radius: 50%;
+      border: 10px solid ghostwhite;
+    }
+
+    &_about {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: flex-start;
+    }
+  }
+
+  &_details {
+    width: 100%;
+    padding-top: 100px;
+    text-align: center;
+  }
+}

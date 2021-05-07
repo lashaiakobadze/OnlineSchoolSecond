@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
     return this.authService.user.pipe(
       take(1), // Add the take operator because automatically unsubscribe and Avoid bugs.
       map(user => {
-      let isAuth = !!user; // I will Change this options for authenticated rout
+      let isAuth = !!user; 
       if(isAuth) {
         return true;
       }
