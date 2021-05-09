@@ -5,11 +5,15 @@
  [curHomework]="curHomework.homeworkNumber"
  [curTaskNumber] = 'i+1'
  [curTask]="task"
+ [showCorrectAnswer]="disabledSuccess"
  ></app-tasks>
 
 <button
+ *ngIf="!disabledSuccess"
  type="submit"
  class="btn btn-success"
  (click)="endHomework()"
- [disabled]="disabledSuccess"
  >Success homework</button>
+
+
+<span *ngIf="disabledSuccess"> You got {{ yourScore }} points out of {{ maxScore }}.</span>

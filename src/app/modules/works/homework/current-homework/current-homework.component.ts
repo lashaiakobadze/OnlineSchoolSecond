@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { Homework } from '../../models/homework.model';
 import { HomeworkService } from '../../homework.service';
+import { SolvedHomework } from '../../models/solved-homework.model';
 
 @Component({
   selector: 'app-current-homework',
@@ -10,9 +10,10 @@ import { HomeworkService } from '../../homework.service';
 })
 export class CurrentHomeworkComponent implements OnInit {
   curHomework: Homework;
-  taskForm: FormGroup;
-  answeredHomework: any = [];
+  answeredHomework: SolvedHomework[] = []; // I will use it when I add data from the database. I will save the assignment here and send it back.
   disabledSuccess: boolean = false;
+  yourScore: number = 0;
+  maxScore: number = null;
 
   constructor(
     private homeworkService: HomeworkService,
@@ -20,12 +21,22 @@ export class CurrentHomeworkComponent implements OnInit {
 
   ngOnInit(): void {
     this.curHomework = this.homeworkService.homework;
-    console.log(this.curHomework);
   }
 
   endHomework() {
-    console.log(this.homeworkService.answeredHomework);
-    if(this.homeworkService.answeredHomework.length === 5) this.disabledSuccess = true;
+    // I will replace push with put, when add base.
+    if(this.homeworkService.answeredTasks.length === this.curHomework.tasks.length) {
+      this.disabledSuccess = true;
+      this.homeworkService.answeredHomework.push(
+        new SolvedHomework(
+        'lashaiakobadze@gmail.com',
+        this.curHomework.homeworkNumber,
+        this.homeworkService.answeredTasks)
+      );
+    }
+
+    this.yourScore = this.homeworkService.answeredHomework[0].getScore();
+    this.maxScore = this.homeworkService.answeredTasks.length * 2;
   }
 
 }
