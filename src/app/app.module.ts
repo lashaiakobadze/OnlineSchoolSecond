@@ -11,6 +11,7 @@ import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './modules/home/home.module';
 import { ProfileModule } from './modules/profile/profile.module';
 import { AuthModule } from './auth/auth.module';
+import { WorksModule } from './modules/works/works.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
     SharedModule,
     HomeModule,
-    ProfileModule
+    ProfileModule,
+    WorksModule
   ],
   providers: [],
   bootstrap: [AppComponent]

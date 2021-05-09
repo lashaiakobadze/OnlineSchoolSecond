@@ -1,0 +1,25 @@
+<form [formGroup]="taskForm" (ngSubmit)="submitTask()">
+  <div class="form-group">
+    <p>task {{ curTaskNumber }}</p>
+    <p class="help-block">{{ curTask.conditions }}</p>
+    <div class="form-group">
+      <label for="comment">Solve the task Enter here:</label>
+      <textarea
+       formControlName='solve'
+       class="form-control" rows="5"
+       placeholder="Write the solution of the task here"
+       >{{ curTask.solve }}</textarea>
+    </div>
+    <div class="form-group answer">
+      <label for="comment">Final answer: </label>
+      <input
+       class="form-control"
+       placeholder="Write your answer here."
+       formControlName='answer'
+       [attr.data-answer]="curTask.answer"
+       #answer>
+    </div>
+  </div>
+  <button [disabled]="isAdded" type="button" class="btn btn-info" (click)="addTask()">Submit task</button>
+</form>
+<hr>

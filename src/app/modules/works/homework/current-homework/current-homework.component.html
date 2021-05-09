@@ -1,0 +1,15 @@
+<label class="form-group">Homework #{{ curHomework.homeworkNumber }}</label>
+
+<app-tasks
+ *ngFor="let task of curHomework.tasks; let i = index"
+ [curHomework]="curHomework.homeworkNumber"
+ [curTaskNumber] = 'i+1'
+ [curTask]="task"
+ ></app-tasks>
+
+<button
+ type="submit"
+ class="btn btn-success"
+ (click)="endHomework()"
+ [disabled]="disabledSuccess"
+ >Success homework</button>

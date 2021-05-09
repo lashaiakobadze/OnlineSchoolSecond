@@ -14,5 +14,30 @@
   <div class="blog_header">Blog</div>
   <div class="blog_items">
     <app-home-blog *ngFor="let newsObj of newsObjects" [news]="newsObj"></app-home-blog>
+
+    <!-- Paging -->
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+        <li>
+          <a aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li><a>1</a></li>
+        <li><a>2</a></li>
+        <li><a>3</a></li>
+        <li><a>4</a></li>
+        <li><a>5</a></li>
+        <li>
+          <a aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
   </div>
 </div>
+
+
+
