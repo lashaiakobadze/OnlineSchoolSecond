@@ -9,18 +9,65 @@ import { Task } from './models/Task.model';
 })
 export class HomeworkService {
   homework: Homework;
-  answeredHomework: SolvedHomework[] = [];
+  answeredHomework: SolvedHomework[] = [
+    new SolvedHomework(
+      'lashaiakobadze@gmail.com',
+      1,
+      [
+        new SolvedTask(1, '2*2=4', '4', 2),
+        new SolvedTask(1, '2*2=4', '4', 2),
+        new SolvedTask(1, '2*2=4', '4', 2),
+        new SolvedTask(1, '2*2=4', '4', 2),
+        new SolvedTask(1, '2*2=4', '4', 0),
+      ]
+    )
+  ];
   answeredTasks: SolvedTask[] = [];
 
   isTestEnterMode: boolean = false;
 
   constructor() {
-    this.homework = new Homework(1, [
+    this.homework = new Homework(2, [
       new Task("2 + 2 = ?", "2 + 2 = 4", "4"),
       new Task("2 * 2 = ?", "2 * 2 = 4", "4"),
-      // new Task("9 * 7 = ?", "9 * 7 = 63", "63"),
-      // new Task("8 * 7 = ?", "8 * 7 = 56", "56"),
-      // new Task("35 * 3 = ?", "35 * 3 = 105", "105"),
+      new Task("9 * 7 = ?", "9 * 7 = 63", "63"),
+      new Task("8 * 7 = ?", "8 * 7 = 56", "56"),
+      new Task("35 * 3 = ?", "35 * 3 = 105", "105"),
     ]);
   }
+
+  getAnsweredHomeworksSum() {
+    let sum = 0;
+    this.answeredHomework.forEach(homework => {
+      sum += homework.getScore;
+    })
+    return sum;
+  }
+
+  getAnsweredHomeworksPercentage() {
+    let averagePrec = 0;
+    this.answeredHomework.forEach(homework => {
+      averagePrec += homework.getPercentage;
+    })
+    return Math.round(averagePrec/this.answeredHomework.length);
+  }
+
+
+  // I will change these methods when I add an activity service.
+  getActivitiesFirstSum() {
+    let sum = 0;
+    this.answeredHomework.forEach(activity => {
+      sum += activity.getActivityFirst;
+    })
+    return sum;
+  }
+
+  getActivitiesSecondSum() {
+    let sum = 0;
+    this.answeredHomework.forEach(activity => {
+      sum += activity.getActivitySecond;
+    })
+    return sum;
+  }
+
 }

@@ -7,13 +7,15 @@ import { HomeworkComponent } from './homework/homework.component';
 import { OnlineTestComponent } from './online-test/online-test.component';
 import { CurrentHomeworkComponent } from './homework/current-homework/current-homework.component';
 import { CurrentTestComponent } from './online-test/current-test/current-test.component';
+import { AuthGuard } from 'src/app/auth/auth.guard';
 
 const workRoutes: Routes = [
   {
     path: 'works',
     component: WorksComponent,
+    canActivate: [AuthGuard],
     children: [
-      { path: '', redirectTo: 'online-test', pathMatch: 'full' },
+      { path: '', redirectTo: 'homework', pathMatch: 'full' },
       { path: 'activity', component: ActivityComponent },
       {
         path: 'homework',

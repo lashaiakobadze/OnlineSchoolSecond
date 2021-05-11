@@ -6,14 +6,24 @@
  [curTaskNumber] = 'i+1'
  [curTask]="task"
  [showCorrectAnswer]="disabledSuccess"
- ></app-tasks>
+></app-tasks>
 
 <button
  *ngIf="!disabledSuccess"
  type="submit"
  class="btn btn-success"
  (click)="endHomework()"
- >Success homework</button>
+>Success homework</button>
 
 
 <span *ngIf="disabledSuccess"> You got {{ yourScore }} points out of {{ maxScore }}.</span>
+
+<span *ngIf="errorSuccess"> You have not completed all the assignments.</span>
+<!-- <button
+ type="button"
+ class="btn btn-primary"
+ (click)="backHomework()"
+ routerLink="/works/homework"
+ >Go back to homework</button> -->
+
+ <!-- *ngIf="disabledSuccess" -->

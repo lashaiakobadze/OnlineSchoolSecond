@@ -9,40 +9,24 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>@twitter</td>
-      <td>უიიყუიყი</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
+    <tr *ngFor="let week of weeks">
+      <th scope="row">{{ week.homeworkNum }}</th>
+      <td>{{ week.getActivitySum }}</td>
+      <td>{{ week.getScore }}</td>
+      <td>{{ testsSum }}</td>
+      <td>{{ week.getScore + week.getActivitySum + testsSum}}</td>
     </tr>
   </tbody>
   <tfoot>
     <tr>
       <th scope="col">sum</th>
-      <th scope="col">100</th>
-      <th scope="col">315</th>
-      <th scope="col">256</th>
-      <th scope="col">726</th>
+      <th scope="col">{{ activitiesSum }}</th>
+      <th scope="col">{{ homeworksSum }}</th>
+      <th scope="col">{{ testsSum }}</th>
+      <th scope="col">{{ activitiesSum + homeworksSum + testsSum }}</th>
     </tr>
   </tfoot>
 </table>
 
-
-<!--  -->
 
 

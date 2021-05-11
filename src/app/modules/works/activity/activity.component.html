@@ -16,39 +16,27 @@
         <th scope="col">sum</th>
       </tr>
     </thead>
-    <tbody >
+    <tbody *ngFor="let activity of activities">
       <tr>
-        <th scope="row">1</th>
-        <td>4.5</td>
-        <td>4</td>
-        <td>8.5</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>4.5</td>
-        <td>4</td>
-        <td>8.5</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>4.5</td>
-        <td>4</td>
-        <td>8.5</td>
+        <th scope="row">{{ activity.homeworkNum }}</th>
+        <td>{{ activity.getActivityFirst }}</td>
+        <td>{{ activity.getActivitySecond }}</td>
+        <td>{{ activity.getActivitySum }}</td>
       </tr>
     </tbody>
     <tfoot>
       <tr>
         <th scope="col">sum</th>
-        <th scope="col">13.5</th>
-        <th scope="col">12</th>
-        <th scope="col">25.5</th>
+        <th scope="col">{{ activitiesScoreFirst }}</th>
+        <th scope="col">{{ activitiesScoreSecond }}</th>
+        <th scope="col">{{ activitiesScoreFirst + activitiesScoreSecond }}</th>
       </tr>
     </tfoot>
   </table>
 </div>
 <hr>
 <div class="progress">
-  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-    60%
+  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [style.width.%]="activityPercentage">
+    {{ activityPercentage }}%
   </div>
 </div>

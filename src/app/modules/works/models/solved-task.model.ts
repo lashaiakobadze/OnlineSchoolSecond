@@ -1,10 +1,11 @@
+// SolvedTask model, Solved task for solved tasks and solved homework.
 export class SolvedTask {
-  public taskNumber: Number;
+  public taskNumber: number;
   public taskSolved: string;
   public taskAnswered: string;
-  public taskScored: Number;
+  public taskScored: number;
 
-  constructor(taskNumber: Number, taskSolved: string, taskAnswered: string, taskScored: Number) {
+  constructor(taskNumber: number, taskSolved: string, taskAnswered: string, taskScored: number) {
     this.taskNumber = taskNumber;
     this.taskSolved = taskSolved;
     this.taskAnswered = taskAnswered;

@@ -12,9 +12,8 @@
         </li>
       </ul>
 
-      <!-- *ngIf="isAuthenticated" -->
       <ul class="nav navbar-nav">
-        <li routerLinkActive="active">
+        <li routerLinkActive="active" *ngIf="isAuthenticated">
           <a routerLink="works">Works</a>
         </li>
       </ul>

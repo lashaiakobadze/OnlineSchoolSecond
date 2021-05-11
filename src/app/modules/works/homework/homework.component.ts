@@ -1,6 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HomeworkService } from '../homework.service';
+import { SolvedHomework } from '../models/solved-homework.model';
 
 @Component({
   selector: 'app-homework',
@@ -8,8 +9,10 @@ import { HomeworkService } from '../homework.service';
   styleUrls: ['./homework.component.scss']
 })
 export class HomeworkComponent implements OnInit {
+  percentage: number = 0;
+  solvedHomeworks: SolvedHomework[] = [];
 
-    constructor(
+  constructor(
     public homeworkService: HomeworkService,
     private router: Router,
     private route: ActivatedRoute) { }
@@ -20,7 +23,11 @@ export class HomeworkComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.solvedHomeworks = this.homeworkService.answeredHomework;
     this.homeworkService.isTestEnterMode = false;
+
+    if(this.homeworkService.answeredHomework.length === 0) return;
+    this.percentage = this.homeworkService.answeredHomework[0].getPercentage;
   }
 
 }

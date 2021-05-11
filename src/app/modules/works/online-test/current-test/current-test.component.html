@@ -1,19 +1,19 @@
+<label class="form-group">Test #{{ test.TestNumber }}</label>
+<span class="about-test">You have 30 minutes and 1 chance.</span>
 
-<div class="panel panel-default">
-  <!-- Task -->
-  <div class="panel-heading">Online test 4</div>
-  <div class="panel-body">
-    <p>
-      Some default panel content here. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Nullam id dolor id nibh ultricies vehicula ut id elit.
-    </p>
-  </div>
+<app-tests
+ *ngFor="let tes of test.tests; let i = index"
+ [curTest]="tes"
+ [curTestNum]='i+1'
+></app-tests>
 
-  <!-- Answer group -->
-  <ul class="list-group">
-    <li class="list-group-item">Answer 1</li>
-    <li class="list-group-item">Answer 2</li>
-    <li class="list-group-item">Answer 3</li>
-    <li class="list-group-item">Answer 1</li>
-    <li class="list-group-item">Answer 5</li>
-  </ul>
-</div>
+<button
+ *ngIf="!disabledSuccess"
+ type="submit"
+ class="btn btn-success"
+ (click)="endTest()"
+>Success Test</button>
+
+<span *ngIf="disabledSuccess"> You got {{ yourScore }} points out of {{ maxScore }}.</span>
+
+<span *ngIf="errorSuccess"> You have not completed all the assignments.</span>

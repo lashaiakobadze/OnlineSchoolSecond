@@ -1,0 +1,16 @@
+<!-- aq shevqmna forma -->
+
+<div class="panel panel-default">
+  <!-- Task -->
+  <div class="panel-heading">task {{ curTestNum }}</div>
+  <div class="panel-body">
+    <p>{{ curTest.conditions }}</p>
+  </div>
+
+  <!-- Answer group -->
+  <ul class="list-group" *ngFor="let option of curTest.options">
+    <li class="list-group-item">{{ option }}</li>
+  </ul>
+
+</div>
+<hr>

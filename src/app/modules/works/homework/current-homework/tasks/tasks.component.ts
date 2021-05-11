@@ -46,7 +46,7 @@ export class TasksComponent implements OnInit, AfterViewInit {
       this.curTaskNumber,
       this.taskForm.value.solve,
       this.taskForm.value.answer,
-      this.taskForm.value.answer == this.answer.nativeElement.innerHTML ? 2 : 0),
+      this.taskForm.value.answer === this.answer.nativeElement.innerHTML ? 2 : 0),
     )
     console.log(this.homeworkService.answeredTasks);
   }

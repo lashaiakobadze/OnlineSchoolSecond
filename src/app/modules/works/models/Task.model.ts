@@ -1,3 +1,4 @@
+// Task model, for homework with number, also for admin.
 export class Task {
   public conditions: string;
   public solve: string;
