@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivityService } from '../activity.service';
 import { HomeworkService } from '../homework.service';
 import { SolvedHomework } from '../models/solved-homework.model';
+import { TestService } from '../test.service';
 
 @Component({
   selector: 'app-activity',
@@ -16,15 +18,17 @@ export class ActivityComponent implements OnInit {
 
   constructor(
     public homeworkService: HomeworkService,
+    public testService: TestService,
+    public activityService: ActivityService
   ) { }
 
   ngOnInit(): void {
     this.activities = this.homeworkService.answeredHomework;
-    this.activityPercentage = this.homeworkService.getAnsweredHomeworksPercentage() * 0.9;
+    this.activityPercentage = this.activityService.getActivityPercentage();
 
     if(this.activities.length === 0) return;
-    this.activitiesScoreFirst = this.homeworkService.getActivitiesFirstSum();
-    this.activitiesScoreSecond = this.homeworkService.getActivitiesSecondSum();
+    this.activitiesScoreFirst = this.activityService.getActivitiesFirstSum();
+    this.activitiesScoreSecond = this.activityService.getActivitiesSecondSum();
   }
 
 }

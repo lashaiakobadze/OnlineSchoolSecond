@@ -1,7 +1,7 @@
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th scope="col">#</th>
+      <th scope="col">#Week</th>
       <th scope="col">Activity</th>
       <th scope="col">homework</th>
       <th scope="col">Online test</th>
@@ -9,12 +9,12 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let week of weeks">
-      <th scope="row">{{ week.homeworkNum }}</th>
-      <td>{{ week.getActivitySum }}</td>
-      <td>{{ week.getScore }}</td>
-      <td>{{ testsSum }}</td>
-      <td>{{ week.getScore + week.getActivitySum + testsSum}}</td>
+    <tr *ngFor="let week of weeks; let i = index;">
+      <th scope="row">{{ week?.homeworkNum }}</th>
+      <td>{{ week?.getActivityFirst + testService.solvedTests[i]?.getActivitySecond }}</td>
+      <td>{{ week?.getScore }}</td>
+      <td>{{ testService.solvedTests[i]?.getTestScore }}</td>
+      <td>{{ week?.getScore + (week?.getActivityFirst + testService.solvedTests[i]?.getActivitySecond) + testService.solvedTests[i]?.getTestScore }}</td>
     </tr>
   </tbody>
   <tfoot>

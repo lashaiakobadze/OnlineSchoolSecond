@@ -2,7 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Registration } from 'src/app/auth/registration/registration.model';
+import { ActivityService } from '../works/activity.service';
 import { HomeworkService } from '../works/homework.service';
+import { TestService } from '../works/test.service';
 
 @Component({
   selector: 'app-profile',
@@ -23,7 +25,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   constructor(
     public authService: AuthService,
-    public homeworkService: HomeworkService
+    public homeworkService: HomeworkService,
+    public testService: TestService,
+    public activityService: ActivityService
   ) { }
 
   ngOnInit(): void {
@@ -43,9 +47,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
     //   if(!this.userProfile) console.error('data ar shemosula');
     // }
     if(this.homeworkService.answeredHomework.length === 0) return;
+    this.activityPercentage = this.activityService.getActivityPercentage();
     this.homeworkPercentage = this.homeworkService.getAnsweredHomeworksPercentage();
-    this.activityPercentage = +this.homeworkPercentage * 0.9;
-    this.testPercentage = 60;
+    this.testPercentage = this.testService.getSolvedTestsPercentage();
     this.averagePercentage = Math.round((this.homeworkPercentage + this.activityPercentage + this.testPercentage)/3);
   }
 

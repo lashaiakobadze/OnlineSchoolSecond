@@ -30,9 +30,9 @@ export class HomeworkService {
     this.homework = new Homework(2, [
       new Task("2 + 2 = ?", "2 + 2 = 4", "4"),
       new Task("2 * 2 = ?", "2 * 2 = 4", "4"),
-      new Task("9 * 7 = ?", "9 * 7 = 63", "63"),
-      new Task("8 * 7 = ?", "8 * 7 = 56", "56"),
-      new Task("35 * 3 = ?", "35 * 3 = 105", "105"),
+      // new Task("9 * 7 = ?", "9 * 7 = 63", "63"),
+      // new Task("8 * 7 = ?", "8 * 7 = 56", "56"),
+      // new Task("35 * 3 = ?", "35 * 3 = 105", "105"),
     ]);
   }
 
@@ -50,24 +50,6 @@ export class HomeworkService {
       averagePrec += homework.getPercentage;
     })
     return Math.round(averagePrec/this.answeredHomework.length);
-  }
-
-
-  // I will change these methods when I add an activity service.
-  getActivitiesFirstSum() {
-    let sum = 0;
-    this.answeredHomework.forEach(activity => {
-      sum += activity.getActivityFirst;
-    })
-    return sum;
-  }
-
-  getActivitiesSecondSum() {
-    let sum = 0;
-    this.answeredHomework.forEach(activity => {
-      sum += activity.getActivitySecond;
-    })
-    return sum;
   }
 
 }

@@ -27,7 +27,8 @@
    *ngIf="!showCorrectAnswer"
    [disabled]="isAdded"
    type="button"
-   class="btn btn-info"
+   class="btn"
+   [ngClass]="{'btn-danger': !isAdded, 'btn-success': isAdded }"
    (click)="addTask()"
   >Submit task</button>
 </form>

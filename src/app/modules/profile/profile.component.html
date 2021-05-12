@@ -11,23 +11,23 @@
   <hr>
   <!-- Progress bar -->
   <div class="progress">
-    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" [style.width.%]="this.homeworkService.getAnsweredHomeworksPercentage() * 0.9">
+    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" [style.width.%]="activityPercentage">
       <span class="sr-only"> Activity</span>
     </div>
   </div>
   <div class="progress">
-    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" [style.width.%]="homeworkService.getAnsweredHomeworksPercentage()">
+    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" [style.width.%]="homeworkPercentage">
       <span class="sr-only">Homework</span>
     </div>
   </div>
   <div class="progress">
-    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [style.width.%]="testPercentage">
       <span class="sr-only">test</span>
     </div>
   </div>
   <!-- Table -->
   <div class="profile_details">
-    <div class="subject-title">Subjects</div>
+    <!-- <div class="subject-title">Subjects</div> -->
     <app-profile-details></app-profile-details>
   </div>
 </div>

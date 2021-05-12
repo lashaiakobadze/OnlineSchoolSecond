@@ -24,16 +24,8 @@ export class SolvedHomework {
     return 100 * this.getScore/(2*this.tasks.length);
   }
 
-  // I will change these methods when I add an activity service.
+  // I will change these methods when I add an activity service from adminpanel.
   get getActivityFirst() {
     return this.getScore * 0.75 / 2;
-  }
-
-  get getActivitySecond() {
-    return this.getScore * 1.25 / 2;
-  }
-
-  get getActivitySum() {
-    return this.getActivityFirst + this.getActivitySecond;
   }
 }

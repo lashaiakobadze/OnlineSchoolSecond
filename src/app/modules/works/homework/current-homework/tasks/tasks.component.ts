@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { HomeworkService } from '../../../homework.service';
-import { SolvedHomework } from '../../../models/solved-homework.model';
 import { SolvedTask } from '../../../models/solved-task.model';
 import { Task } from '../../../models/Task.model';
 
@@ -10,7 +9,7 @@ import { Task } from '../../../models/Task.model';
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.scss']
 })
-export class TasksComponent implements OnInit, AfterViewInit {
+export class TasksComponent implements OnInit {
   @Input() curHomework: number;
   @Input() curTask: Task;
   @Input() curTaskNumber;
@@ -30,9 +29,6 @@ export class TasksComponent implements OnInit, AfterViewInit {
     })
   }
 
-  ngAfterViewInit() {
-
-  }
 
   // Maybe use for put
   submitTask() {

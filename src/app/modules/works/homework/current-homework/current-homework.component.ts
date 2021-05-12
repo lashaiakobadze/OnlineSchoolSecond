@@ -41,7 +41,7 @@ export class CurrentHomeworkComponent implements OnInit {
       );
     }
 
-    this.yourScore = this.homeworkService.answeredHomework[this.curHomework.homeworkNumber - 1].getScore;
+    this.yourScore = this.homeworkService.answeredHomework[this.curHomework.homeworkNumber - 1]?.getScore;
     this.maxScore = this.homeworkService.answeredTasks.length * 2;
   }
 

@@ -16,12 +16,12 @@
         <th scope="col">sum</th>
       </tr>
     </thead>
-    <tbody *ngFor="let activity of activities">
+    <tbody *ngFor="let activity of activities; let i = index">
       <tr>
-        <th scope="row">{{ activity.homeworkNum }}</th>
-        <td>{{ activity.getActivityFirst }}</td>
-        <td>{{ activity.getActivitySecond }}</td>
-        <td>{{ activity.getActivitySum }}</td>
+        <th scope="row">{{ activity?.homeworkNum }}</th>
+        <td>{{ activity?.getActivityFirst }}</td>
+        <td>{{ testService.solvedTests[i]?.getActivitySecond }}</td>
+        <td>{{ activity?.getActivityFirst + testService.solvedTests[i]?.getActivitySecond }}</td>
       </tr>
     </tbody>
     <tfoot>
