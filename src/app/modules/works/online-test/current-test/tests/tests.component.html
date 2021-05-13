@@ -18,7 +18,7 @@
     </div>
 
     <div class="form-group" [ngStyle]="{'display': showCorrectAnswer ? 'block' : 'none' }">
-      <button class="form-control answer" #answer>Correct answer: {{ curTest.answer }}</button>
+      <button class="form-control answer">Correct answer: <span #answer>{{ curTest.answer }}</span> </button>
     </div>
 
     <button

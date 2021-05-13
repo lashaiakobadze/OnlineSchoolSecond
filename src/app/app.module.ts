@@ -10,24 +10,26 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './modules/home/home.module';
 import { ProfileModule } from './modules/profile/profile.module';
-import { AuthModule } from './auth/auth.module';
+// import { AuthModule } from './auth/auth.module';
 import { WorksModule } from './modules/works/works.module';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
+    ErrorPageComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule,
-    AuthModule,
+    // AuthModule,
     SharedModule,
     HomeModule,
     ProfileModule,
-    WorksModule
+    WorksModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

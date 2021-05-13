@@ -44,7 +44,6 @@ export class TasksComponent implements OnInit {
       this.taskForm.value.answer,
       this.taskForm.value.answer === this.answer.nativeElement.innerHTML ? 2 : 0),
     )
-    console.log(this.homeworkService.answeredTasks);
   }
 
 }

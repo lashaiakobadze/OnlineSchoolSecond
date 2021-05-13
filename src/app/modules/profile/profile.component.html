@@ -1,10 +1,10 @@
 <div class="profile">
   <div class="profile_info">
-    <img [src]="userProfile.imgLink" [alt]="userProfile.firstName" class=" img-circle profile_info_img img-center" >
+    <img [src]="userProfile?.imgLink" [alt]="userProfile?.firstName" class=" img-circle profile_info_img img-center" >
     <div class="profile_info_about">
-      <div class="student-name"><span>Name: </span>{{ userProfile.firstName }} {{ userProfile.lastName }}</div>
-      <div class="student-group"><span>Group: </span>{{ userProfile.group }}</div>
-      <div class="student-mail"><span>Email: </span>{{ userProfile.email }}</div>
+      <div class="student-name"><span>Name: </span>{{ userProfile?.firstName }} {{ userProfile?.lastName }}</div>
+      <div class="student-group"><span>Group: </span>{{ userProfile?.group }}</div>
+      <div class="student-mail"><span>Email: </span>{{ userProfile?.email }}</div>
       <div class="student-rate"><span>Rate: </span>{{ averagePercentage }}%</div>
     </div>
   </div>

@@ -110,7 +110,7 @@ export class AuthService {
   autoLogout(expirationDuration: number) {
     this.tokenExpirationTime = setTimeout( () => {
       this.logout();
-    }, expirationDuration) // We can control auto logout time here in millisecond
+    }, 1000*600) // expirationDuration // We can control auto logout time here in millisecond
   }
 
 

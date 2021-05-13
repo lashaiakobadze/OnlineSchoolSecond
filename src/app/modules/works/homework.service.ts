@@ -30,9 +30,9 @@ export class HomeworkService {
     this.homework = new Homework(2, [
       new Task("2 + 2 = ?", "2 + 2 = 4", "4"),
       new Task("2 * 2 = ?", "2 * 2 = 4", "4"),
-      // new Task("9 * 7 = ?", "9 * 7 = 63", "63"),
-      // new Task("8 * 7 = ?", "8 * 7 = 56", "56"),
-      // new Task("35 * 3 = ?", "35 * 3 = 105", "105"),
+      new Task("9 * 7 = ?", "9 * 7 = 63", "63"),
+      new Task("8 * 7 = ?", "8 * 7 = 56", "56"),
+      new Task("35 * 3 = ?", "35 * 3 = 105", "105"),
     ]);
   }
 

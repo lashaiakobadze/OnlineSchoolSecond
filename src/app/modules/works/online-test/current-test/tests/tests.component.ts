@@ -48,7 +48,6 @@ export class TestsComponent implements OnInit {
       this.testForm.value.option,
       this.testForm.value.option === this.answer.nativeElement.innerHTML ? 2 : 0),
     )
-    console.log(this.testService.solvedTestTasks);
   }
 
 }

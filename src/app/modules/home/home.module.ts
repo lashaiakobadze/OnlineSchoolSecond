@@ -19,12 +19,12 @@ import { BlogComponent } from './home-blog/blog/blog.component';
     BlogComponent
   ],
   imports: [
-    CommonModule,
+    SharedModule,
+    // CommonModule,
     CarouselModule,
     RouterModule,
     BrowserAnimationsModule,
     HomeRoutingModule,
-    SharedModule,
   ]
 })
 export class HomeModule { }
