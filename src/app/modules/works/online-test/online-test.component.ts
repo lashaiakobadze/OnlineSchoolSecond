@@ -1,33 +1,67 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+
+import { Test } from '../models/test.model';
 import { SolvedTest } from '../models/solved-test.model';
-import { TestService } from '../test.service';
+
+import * as fromApp from '../../../store/app.reducer';
+import * as TestActions from '../store-test/test.actions';
+
 
 @Component({
   selector: 'app-online-test',
   templateUrl: './online-test.component.html',
   styleUrls: ['./online-test.component.scss']
 })
-export class OnlineTestComponent implements OnInit {
-  percentage: number = 0;
+export class OnlineTestComponent implements OnInit, OnDestroy {
+  testsPercentage: number = null;
+  testsSum: number = null;
   solvedTests: SolvedTest[] = [];
+  curTest: Test;
+  isTestMode: boolean;
+  isSolved: number;
+
+  testSub: Subscription;
+  routerSub: Subscription;
 
   constructor(
-    public testService: TestService,
-    private router: Router,
-    private route: ActivatedRoute) { }
+    private store: Store<fromApp.AppState>,
+    private route: ActivatedRoute,
+  ) { }
 
   ngOnInit(): void {
-    this.testService.isTestMode = false;
-    this.solvedTests = this.testService.solvedTests;
+    this.routerSub = this.route.queryParams.pipe(
+      map(params => {
+        return params;
+      })
+    ).subscribe(status => {
+      if(status.isSolved) {
+        this.store.dispatch(new TestActions.GetTestMode());
+      }
+    });
+
+    this.store.dispatch(new TestActions.getAnsweredTestsPercentage());
+    this.testSub = this.store.select('OnlineTest').subscribe(testState => {
+      this.solvedTests = testState.solvedTests;
+      this.testsSum = testState.testsSum;
+      this.testsPercentage = testState.testsPercentage;
+      this.curTest = testState.test;
+      this.isSolved = testState.testIsWritten;
+      this.isTestMode = testState.isTestMode;
+    });
   }
 
   goToCurTest() {
-    this.testService.isTestMode = true;
-    this.router.navigate(['currentTest'], {relativeTo: this.route});
+    this.store.dispatch(new TestActions.GoToTest({ testNumber: this.curTest.TestNumber , isSolved: this.isSolved }));
+    if(this.solvedTests.length === 0) return;
+  }
 
-    if(this.testService.solvedTests.length === 0) return;
-    this.percentage = this.testService.solvedTests[0].getTestPercentage;
+  ngOnDestroy() {
+    if(this.routerSub) this.routerSub.unsubscribe();
+    if(this.testSub) this.testSub.unsubscribe();
   }
 
 }

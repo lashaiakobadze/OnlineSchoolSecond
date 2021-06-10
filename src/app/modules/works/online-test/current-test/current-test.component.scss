@@ -13,3 +13,21 @@
   margin-bottom: 40px;
   font-size: 25px;
 }
+
+.inActive {
+  margin: auto;
+  font-size: 40px;
+  font-weight: 600;
+}
+
+.back {
+  margin-left: 45%;
+  width: 140px;
+  transition: width 2s;
+
+  &:hover {
+    width: 200px;
+  }
+}
+
+

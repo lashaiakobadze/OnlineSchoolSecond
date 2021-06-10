@@ -2,40 +2,70 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a routerLink="/home" class="navbar-brand">Online School</a>
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a routerLink="/home" class="navbar-brand">{{'Online School' | translate }}</a>
     </div>
-
-    <div class="collapse navbar-collapse">
+    <!--  -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li routerLinkActive="active" *ngIf="isAuthenticated">
-          <a routerLink="profile">Profile</a>
+        <li routerLinkActive="active">
+          <a routerLink="/home">{{'Home' | translate }}</a>
         </li>
       </ul>
 
       <ul class="nav navbar-nav">
         <li routerLinkActive="active" *ngIf="isAuthenticated">
-          <a routerLink="works">Works</a>
+          <a routerLink="profile">{{'Profile' | translate }}</a>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav">
+        <li routerLinkActive="active" *ngIf="isAuthenticated">
+          <a routerLink="works">{{'Works' | translate }}</a>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav">
+        <li routerLinkActive="active">
+          <a routerLink="contact">{{'Contact' | translate }}</a>
+        </li>
+      </ul>
+
+      <!-- <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown" appDropdown>
+          <a style="cursor: pointer;" class="dropdown-toggle" role="button">Language<span class="caret"></span></a>
+          <ul class="dropdown-menu" style="width: 50%;">
+            <li style="cursor: pointer; text-align: center;" value="en" (click)="changeLang($event.target.value)">EN</li>
+            <li style="cursor: pointer; text-align: center;" value="ge" (click)="changeLang($event.target.value)">GE</li>
+          </ul>
+        </li>
+      </ul> -->
+
+      <ul class="nav navbar-nav navbar-right ">
+        <li class="dropdown" appDropdown>
+          <select class="language" id="inputGroupSelect01" (change)="changeLang($event.target.value)">
+            <option value="en" [selected]="lang == 'en'">{{'EN' | translate }}</option>
+            <option value="ge" [selected]="lang == 'ge'">{{'GE' | translate }}</option>
+          </select>
         </li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
         <li routerLinkActive="active" *ngIf="!isAuthenticated">
-          <a routerLink="/auth/login">Authenticate</a>
+          <a routerLink="/auth/login">{{'Authenticate' | translate }}</a>
         </li>
         <li *ngIf="isAuthenticated">
           <a
            routerLink='../auth'
            style="cursor: pointer;"
            (click)="onLogout()"
-           >Logout</a>
+           >{{'Logout' | translate }}</a>
         </li>
-        <!-- <li class="dropdown" appDropdown *ngIf="isAuthenticated">
-          <a style="cursor: pointer;" class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a style="cursor: pointer;" (click)="onSaveData()">Save Data</a></li>
-            <li><a style="cursor: pointer;" (click)="onFetchData()">Fetch Data</a></li>
-          </ul>
-        </li> -->
       </ul>
     </div>
   </div>

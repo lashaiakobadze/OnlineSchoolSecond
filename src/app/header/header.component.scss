@@ -1,17 +1,6 @@
-// @import '../../styles.scss';
-
-.header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-
-  &_navigation {
-    width: 30%;
-
-    &_items {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-    }
-  }
+.language {
+  height: 50px;
+  margin-left: 15px;
+  background-color: transparent;
+  border: none;
 }

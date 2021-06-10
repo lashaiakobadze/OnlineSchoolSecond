@@ -1,24 +1,31 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Resolve } from '@angular/router';
-import { HomeService } from './home.service';
+import { Store } from '@ngrx/store';
 import { News } from './news.model';
+import * as fromApp from '../../store/app.reducer';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class HomeResolverService implements Resolve<News[]> {
 
-  constructor(private homeService: HomeService) { }
+  constructor(private store: Store<fromApp.AppState>) { }
 
+  // I do not actually use this resolver, Because I take out the UI spinners.
   resolve(router: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const news = this.homeService.getNewsData();
+    let news: News[] = [];
+
+    this.store.select('home')
+    .subscribe(homeState => {
+      news = homeState.news;
+    })
 
     // To prevent update bugs
     if(news.length === 0) {
-      return this.homeService.fetchNews();
+      return news;
     } else {
       return news;
     }
   }
-
 }

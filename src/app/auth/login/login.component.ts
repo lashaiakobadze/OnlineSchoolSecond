@@ -1,10 +1,12 @@
 import { Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AlertComponent } from 'src/app/shared/alert/alert.component';
 import { PlaceholderDirective } from 'src/app/shared/placeholder/placeholder.directive';
-import { AuthService } from '../auth.service';
+
+import * as fromApp from '../../store/app.reducer';
+import * as AuthActions from '../store/auth.actions';
 
 @Component({
   selector: 'app-login',
@@ -12,16 +14,28 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  isLoading: boolean;
+  error: string = null;
   @ViewChild(PlaceholderDirective, { static: false}) alertHost: PlaceholderDirective;
+
   private closeSub: Subscription;
+  private authSub: Subscription;
 
   constructor(
-    public authService: AuthService,
-    private router: Router,
-    private componentFactoryResolver: ComponentFactoryResolver) {}
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private store: Store<fromApp.AppState>
+  ) {}
 
   ngOnInit(): void {
+    this.authSub =  this.store.select('auth').subscribe(authState => {
+      this.isLoading = authState.loading;
+      this.error = authState.authError;
+      if(this.error) {
+        this.showErrorAlert(this.error);
+      }
+    });
   }
+
 
   onLogin(form: NgForm) {
     if (!form.valid) {
@@ -30,27 +44,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     const email = form.value.email;
     const password = form.value.password;
-    this.authService.isLoading = true;
-
-    this.authService.authObs = this.authService.login(email, password);
-
-    this.authService.authObs.subscribe(
-      resData => {
-        // console.log(resData);
-        this.router.navigate(['/home']);
-        this.authService.isLoading = false;
-      },
-      errorMessage => {
-        this.authService.error = errorMessage;
-        this.showErrorAlert(errorMessage);
-        this.authService.isLoading = false;
-      }
+    this.store.dispatch(
+      new AuthActions.LoginStart({email: email, password: password})
     );
-  }
-
-
-  onHandleError() {
-    this.authService.error = null;
   }
 
 
@@ -67,7 +63,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.closeSub = componentRef.instance.closeAlert.subscribe(() => {
       this.closeSub.unsubscribe();
       hostViewContainerRef.clear();
-      this.onHandleError();
+      this.store.dispatch(new AuthActions.ClearError());
     });
   }
 
@@ -76,6 +72,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if(this.closeSub) {
       this.closeSub.unsubscribe();
+    }
+    if(this.authSub) {
+      this.authSub.unsubscribe();
     }
   }
 

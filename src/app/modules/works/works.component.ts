@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { HomeworkService } from './homework.service';
-import { TestService } from './test.service';
+import { Store } from '@ngrx/store';
+
+import * as fromApp from '../../store/app.reducer';
+import * as HomeworkActions from './store-homework/homework.actions';
+import * as TestActions from './store-test/test.actions';
 
 @Component({
   selector: 'app-works',
@@ -9,23 +11,17 @@ import { TestService } from './test.service';
   styleUrls: ['./works.component.scss']
 })
 export class WorksComponent implements OnInit {
-
-  constructor(
-    public homeworkService: HomeworkService,
-    public testService: TestService,
-    private router: Router,
-    private route: ActivatedRoute) { }
+  constructor(private store: Store<fromApp.AppState>) { }
 
   ngOnInit(): void {
   }
 
-  // Maybe control the routing with a function
   onNavigateHomework() {
-    this.homeworkService.isTestEnterMode = false;
+   this.store.dispatch(new HomeworkActions.GetHomeworkModeBack());
   }
 
   onNavigateTest() {
-    this.testService.isTestMode = false;
+    this.store.dispatch(new TestActions.GetTestModeBack());
   }
 
 }

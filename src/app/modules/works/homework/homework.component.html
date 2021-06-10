@@ -1,9 +1,9 @@
 <hr>
-<div class="panel panel-default" *ngIf="!homeworkService.isTestEnterMode">
+<div class="panel panel-default" *ngIf="!isHomeworkEnterMode">
   <!-- Default panel contents -->
-  <div class="panel-heading">Maximum score 10.</div>
+  <div class="panel-heading">{{'homework.title' | translate}}</div>
   <div class="panel-body">
-    <p>Assess homework challenges, a total of 5 challenges are each assessed with 2 point. </p>
+    <p>{{'homework.about' | translate}}</p>
   </div>
 
   <!-- Table -->
@@ -11,7 +11,7 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Homework score</th>
+        <th scope="col">{{'homework.homeworkScore' | translate}}</th>
       </tr>
     </thead>
     <tbody *ngFor="let homework of solvedHomeworks">
@@ -22,8 +22,8 @@
     </tbody>
     <tfoot>
       <tr>
-        <th scope="col">sum</th>
-        <th scope="col">{{ homeworkService.getAnsweredHomeworksSum() }}</th>
+        <th scope="col">{{'homework.sum' | translate}}</th>
+        <th scope="col">{{ homeworksSum }}</th>
       </tr>
     </tfoot>
   </table>
@@ -31,15 +31,15 @@
 
 <hr>
 
-<div class="progress" *ngIf="!homeworkService.isTestEnterMode">
-  <div class="progress-bar" role="progressbar" aria-valuenow="proc" aria-valuemin="0" aria-valuemax="100" [style.width.%]="homeworkService.getAnsweredHomeworksPercentage()">
-    {{ homeworkService.getAnsweredHomeworksPercentage() }}%
+<div class="progress" *ngIf="!isHomeworkEnterMode">
+  <div class="progress-bar" role="progressbar" aria-valuenow="proc" aria-valuemin="0" aria-valuemax="100" [style.width.%]="homeworksPercentage">
+    {{ homeworksPercentage }}%
   </div>
 </div>
 
 
-<button type="button" class="btn btn-primary" (click)="goToCurHomework()" *ngIf="!homeworkService.isTestEnterMode">Go to current homework</button>
+<button type="button" class="btn btn-primary" (click)="goToCurHomework()" *ngIf="!isHomeworkEnterMode">{{'homework.btn' | translate}}</button>
 
-<router-outlet *ngIf="homeworkService.isTestEnterMode"></router-outlet>
+<router-outlet *ngIf="isHomeworkEnterMode"></router-outlet>
 
 

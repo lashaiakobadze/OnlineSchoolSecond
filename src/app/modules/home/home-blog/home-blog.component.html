@@ -2,7 +2,7 @@
   <div class="blog-item_title">{{ news.title }}</div>
   <img class="blog-item_img" [src]="news.imgPath" alt="news-post">
   <p class="blog-item_info">{{ news.info }}</p>
-  <button class="btn btn-info" (click)="onOpenModal()">more >></button>
+  <button class="btn btn-info" (click)="onOpenModal()">{{'Read more' | translate }}</button>
 </div>
 
 <app-blog [blogNews]="news"  *ngIf="isOpenModal" (closeAlert)="isCloseModal($event)"></app-blog>

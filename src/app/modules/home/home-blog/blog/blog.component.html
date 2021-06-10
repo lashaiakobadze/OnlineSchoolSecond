@@ -5,7 +5,7 @@
     <img class="blog-item_img" [src]="blogNews.imgPath" alt="news-post">
     <p class="blog-item_info">{{ blogNews.info }}</p>
     <div class="blog-box-actions">
-      <button class="btn btn-danger" (click)="onCloseAlert()">Close</button>
+      <button class="btn btn-danger" (click)="onCloseAlert()">{{'Close' | translate }}</button>
     </div>
   </div>
 </div>

@@ -7,9 +7,9 @@ export class News {
     title: string,
     imgPath: string,
     info: string
-    ) {
-      this.title = title;
-      this.imgPath = imgPath;
-      this.info = info;
-    }
+  ) {
+    this.title = title;
+    this.imgPath = imgPath;
+    this.info = info;
+  }
 }

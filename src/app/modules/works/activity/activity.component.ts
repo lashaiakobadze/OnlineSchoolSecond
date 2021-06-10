@@ -1,34 +1,50 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivityService } from '../activity.service';
-import { HomeworkService } from '../homework.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { SolvedHomework } from '../models/solved-homework.model';
-import { TestService } from '../test.service';
+import { SolvedTest } from '../models/solved-test.model';
+
+import * as fromApp from '../../../store/app.reducer';
+import * as HomeworkActions from '../store-homework/homework.actions';
+import * as TestActions from '../store-test/test.actions';
 
 @Component({
   selector: 'app-activity',
   templateUrl: './activity.component.html',
   styleUrls: ['./activity.component.scss']
 })
-export class ActivityComponent implements OnInit {
+export class ActivityComponent implements OnInit, OnDestroy {
   activityPercentage: number = 0;
   activitiesScoreFirst: number = 0;
   activitiesScoreSecond: number = 0;
 
-  activities: SolvedHomework[] = [];
+  homeworkSub: Subscription;
+  testSub: Subscription;
 
-  constructor(
-    public homeworkService: HomeworkService,
-    public testService: TestService,
-    public activityService: ActivityService
-  ) { }
+  activitiesHomework: SolvedHomework[] = [];
+  activitiesTest: SolvedTest[] = [];
+
+  constructor(private store: Store<fromApp.AppState>) { }
 
   ngOnInit(): void {
-    this.activities = this.homeworkService.answeredHomework;
-    this.activityPercentage = this.activityService.getActivityPercentage();
+    this.store.dispatch(new HomeworkActions.getActivitiesFirstSum());
+    this.homeworkSub = this.store.select('homeWork').subscribe(homeworkState => {
+      this.activitiesHomework = homeworkState.answeredHomeworks;
+      this.activitiesScoreFirst = homeworkState.firstActivities;
+    });
 
-    if(this.activities.length === 0) return;
-    this.activitiesScoreFirst = this.activityService.getActivitiesFirstSum();
-    this.activitiesScoreSecond = this.activityService.getActivitiesSecondSum();
+    this.store.dispatch(new TestActions.getActivitiesSecondSum());
+    this.testSub = this.store.select('OnlineTest').subscribe(testState => {
+      this.activitiesTest = testState.solvedTests;
+      this.activitiesScoreSecond = testState.secondActivities;
+    });
+
+    this.activityPercentage = (this.activitiesScoreFirst/this.activitiesHomework.length + this.activitiesScoreSecond/this.activitiesTest.length) * 10;
+  }
+
+  ngOnDestroy() {
+    if(this.homeworkSub) this.homeworkSub.unsubscribe();
+    if(this.testSub) this.testSub.unsubscribe();
   }
 
 }

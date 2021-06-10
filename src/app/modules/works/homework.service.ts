@@ -1,55 +1,41 @@
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Homework } from './models/homework.model';
 import { SolvedHomework } from './models/solved-homework.model';
 import { SolvedTask } from './models/solved-task.model';
 import { Task } from './models/Task.model';
 
+import * as fromApp from '../../store/app.reducer';
+import * as HomeworkActions from './store-homework/homework.actions';
+
 @Injectable({
   providedIn: 'root'
 })
 export class HomeworkService {
-  homework: Homework;
-  answeredHomework: SolvedHomework[] = [
-    new SolvedHomework(
-      'lashaiakobadze@gmail.com',
-      1,
-      [
-        new SolvedTask(1, '2*2=4', '4', 2),
-        new SolvedTask(1, '2*2=4', '4', 2),
-        new SolvedTask(1, '2*2=4', '4', 2),
-        new SolvedTask(1, '2*2=4', '4', 2),
-        new SolvedTask(1, '2*2=4', '4', 0),
-      ]
-    )
-  ];
-  answeredTasks: SolvedTask[] = [];
+  currentHomework = new Homework(2, [
+    new Task("2 + 2 = ?", "2 + 2 = 4", "4"),
+    new Task("2 * 2 = ?", "2 * 2 = 4", "4"),
+    new Task("9 * 7 = ?", "9 * 7 = 63", "63"),
+    new Task("8 * 7 = ?", "8 * 7 = 56", "56"),
+    new Task("35 * 3 = ?", "35 * 3 = 105", "105"),
+  ]);
 
-  isTestEnterMode: boolean = false;
+  solvedHomework = new SolvedHomework(
+    'lashaiakobadze@gmail.com',
+    1,
+    [
+      new SolvedTask(1, '2*2=4', '4', 2),
+      new SolvedTask(1, '2*2=4', '4', 2),
+      new SolvedTask(1, '2*2=4', '4', 2),
+      new SolvedTask(1, '2*2=4', '4', 2),
+      new SolvedTask(1, '2*2=4', '4', 0),
+    ]
+  );
 
-  constructor() {
-    this.homework = new Homework(2, [
-      new Task("2 + 2 = ?", "2 + 2 = 4", "4"),
-      new Task("2 * 2 = ?", "2 * 2 = 4", "4"),
-      new Task("9 * 7 = ?", "9 * 7 = 63", "63"),
-      new Task("8 * 7 = ?", "8 * 7 = 56", "56"),
-      new Task("35 * 3 = ?", "35 * 3 = 105", "105"),
-    ]);
+  constructor(private store: Store<fromApp.AppState>) { }
+
+  getOldHomeworkState() {
+    this.store.dispatch(new HomeworkActions.AddAnsweredHomework(this.solvedHomework));
+    this.store.dispatch(new HomeworkActions.GetCurrentHomework(this.currentHomework))
   }
-
-  getAnsweredHomeworksSum() {
-    let sum = 0;
-    this.answeredHomework.forEach(homework => {
-      sum += homework.getScore;
-    })
-    return sum;
-  }
-
-  getAnsweredHomeworksPercentage() {
-    let averagePrec = 0;
-    this.answeredHomework.forEach(homework => {
-      averagePrec += homework.getPercentage;
-    })
-    return Math.round(averagePrec/this.answeredHomework.length);
-  }
-
 }

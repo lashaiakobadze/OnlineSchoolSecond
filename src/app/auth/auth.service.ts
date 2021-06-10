@@ -1,197 +1,64 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { throwError, BehaviorSubject, Observable } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-import { User } from './user.model';
-import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
-import { Registration } from './registration/registration.model';
+import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
+import { of } from 'rxjs';
 
-export interface AuthResponseData {
-  kind: string,
-  idToken: string;
-  email: string;
-  refreshToken: string;
-  expiresIn: string;
-  localId: string;
-  registered?: string;
-}
+import * as fromApp from '../store/app.reducer';
+import * as AuthActions from './store/auth.actions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  isLoading: boolean = false;
-  error: string = null;
-  authObs: Observable<AuthResponseData>;
-  private tokenExpirationTime: unknown;
-  user = new BehaviorSubject<User>(null);  // Use BehaviorSubject because we always have access to the last value.
-
+  private tokenExpirationTime: any;
 
   constructor(
-    private http: HttpClient , private router: Router) { }
+    private store: Store<fromApp.AppState>,
+    private translateService: TranslateService
+  ) { }
 
-
-  // Add users on base API and catch errors
-  signUp(email: string, password: string) {
-    return this.http.post<AuthResponseData>(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseAPIKey}`,
-      {
-        email: email,
-        password: password,
-        returnSecureToken: true
-      }
-    )
-    .pipe(
-      catchError(this.handleError),
-      tap(resData => {
-        this.handleAuthentication(
-          resData.email,
-          resData.localId,
-          resData.idToken,
-          +resData.expiresIn
-        );
-    }));
+  setLogoutTimer(expirationDuration: number) {
+    this.tokenExpirationTime = setTimeout(() => {
+      this.store.dispatch(new AuthActions.Logout());
+    }, expirationDuration);
   }
 
 
-  // Login users and catch errors
-  login(email: string, password: string) {
-    return this.http.post<AuthResponseData>(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseAPIKey}`,
-      {
-        email: email,
-        password: password,
-        returnSecureToken: true
-      }
-    )
-    .pipe(
-      catchError(this.handleError),
-      tap(resData => {
-        this.handleAuthentication(
-          resData.email,
-          resData.localId,
-          resData.idToken,
-          +resData.expiresIn
-        );
-    }));
-  }
-
-
-  // Auto login for refresh bugs
-  autoLogin() {
-    const userData: {
-      email: string;
-      id: string;
-      _token: string;
-      _tokenExpirationDate: string;
-    } = JSON.parse(localStorage.getItem('userData'));
-
-    if(!userData) {
-      return;
-    }
-
-    const loadedUser = new User(
-      userData.email,
-      userData.id,
-      userData._token,
-      new Date(userData._tokenExpirationDate)
-    );
-
-    if(loadedUser.token) {
-      this.user.next(loadedUser);
-      const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
-      this.autoLogout(expirationDuration);
+  clearLogoutTimer() {
+    if(this.tokenExpirationTime) {
+      clearTimeout(this.tokenExpirationTime);
+      this.tokenExpirationTime = null;
     }
   }
 
 
-  // Auto logout
-  autoLogout(expirationDuration: number) {
-    this.tokenExpirationTime = setTimeout( () => {
-      this.logout();
-    }, 1000*600) // expirationDuration // We can control auto logout time here in millisecond
-  }
-
-
-  // User logout and clear auto logout method
-  logout() {
-    this.user.next(null);
-    this.router.navigate(['/auth']);
-    localStorage.removeItem('userData');
-  }
-
-
-  // Storing the user data
-  private handleAuthentication(
-    email: string,
-    userId: string,
-    token: string,
-    expiresIn: number
-  ) {
-    const expirationDate = new Date(new Date().getTime() + +expiresIn * 1000);
-    const user = new User(email, userId, token, expirationDate);
-    this.user.next(user);
-    this.autoLogout(expiresIn * 1000);
-    localStorage.setItem('userData', JSON.stringify(user));
-  }
-
-
-  // Error catch Method
-  private handleError(errorRes: HttpErrorResponse) {
+  handleError = (errorRes: any) => {
     let errorMessage = 'An unknown occurred!';
 
     if(!errorRes.error || !errorRes.error.error) {
-      return throwError(errorMessage);
+      return of(new AuthActions.AuthenticateFail(errorMessage));
     }
 
     switch (errorRes.error.error.message) {
-      case 'EMAIL_EXISTS': errorMessage = 'The email address is already in use by another account.';
+      case 'EMAIL_EXISTS':
+        this.translateService.get('auth.emailExists').subscribe(msg => errorMessage = msg);
       break;
-      case 'OPERATION_NOT_ALLOWED': errorMessage = 'Password sign-in is disabled for this project.';
+      case 'OPERATION_NOT_ALLOWED':
+        this.translateService.get('auth.operationNotAllowed').subscribe(msg => errorMessage = msg);
       break;
-      case 'TOO_MANY_ATTEMPTS_TRY_LATER': errorMessage = 'We have blocked all requests from this device due to unusual activity. Try again later.';
-      case 'EMAIL_NOT_FOUND': errorMessage = 'There is no user record corresponding to this identifier. The user may have been deleted.';
+      case 'TOO_MANY_ATTEMPTS_TRY_LATER':
+        this.translateService.get('auth.tooManyAttemptsTryLater').subscribe(msg => errorMessage = msg);
+      case 'EMAIL_NOT_FOUND':
+        this.translateService.get('auth.emailNotFound').subscribe(msg => errorMessage = msg);
       break;
-      case 'INVALID_PASSWORD': errorMessage = 'The password is invalid or the user does not have a password.';
+      case 'INVALID_PASSWORD':
+        this.translateService.get('auth.invalidPassword').subscribe(msg => errorMessage = msg);
       break;
-      case 'USER_DISABLED': errorMessage = 'The user account has been disabled by an administrator.';
+      case 'USER_DISABLED':
+        this.translateService.get('auth.userDisabled').subscribe(msg => errorMessage = msg);
       break;
     }
-    // console.log(errorRes);
-    return throwError(errorMessage);
-  }
-
-
-  // Profiles registration methods
-  profiles: Registration[] = [];
-
-
-  fetchProfiles() {
-    return this.http
-    .get<Registration[]>(
-      'https://onlineschool-bee89-default-rtdb.firebaseio.com/profiles.json'
-    )
-    .pipe(
-      tap(
-        (profilesObj: Registration[]) => {
-          this.profiles = profilesObj;
-          this.profiles = this.getProfiles();
-      })
-    )
-  }
-
-
-  getProfiles() {
-    return this.profiles.slice();
-  }
-
-
-  addProfile(profiles: Registration[]) {
-    this.http.put<Registration[]>('https://onlineschool-bee89-default-rtdb.firebaseio.com/profiles.json', profiles)
-      .subscribe(resData => {
-        console.log(resData);
-      })
+    return of(new AuthActions.AuthenticateFail(errorMessage));
   }
 
 }

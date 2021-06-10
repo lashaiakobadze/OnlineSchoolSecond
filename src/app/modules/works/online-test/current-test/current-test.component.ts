@@ -1,45 +1,105 @@
-import { Component, OnInit } from '@angular/core';
-import { SolvedTest } from '../../models/solved-test.model';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map, tap } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
+
 import { Test } from '../../models/test.model';
-import { TestService } from '../../test.service';
+import { SolvedTest } from '../../models/solved-test.model';
+import { SolvedTestTask } from '../../models/solved-test-task.model';
+
+import * as fromApp from '../../../../store/app.reducer';
+import * as TestActions from '../../store-test/test.actions';
+
 
 @Component({
   selector: 'app-current-test',
   templateUrl: './current-test.component.html',
   styleUrls: ['./current-test.component.scss']
 })
-export class CurrentTestComponent implements OnInit {
+export class CurrentTestComponent implements OnInit, OnDestroy {
+  testMode: boolean;
   test: Test;
-  solvedTest: SolvedTest[] = [];
+  solvedTests: SolvedTest[] = [];
+  solvedTestTasks: SolvedTestTask[];
   disabledSuccess: boolean = false;
   errorSuccess: boolean = false;
   yourScore: number = null;
   maxScore: number = null;
+  active: number;
+  testIsWritten: number;
+
+  testSub: Subscription;
+  routerSub: Subscription;
 
   constructor(
-    public testService: TestService
+    private store: Store<fromApp.AppState>,
+    private router: Router,
+    private route: ActivatedRoute,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
-    this.test = this.testService.test;
-  }
+    this.routerSub = this.route.queryParams.pipe(
+      map(params => {
+        return params.isSolved
+      })
+    ).subscribe(status => {
+      this.active = +status;
+    });
+
+    this.testSub = this.store.select('OnlineTest').subscribe(testState => {
+      this.test = testState.test;
+      this.solvedTestTasks = testState.solvedTestTasks;
+      this.solvedTests = testState.solvedTests;
+      this.testMode = testState.isTestMode;
+      this.testIsWritten = testState.testIsWritten;
+    });
+  };
 
   endTest() {
     this.errorSuccess = true;
-    if(this.testService.solvedTestTasks.length === this.test.tests.length) {
+    if(this.solvedTestTasks.length === 0) return;
+    if(this.solvedTestTasks.length === this.test.tests.length) {
       this.disabledSuccess = true;
       this.errorSuccess = false;
-      this.testService.solvedTests.push(
+
+      this.store.dispatch(new TestActions.GetSolvedMode());
+
+      this.store.dispatch(new TestActions.AddAnsweredTest(
         new SolvedTest(
           'lashaiakobadze@gmail.com',
           this.test.TestNumber,
-          this.testService.solvedTestTasks
+          this.solvedTestTasks
         )
-      )
+      ));
     };
 
-    this.yourScore = this.testService.solvedTests[this.test.TestNumber - 1].getTestScore;
-    this.maxScore = this.testService.solvedTestTasks.length * 2;
-  }
+    this.yourScore = this.solvedTests[this.test.TestNumber - 1].getTestScore;
+    this.maxScore = this.solvedTestTasks.length * 2;
+  };
+
+  onNavigateBack() {
+    this.store.dispatch(new TestActions.GetTestMode());
+    this.router.navigate(['../'], { relativeTo: this.route });
+  };
+
+  canDeactivate(): boolean | Observable<boolean> | Promise<boolean> {
+    if (this.testIsWritten) {
+      return true;
+    }
+    let msg = '';
+    this.translateService.get('guardMsg').subscribe(msgs => msg = msgs);
+    return confirm(msg);
+  };
+
+  ngOnDestroy() {
+    if(this.routerSub) this.routerSub.unsubscribe();
+    if(this.testSub) this.testSub.unsubscribe();
+    if(this.solvedTestTasks.length !== this.test.tests.length) {
+      this.store.dispatch(new TestActions.ClearAnsweredTasks());
+    }
+  };
 
 }

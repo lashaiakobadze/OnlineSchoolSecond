@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { News } from '../news.model';
 
 
@@ -13,9 +12,7 @@ export class HomeBlogComponent implements OnInit {
   @Output() modalData = new EventEmitter<News>();
   @Output() isOpenModal: boolean;
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.isOpenModal = false;
@@ -23,7 +20,6 @@ export class HomeBlogComponent implements OnInit {
 
   onOpenModal() {
     this.isOpenModal = true;
-    this.router.navigate(['blog'], {relativeTo: this.route});
   }
 
   isCloseModal(isClose: boolean) {

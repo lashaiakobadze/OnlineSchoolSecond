@@ -1,25 +1,25 @@
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th scope="col">#Week</th>
-      <th scope="col">Activity</th>
-      <th scope="col">homework</th>
-      <th scope="col">Online test</th>
-      <th scope="col">Week sum</th>
+      <th scope="col">#{{'Week' | translate}}</th>
+      <th scope="col">{{'Activity' | translate}}</th>
+      <th scope="col">{{'Homework' | translate}}</th>
+      <th scope="col">{{'Online test' | translate}}</th>
+      <th scope="col">{{'Week sum' | translate}}</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let week of weeks; let i = index;">
+    <tr *ngFor="let week of weeksHomework; let i = index;">
       <th scope="row">{{ week?.homeworkNum }}</th>
-      <td>{{ week?.getActivityFirst + testService.solvedTests[i]?.getActivitySecond }}</td>
+      <td>{{ week?.getActivityFirst +  weeksTest[i]?.getActivitySecond}}</td>
       <td>{{ week?.getScore }}</td>
-      <td>{{ testService.solvedTests[i]?.getTestScore }}</td>
-      <td>{{ week?.getScore + (week?.getActivityFirst + testService.solvedTests[i]?.getActivitySecond) + testService.solvedTests[i]?.getTestScore }}</td>
+      <td>{{ weeksTest[i]?.getTestScore }}</td>
+      <td>{{ week?.getScore + (week?.getActivityFirst + weeksTest[i]?.getActivitySecond) + weeksTest[i]?.getTestScore }}</td>
     </tr>
   </tbody>
   <tfoot>
     <tr>
-      <th scope="col">sum</th>
+      <th scope="col">{{'Sum' | translate}}</th>
       <th scope="col">{{ activitiesSum }}</th>
       <th scope="col">{{ homeworksSum }}</th>
       <th scope="col">{{ testsSum }}</th>

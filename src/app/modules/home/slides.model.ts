@@ -9,10 +9,10 @@ export class Slide {
     src: string,
     alt: string,
     title: string
-    ) {
-      this.id = id;
-      this.src = src;
-      this.alt = alt;
-      this.title = title;
-    }
+  ) {
+    this.id = id;
+    this.src = src;
+    this.alt = alt;
+    this.title = title;
+  }
 }

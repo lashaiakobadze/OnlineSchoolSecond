@@ -1,24 +1,20 @@
 <div class="panel panel-default">
-  <div class="panel-heading">task: {{ curTestNum }}</div>
+  <div class="panel-heading">{{'onlineTest.test.testNumber' | translate}}: {{ curTestNum }}</div>
   <div class="panel-body">
     <p>{{ curTest.conditions }}</p>
   </div>
 
-  <form [formGroup]="testForm" (ngSubmit)="testSubmit()" >
+  <form [formGroup]="testForm">
 
     <div class="form-group list-group">
       <div class="list-group-item" *ngFor="let option of curTest.options">
-        <input type="radio" [value]="option" formControlName="option" (change)="changeGender($event)">
+        <input type="radio" [value]="option" formControlName="option">
         <label class="form-control" [for]="option">{{ option }}</label>
-      </div>
-
-      <div *ngIf="f.option.touched && f.option.invalid" class="alert alert-danger">
-        <div *ngIf="f.option.errors.required">Name is required.</div>
       </div>
     </div>
 
     <div class="form-group" [ngStyle]="{'display': showCorrectAnswer ? 'block' : 'none' }">
-      <button class="form-control answer">Correct answer: <span #answer>{{ curTest.answer }}</span> </button>
+      <button class="form-control answer">{{'onlineTest.test.corAnswer' | translate}}: <span #answer>{{ curTest.answer }}</span> </button>
     </div>
 
     <button
@@ -29,7 +25,7 @@
      type="submit"
      [disabled]="!testForm.valid"
      (click)="addTestTask()"
-     >Submit test</button>
+     >{{'onlineTest.test.btn' | translate}}</button>
   </form>
 </div>
 

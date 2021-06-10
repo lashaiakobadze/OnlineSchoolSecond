@@ -1,9 +1,9 @@
 <hr>
-<div class="panel panel-default" *ngIf="!testService.isTestMode">
+<div class="panel panel-default" *ngIf="!isTestMode">
   <!-- Default panel contents -->
-  <div class="panel-heading">Maximum score 10.</div>
+  <div class="panel-heading">{{'onlineTest.title' | translate}}</div>
   <div class="panel-body">
-    <p>The test consists of 5 tasks with 5 possible answers for each, 1 task is evaluated with 2 points.</p>
+    <p>{{'onlineTest.about' | translate}}</p>
   </div>
 
   <!-- Table -->
@@ -11,7 +11,7 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Test score</th>
+        <th scope="col">{{'onlineTest.testScore' | translate}}</th>
       </tr>
     </thead>
     <tbody *ngFor="let test of solvedTests">
@@ -22,8 +22,8 @@
     </tbody>
     <tfoot>
       <tr>
-        <th scope="col">sum</th>
-        <th scope="col">{{ this.testService.getSolvedTestsSum() }}</th>
+        <th scope="col">{{'onlineTest.sum' | translate}}</th>
+        <th scope="col">{{ testsSum }}</th>
       </tr>
     </tfoot>
   </table>
@@ -31,13 +31,13 @@
 
 <hr>
 
-<div class="progress" *ngIf="!testService.isTestMode">
-  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [style.width.%]="testService.getSolvedTestsPercentage()">
-    {{ testService.getSolvedTestsPercentage() }}%
+<div class="progress" *ngIf="!isTestMode">
+  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [style.width.%]="testsPercentage">
+    {{ testsPercentage }}%
   </div>
 </div>
 
 
-<button type="button" class="btn btn-primary" (click)="goToCurTest()" *ngIf="!testService.isTestMode">Go to test</button>
+<button type="button" class="btn btn-primary" (click)="goToCurTest()" *ngIf="!isTestMode">{{'onlineTest.btn' | translate}}</button>
 
-<router-outlet *ngIf="testService.isTestMode"></router-outlet>
+<router-outlet *ngIf="isTestMode"></router-outlet>

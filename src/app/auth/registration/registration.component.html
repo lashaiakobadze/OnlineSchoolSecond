@@ -1,11 +1,12 @@
 <div class="row">
   <div class="col-xs-12 col-md-6 col-md-offset-3">
-    <div *ngIf="authService.isLoading" class="spinner">
+    <div *ngIf="isLoading" class="spinner">
       <app-loading-spinner></app-loading-spinner>
     </div>
-    <form [formGroup]="registerForm" (ngSubmit)="onRegister()" *ngIf="!authService.isLoading">
+
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
       <div class="form-group">
-        <label for="firstName">First name</label>
+        <label for="firstName">{{'First name' | translate}}</label>
         <input
           type="text"
           class="form-control"
@@ -13,7 +14,7 @@
         />
       </div>
       <div class="form-group">
-        <label for="lastName">Last name</label>
+        <label for="lastName">{{'Last name' | translate}}</label>
         <input
           type="text"
           class="form-control"
@@ -21,7 +22,7 @@
         />
       </div>
       <div class="form-group">
-        <label for="personalNumber">Personal number</label>
+        <label for="personalNumber">{{'Personal ID number' | translate}}</label>
         <input
           type="text"
           class="form-control"
@@ -29,7 +30,7 @@
         />
       </div>
       <div class="form-group">
-        <label for="phone">Phone number</label>
+        <label for="phone">{{'Phone number' | translate}}</label>
         <input
           type="tel"
           class="form-control"
@@ -37,7 +38,7 @@
         />
       </div>
       <div class="form-group">
-        <label for="imgLink">Image link</label>
+        <label for="imgLink">{{'Image link' | translate}}</label>
         <input
           type="url"
           class="form-control"
@@ -45,7 +46,7 @@
         />
       </div>
       <div class="form-group">
-        <label for="sel1">Group:</label>
+        <label for="sel1">{{'Group' | translate}}</label>
         <select formControlName="group" class="form-control" id="sel1">
           <option>A</option>
           <option>B</option>
@@ -54,7 +55,7 @@
         </select>
       </div>
       <div class="form-group">
-        <label for="email">Email</label>
+        <label for="email">{{'Email' | translate}}</label>
         <input
           type="email"
           class="form-control"
@@ -74,7 +75,7 @@
          type="submit"
          class="btn btn-success"
          [disabled]="!registerForm.valid"
-         >Register</button>
+         >{{'Register' | translate}}</button>
       </div>
     </form>
   </div>

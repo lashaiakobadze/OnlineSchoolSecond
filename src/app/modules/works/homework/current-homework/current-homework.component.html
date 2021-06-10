@@ -1,29 +1,31 @@
-<label class="form-group">Homework #{{ curHomework.homeworkNumber }}</label>
 
-<app-tasks
- *ngFor="let task of curHomework.tasks; let i = index"
- [curHomework]="curHomework.homeworkNumber"
- [curTaskNumber] = 'i+1'
- [curTask]="task"
- [showCorrectAnswer]="disabledSuccess"
-></app-tasks>
+<span class="inActive" *ngIf="active">{{'homework.curHomework.status' | translate}}</span>
 
-<button
- *ngIf="!disabledSuccess"
- type="submit"
- class="btn btn-info"
- (click)="endHomework()"
->End of homework</button>
+<div *ngIf="!active">
+  <label class="form-group">{{'Homework' | translate}} #{{ curHomework.homeworkNumber }}</label>
+
+  <app-tasks
+  *ngFor="let task of curHomework.tasks; let i = index"
+  [curHomework]="curHomework.homeworkNumber"
+  [curTaskNumber] = 'i+1'
+  [curTask]="task"
+  [showCorrectAnswer]="disabledSuccess"
+  ></app-tasks>
+
+  <button
+  *ngIf="!disabledSuccess"
+  type="submit"
+  class="btn btn-success"
+  (click)="endHomework()"
+  >{{'homework.curHomework.btn' | translate}}</button>
 
 
-<span *ngIf="disabledSuccess"  class="success"> You got {{ yourScore }} points out of {{ maxScore }}.</span>
+  <span *ngIf="disabledSuccess"  class="success"> {{'assessment.first' | translate}} {{ yourScore }} {{'assessment.second' | translate}} {{ maxScore }} {{'assessment.third' | translate}}</span>
 
-<span *ngIf="errorSuccess" class="danger"> You have not completed all the assignments.</span>
-<!-- <button
- type="button"
- class="btn btn-primary"
- (click)="backHomework()"
- routerLink="/works/homework"
- >Go back to homework</button> -->
+  <span *ngIf="errorSuccess" class="danger">{{'homework.curHomework.errorMsg' | translate}}</span>
+</div>
 
- <!-- *ngIf="disabledSuccess" -->
+<button class="btn btn-info back" (click)="onNavigateBack()">{{'btnBack' | translate}}</button>
+
+
+

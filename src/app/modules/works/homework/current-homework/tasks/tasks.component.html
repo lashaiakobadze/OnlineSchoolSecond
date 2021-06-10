@@ -1,25 +1,25 @@
 <form [formGroup]="taskForm" (ngSubmit)="submitTask()">
   <div class="form-group">
-    <p>task {{ curTaskNumber }}</p>
+    <p>{{'homework.task.taskNumber' | translate}} {{ curTaskNumber }}</p>
     <p class="help-block">{{ curTask.conditions }}</p>
     <div class="form-group">
-      <label for="comment">Solve the task Enter here:</label>
+      <label for="comment">{{'homework.task.title' | translate}}:</label>
       <textarea
        formControlName='solve'
        class="form-control" rows="5"
-       placeholder="Write the solution of the task here"
+       placeholder="{{'homework.task.solutionPlaceholder' | translate}}"
        >{{ curTask.solve }}</textarea>
     </div>
     <div class="form-group answer">
-      <label for="comment">Final answer: </label>
+      <label for="comment">{{'homework.task.answer' | translate}}: </label>
       <input
        class="form-control"
-       placeholder="Write your answer here."
+       placeholder="{{'homework.task.answerPlaceholder' | translate}}"
        formControlName='answer'
        >
     </div>
     <div class="form-group answer correct-answer" [ngStyle]="{'display': showCorrectAnswer ? 'block' : 'none' }">
-      <label for="comment">Correct answer: </label>
+      <label for="comment">{{'homework.task.corAnswer' | translate}}: </label>
       <span class="form-control" style="border-color: rgba(5, 250, 5, 0.604);" #answer>{{ curTask.answer }}</span>
     </div>
   </div>
@@ -30,6 +30,6 @@
    class="btn"
    [ngClass]="{'btn-danger': !isAdded, 'btn-success': isAdded }"
    (click)="addTask()"
-  >Submit task</button>
+  >{{'homework.task.btn' | translate}}</button>
 </form>
 <hr>

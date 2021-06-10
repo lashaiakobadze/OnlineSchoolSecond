@@ -1,46 +1,46 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+
+import * as fromApp from '../../store/app.reducer';
+import * as AuthActions from '../store/auth.actions';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent implements OnInit, OnDestroy {
+  isLoading: boolean;
+  error: string = null;
 
-  constructor(
-    public authService: AuthService,
-    private router: Router,
-    private route: ActivatedRoute) { }
+  private signupSub: Subscription;
+
+  constructor(private store: Store<fromApp.AppState>) { }
 
   ngOnInit(): void {
+    this.signupSub = this.store.select('auth').subscribe(authState => {
+      this.isLoading = authState.loading;
+      this.error = authState.authError;
+    })
   }
 
-  // Sing up user on base API
+
   onSignUp(form: NgForm) {
     if (!form.valid) {
      return;
     }
-
     const email = form.value.email;
     const password = form.value.password;
-    this.authService.isLoading = true;
+    this.store.dispatch(new AuthActions.SignupStart({email: email, password: password}));
+  }
 
-    this.authService.authObs = this.authService.signUp(email, password);
 
-    this.authService.authObs.subscribe(
-      resData => {
-        // console.log(resData);
-        this.router.navigate(['../registration'], {relativeTo: this.route});
-        this.authService.isLoading = false;
-      },
-      errorMessage => {
-        this.authService.error = errorMessage;
-        this.authService.isLoading = false;
-      }
-    );
+  ngOnDestroy() {
+    if(this.signupSub) {
+      this.signupSub.unsubscribe();
+    }
   }
 
 }

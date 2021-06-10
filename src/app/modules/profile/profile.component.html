@@ -1,28 +1,32 @@
 <div class="profile">
-  <div class="profile_info">
-    <img [src]="userProfile?.imgLink" [alt]="userProfile?.firstName" class=" img-circle profile_info_img img-center" >
+  <!--  -->
+  <div class="spinner" *ngIf="isLoading">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+  <div class="profile_info" *ngIf="!isLoading">
+    <img [src]="userProfile?.imgLink" [alt]="userProfile?.firstName ?  userProfile?.firstName : 'User profile image'" class=" img-circle profile_info_img img-center" >
     <div class="profile_info_about">
-      <div class="student-name"><span>Name: </span>{{ userProfile?.firstName }} {{ userProfile?.lastName }}</div>
-      <div class="student-group"><span>Group: </span>{{ userProfile?.group }}</div>
-      <div class="student-mail"><span>Email: </span>{{ userProfile?.email }}</div>
-      <div class="student-rate"><span>Rate: </span>{{ averagePercentage }}%</div>
+      <div class="student-name"><span>{{'Name' | translate}}: </span>{{ userProfile?.firstName }} {{ userProfile?.lastName }}</div>
+      <div class="student-group"><span>{{'Group' | translate}}: </span>{{ userProfile?.group }}</div>
+      <div class="student-mail"><span>{{'Email' | translate}}: </span>{{ userProfile?.email }}</div>
+      <div class="student-rate"><span>{{'Rate' | translate}}: </span>{{ averagePercentage }}%</div>
     </div>
   </div>
   <hr>
   <!-- Progress bar -->
   <div class="progress">
     <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" [style.width.%]="activityPercentage">
-      <span class="sr-only"> Activity</span>
+      <span class="sr-only">{{'Activity' | translate}}</span>
     </div>
   </div>
   <div class="progress">
     <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" [style.width.%]="homeworkPercentage">
-      <span class="sr-only">Homework</span>
+      <span class="sr-only">{{'Homework' | translate}}</span>
     </div>
   </div>
   <div class="progress">
     <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [style.width.%]="testPercentage">
-      <span class="sr-only">test</span>
+      <span class="sr-only">{{'Online test' | translate}}</span>
     </div>
   </div>
   <!-- Table -->

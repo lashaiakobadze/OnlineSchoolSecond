@@ -8,24 +8,25 @@ import { OnlineTestComponent } from './online-test/online-test.component';
 import { CurrentHomeworkComponent } from './homework/current-homework/current-homework.component';
 import { CurrentTestComponent } from './online-test/current-test/current-test.component';
 import { AuthGuard } from 'src/app/auth/auth.guard';
+import { CanDeactivateGuardWorks } from './works.guard';
 
 const workRoutes: Routes = [
   {
-    path: 'works',
+    path: '',
     component: WorksComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', redirectTo: 'homework', pathMatch: 'full' },
+      { path: '', redirectTo: 'activity', pathMatch: 'full' },
       { path: 'activity', component: ActivityComponent },
       {
         path: 'homework',
         component: HomeworkComponent,
-        children: [ { path: 'currentHomework', component: CurrentHomeworkComponent } ]
+        children: [ { path: ':id', component: CurrentHomeworkComponent, canDeactivate: [CanDeactivateGuardWorks] } ]
       },
       {
         path: 'online-test',
         component: OnlineTestComponent,
-        children: [ { path: 'currentTest', component: CurrentTestComponent } ]
+        children: [ { path: ':id', component: CurrentTestComponent, canDeactivate: [CanDeactivateGuardWorks] } ]
       }
     ]
   }

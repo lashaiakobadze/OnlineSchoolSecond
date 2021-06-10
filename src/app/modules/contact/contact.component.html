@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <span>{{'contact.title' | translate}}</span>
+     <hr>
+      <form [formGroup]="contactForm" (ngSubmit)="messageSubmit()">
+      <div class="form-grupe">
+        <div class="form-group">
+          <label for="email">{{'Email' | translate}}:</label>
+            <input type="email"
+            formControlName="email"
+            class="form-control"
+            placeholder="{{'contact.email-msg' | translate}}"
+            >
+        </div>
+        <div class="form-group">
+          <label for="message">{{'Message' | translate}}:</label>
+          <textarea
+           formControlName='message'
+           class="form-control" rows="5"
+           placeholder="{{'contact.msg-msg' | translate}}"
+           ></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <button
+          type="submit"
+          class="btn btn-success"
+          [disabled]="!contactForm.valid"
+        >{{'contact.btn-msg' | translate}}</button>
+      </div>
+     </form>
+   </div>
+ </div>
+
+<div class="row">
+  <div  class="map-container col-xs-12 col-md-6 col-md-offset-3">
+    <iframe src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=tbilisi+(My%20Business%20Name)&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+  </div>
+</div>
+
+
+ <!--
+  -->

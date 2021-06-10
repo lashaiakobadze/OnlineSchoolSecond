@@ -1,9 +1,9 @@
 <hr>
 <div class="panel panel-default">
   <!-- Default panel contents -->
-  <div class="panel-heading">Maximum score 10.</div>
+  <div class="panel-heading">{{'activity.title' | translate}}</div>
   <div class="panel-body">
-    <p>An activity that includes 1 week of answering questions in class and challenging yourself. </p>
+    <p>{{'activity.about' | translate}}</p>
   </div>
 
   <!-- Table -->
@@ -11,22 +11,22 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">first part</th>
-        <th scope="col">second part</th>
-        <th scope="col">sum</th>
+        <th scope="col">{{'activity.firstScore' | translate}}</th>
+        <th scope="col">{{'activity.secondScore' | translate}}</th>
+        <th scope="col">{{'activity.sum' | translate}}</th>
       </tr>
     </thead>
-    <tbody *ngFor="let activity of activities; let i = index">
+    <tbody *ngFor="let activity of activitiesHomework; let i = index">
       <tr>
         <th scope="row">{{ activity?.homeworkNum }}</th>
         <td>{{ activity?.getActivityFirst }}</td>
-        <td>{{ testService.solvedTests[i]?.getActivitySecond }}</td>
-        <td>{{ activity?.getActivityFirst + testService.solvedTests[i]?.getActivitySecond }}</td>
+        <td>{{ activitiesTest[i]?.getActivitySecond }}</td>
+        <td>{{ activity?.getActivityFirst + activitiesTest[i]?.getActivitySecond }}</td>
       </tr>
     </tbody>
     <tfoot>
       <tr>
-        <th scope="col">sum</th>
+        <th scope="col">{{'activity.sum' | translate}}</th>
         <th scope="col">{{ activitiesScoreFirst }}</th>
         <th scope="col">{{ activitiesScoreSecond }}</th>
         <th scope="col">{{ activitiesScoreFirst + activitiesScoreSecond }}</th>

@@ -1,9 +1,12 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+
 import { SolvedTestTask } from '../../../models/solved-test-task.model';
-import { SolvedTest } from '../../../models/solved-test.model';
 import { TestTask } from '../../../models/test-task.model';
-import { TestService } from '../../../test.service';
+
+import * as fromApp from '../../../../../store/app.reducer';
+import * as TestActions from '../../../store-test/test.actions';
 
 @Component({
   selector: 'app-tests',
@@ -16,38 +19,25 @@ export class TestsComponent implements OnInit {
   @Input() showCorrectAnswer: boolean = false;
   @ViewChild('answer') answer: ElementRef;
 
-  isAdded: boolean = false; // for disabled button
+  isAdded: boolean = false;
 
-  constructor(public testService: TestService) { }
+  constructor(private store: Store<fromApp.AppState>) { }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
 
   testForm = new FormGroup({
     option: new FormControl('', Validators.required)
   });
 
-  get f(){
-    return this.testForm.controls;
-  }
-
-  testSubmit(){
-    console.log(this.testForm.value);
-  }
-
-  changeGender(e) {
-    console.log(e.target.value);
-  }
-
-  // static add task on tasks array for solvedHomework in service.
   addTestTask() {
     this.isAdded = true;
-    this.testService.solvedTestTasks.push(new SolvedTestTask(
-      this.curTestNum,
-      this.testForm.value.option,
-      this.testForm.value.option === this.answer.nativeElement.innerHTML ? 2 : 0),
-    )
-  }
+    this.store.dispatch(new TestActions.AddAnsweredTestTask(
+      new SolvedTestTask(
+        this.curTestNum,
+        this.testForm.value.option,
+        this.testForm.value.option === this.answer.nativeElement.innerHTML ? 2 : 0
+      ),
+    ));
+  };
 
 }

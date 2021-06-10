@@ -1,12 +1,12 @@
 <ul class="nav nav-tabs">
   <li role="presentation" routerLinkActive="active">
-    <a routerLink='activity'>Activity</a>
+    <a routerLink='activity'>{{'Activity' | translate}}</a>
   </li>
   <li role="presentation" routerLinkActive="active" (click)="onNavigateHomework()">
-    <a routerLink='homework'>Homework</a>
+    <a routerLink='homework'>{{'Homework' | translate}}</a>
   </li>
   <li role="presentation" routerLinkActive="active" (click)="onNavigateTest()">
-    <a routerLink='online-test'>Online-test</a>
+    <a routerLink='online-test'>{{'Online test' | translate}}</a>
   </li>
 </ul>
 <router-outlet></router-outlet>

@@ -1,60 +1,80 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/auth/auth.service';
 import { Registration } from 'src/app/auth/registration/registration.model';
-import { ActivityService } from '../works/activity.service';
-import { HomeworkService } from '../works/homework.service';
-import { TestService } from '../works/test.service';
+
+import * as fromApp from '../../store/app.reducer';
+import * as HomeworkActions from '../works/store-homework/homework.actions';
+import * as TestActions from '../works/store-test/test.actions';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit, OnDestroy {
+export class ProfileComponent {
   userProfiles: Registration[] = [];
   userEmail: string = '';
   userProfile: Registration;
+  isLoading: boolean;
 
-  profilesSub: Subscription;
+  authSub: Subscription;
+  registrationSub: Subscription;
+  homeworkSub: Subscription;
+  testSub: Subscription;
 
-  activityPercentage: number = 0;
-  homeworkPercentage: number = 0;
-  testPercentage: number = 0;
-  averagePercentage: number = 0;
+  activityPercentage: number = null;
+  homeworkPercentage: number = null;
+  testPercentage: number = null;
+  averagePercentage: number = null;
 
-  constructor(
-    public authService: AuthService,
-    public homeworkService: HomeworkService,
-    public testService: TestService,
-    public activityService: ActivityService
-  ) { }
+  activitiesHomework: number;
+  activitiesTest: number;
+  activitiesScoreFirst: number = null;
+  activitiesScoreSecond: number = null;
 
-  ngOnInit(): void {
-    this.authService.user
+  constructor(public store: Store<fromApp.AppState>) { }
+
+  ngOnInit() {
+    this.authSub = this.store.select('auth')
     .subscribe(data => {
       if(!data) return;
-      this.userEmail = data.email;
+      this.userEmail = data.user?.email;
     });
 
-    this.profilesSub = this.authService.fetchProfiles().subscribe();
-    this.userProfiles = this.authService.getProfiles();
+    this.registrationSub = this.store.select('registration')
+    .subscribe(userState => {
+      this.userProfiles = userState.users;
+      this.isLoading = userState.loading;
+    })
     this.userProfile = this.userProfiles.find(dataFromEmail => dataFromEmail.email === this.userEmail);
 
-    // try {
-    //   this.userProfile = this.userProfiles.find(dataFromEmail => dataFromEmail.email === this.userEmail);
-    // } catch {
-    //   if(!this.userProfile) console.error('data ar shemosula');
-    // }
-    if(this.homeworkService.answeredHomework.length === 0) return;
-    this.activityPercentage = this.activityService.getActivityPercentage();
-    this.homeworkPercentage = this.homeworkService.getAnsweredHomeworksPercentage();
-    this.testPercentage = this.testService.getSolvedTestsPercentage();
+    this.store.dispatch(new HomeworkActions.getActivitiesFirstSum());
+    this.store.dispatch(new HomeworkActions.getAnsweredHomeworksPercentage());
+    this.homeworkSub = this.store.select('homeWork').subscribe(homeworkState => {
+      this.homeworkPercentage = homeworkState.homeworksPercentage;
+      this.activitiesHomework = homeworkState.answeredHomeworks.length;
+      this.activitiesScoreFirst = homeworkState.firstActivities;
+    });
+
+    this.store.dispatch(new TestActions.getActivitiesSecondSum());
+    this.store.dispatch(new TestActions.getAnsweredTestsPercentage());
+    this.testSub = this.store.select('OnlineTest').subscribe(testState => {
+      this.testPercentage = testState.testsPercentage;
+      this.activitiesTest = testState.solvedTests.length;
+      this.activitiesScoreSecond = testState.secondActivities;
+    });
+
+    this.activityPercentage = (this.activitiesScoreFirst/this.activitiesHomework + this.activitiesScoreSecond/this.activitiesTest) * 10;
+
     this.averagePercentage = Math.round((this.homeworkPercentage + this.activityPercentage + this.testPercentage)/3);
   }
 
   ngOnDestroy() {
-    this.profilesSub.unsubscribe();
+    if(this.registrationSub) this.registrationSub.unsubscribe();
+    if(this.authSub) this.authSub.unsubscribe();
+    if(this.homeworkSub) this.homeworkSub.unsubscribe();
+    if(this.testSub) this.testSub.unsubscribe();
   }
 
 }

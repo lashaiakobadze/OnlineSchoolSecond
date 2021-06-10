@@ -1,14 +1,15 @@
 <div class="row">
   <div class="col-xs-12 col-md-6 col-md-offset-3">
-    <div class="alert alert-danger" *ngIf='authService.error'>
-      <p>{{ authService.error }}</p>
+    <div class="alert alert-danger" *ngIf='error'>
+      <p>{{ error }}</p>
     </div>
-    <div *ngIf="authService.isLoading" class="spinner">
+    <div *ngIf="isLoading" class="spinner">
       <app-loading-spinner></app-loading-spinner>
     </div>
-    <form #signUpForm="ngForm" (ngSubmit)="onSignUp(signUpForm)" *ngIf="!authService.isLoading">
+
+    <form #signUpForm="ngForm" (ngSubmit)="onSignUp(signUpForm)">
       <div class="form-group">
-        <label for="email">E-Mail</label>
+        <label for="email">{{'Email' | translate}}</label>
         <input
          type="email"
          class="form-control"
@@ -18,7 +19,7 @@
          required>
       </div>
       <div class="form-group">
-        <label for="password">Password</label>
+        <label for="password">{{'Password' | translate}}</label>
         <input
          type="password"
          id="password"
@@ -33,7 +34,7 @@
          type="submit"
          class="btn btn-primary"
          [disabled]="!signUpForm.valid"
-         >Sign up</button>
+         >{{'Sign Up' | translate}}</button>
       </div>
     </form>
   </div>

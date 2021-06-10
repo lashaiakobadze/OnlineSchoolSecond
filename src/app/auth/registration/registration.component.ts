@@ -1,48 +1,65 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { Observable, Subscription } from 'rxjs';
+import { CanComponentDeactivate } from './registration.guard';
+import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 import { Registration } from './registration.model';
+
+import * as fromApp from '../../store/app.reducer';
+import * as RegistrationActions from './store/registration.actions';
+import { TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss']
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit, CanComponentDeactivate, OnDestroy {
   registerForm: FormGroup;
   correctEmail: boolean = true;
   errorMessage: string = null;
+  isLoading: boolean;
   profiles: Registration[];
   profilesEmail: string;
   newRegistration: Registration;
+  validRegistration: boolean = false;
+
+  authSub: Subscription;
+  registrationSub: Subscription;
 
   constructor(
-    public authService: AuthService,
-    private router: Router,
-    ) { }
+    private store: Store<fromApp.AppState>,
+    private translateService: TranslateService
+  ) { }
 
-    ngOnInit(): void {
-      this.registerForm = new FormGroup({
-        'firstName': new FormControl(null, [Validators.required]),
-        'lastName': new FormControl(null, [Validators.required]),
-        'personalNumber': new FormControl(null, [Validators.required, Validators.minLength(11), Validators.maxLength(11)]),
-        'phone': new FormControl(null, [Validators.required]),
-        'imgLink': new FormControl(null, [Validators.required]),
-        'group': new FormControl(null, [Validators.required]),
-        'email': new FormControl(null, [Validators.required, Validators.email]),
-      });
+  ngOnInit(): void {
+    this.registerForm = new FormGroup({
+      'firstName': new FormControl(null, [Validators.required]),
+      'lastName': new FormControl(null, [Validators.required]),
+      'personalNumber': new FormControl(null, [Validators.required, Validators.minLength(11), Validators.maxLength(11)]),
+      'phone': new FormControl(null, [Validators.required]),
+      'imgLink': new FormControl(null, [Validators.required]),
+      'group': new FormControl(null, [Validators.required]),
+      'email': new FormControl(null, [Validators.required, Validators.email]),
+    });
 
+    this.store.dispatch(new RegistrationActions.FetchUsers());
 
-      this.authService.user
-      .subscribe(data => {
-        if(!data) return 'user is null';
-        this.profilesEmail = data.email;
-      });
+    this.authSub = this.store.select('auth')
+    .subscribe(data => {
+      if(!data) return 'user is null';
+      this.profilesEmail = data.user.email;
+      this.isLoading = data.loading;
+    });
 
-      this.authService.fetchProfiles().subscribe();
-      this.profiles = this.authService.getProfiles();
-    }
+    this.registrationSub = this.store.select('registration')
+    .pipe(map(usersState => usersState.users))
+    .subscribe(usersData => {
+      this.profiles = usersData;
+    })
+  }
 
 
   onRegister() {
@@ -56,13 +73,12 @@ export class RegistrationComponent implements OnInit {
       this.registerForm.value.email
     )
 
-    if(this.profilesEmail == this.registerForm.value.email) {
-      if( !this.profiles.find(profile => profile.email == this.registerForm.value.email) ) {
-        this.profiles.push(this.newRegistration);
-        this.authService.addProfile(this.profiles);
-        this.registerForm.reset();
+    if(this.profilesEmail === this.registerForm.value.email) {
+      if( !this.profiles.find(profile => profile.email === this.registerForm.value.email) ) {
+        this.store.dispatch(new RegistrationActions.AddUser(this.newRegistration));
         this.errorMessage = null;
-        this.router.navigate(['./home']);
+        this.validRegistration = true;
+        this.store.dispatch(new RegistrationActions.StoreUsers());
       } else {
         this.correctEmail = false;
         this.errorMessage = 'Registration with this email has already been done!';
@@ -73,5 +89,20 @@ export class RegistrationComponent implements OnInit {
     }
   }
 
+  canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
+    if(this.validRegistration) {
+      return true;
+    }
+    if(!this.validRegistration) {
+      let msg = '';
+      this.translateService.get('guardMsg').subscribe(msgs => msg = msgs);
+      return confirm(msg);
+    } else return;
+  }
+
+  ngOnDestroy() {
+    if(this.authSub) this.authSub.unsubscribe();
+    if(this.registrationSub) this.registrationSub.unsubscribe();
+  }
 
 }

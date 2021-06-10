@@ -1,4 +1,3 @@
-<!-- (initialized)="owlData($event)" -->
 <div class="slide">
   <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
   <owl-carousel-o [options]="owlOptions" *ngIf="!isLoading">
@@ -11,11 +10,10 @@
 </div>
 
 <div class="blog">
-  <div class="blog_header">Blog</div>
+  <div class="blog_header">{{'Blog' | translate }}</div>
   <div class="blog_items">
     <app-home-blog *ngFor="let newsObj of newsObjects" [news]="newsObj"></app-home-blog>
 
-    <!-- Paging -->
     <nav aria-label="Page navigation">
       <ul class="pagination">
         <li>

@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { News } from '../../news.model';
 
 @Component({
@@ -12,9 +11,7 @@ export class BlogComponent implements OnInit {
   @Input() isCloseModal: boolean;
   @Output() closeAlert: any = new EventEmitter<boolean>();
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.isCloseModal = false;
@@ -23,7 +20,6 @@ export class BlogComponent implements OnInit {
   onCloseAlert() {
     this.isCloseModal = true;
     this.closeAlert.emit(this.isCloseModal);
-    this.router.navigate(['./'], {relativeTo: this.route});
   }
 
 }

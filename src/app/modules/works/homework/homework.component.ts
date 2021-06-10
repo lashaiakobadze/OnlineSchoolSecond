@@ -1,33 +1,68 @@
-import { Component, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { HomeworkService } from '../homework.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+
 import { SolvedHomework } from '../models/solved-homework.model';
+import { Homework } from '../models/homework.model';
+
+import * as fromApp from '../../../store/app.reducer';
+import * as HomeworkActions from '../store-homework/homework.actions';
+
 
 @Component({
   selector: 'app-homework',
   templateUrl: './homework.component.html',
   styleUrls: ['./homework.component.scss']
 })
-export class HomeworkComponent implements OnInit {
-  percentage: number = 0;
+export class HomeworkComponent implements OnInit, OnDestroy {
+  homeworksPercentage: number;
+  homeworksSum: number;
   solvedHomeworks: SolvedHomework[] = [];
+  isHomeworkEnterMode: boolean;
+  curHomework: Homework;
+  homeworkIsWritten: number;
+
+  homeworkSub: Subscription;
+  routerSub: Subscription;
 
   constructor(
-    public homeworkService: HomeworkService,
-    private router: Router,
-    private route: ActivatedRoute) { }
+    private store: Store<fromApp.AppState>,
+    private route: ActivatedRoute,
+  ) { }
 
-  goToCurHomework() {
-    this.router.navigate(['currentHomework'], {relativeTo: this.route});
-    this.homeworkService.isTestEnterMode = true;
-  }
 
   ngOnInit(): void {
-    this.solvedHomeworks = this.homeworkService.answeredHomework;
-    this.homeworkService.isTestEnterMode = false;
+    this.routerSub = this.route.queryParams.pipe(
+      map(params => {
+        return params;
+      })
+    ).subscribe(status => {
+      if(status.isWritten) {
+        this.store.dispatch(new HomeworkActions.GetHomeworkMode());      }
+    });
 
-    if(this.homeworkService.answeredHomework.length === 0) return;
-    this.percentage = this.homeworkService.answeredHomework[0].getPercentage;
+    this.store.dispatch(new HomeworkActions.getAnsweredHomeworksPercentage());
+    this.store.dispatch(new HomeworkActions.getAnsweredHomeworksSum());
+    this.homeworkSub = this.store.select('homeWork').subscribe(homeState => {
+      this.solvedHomeworks = homeState.answeredHomeworks;
+      this.homeworksPercentage = homeState.homeworksPercentage;
+      this.homeworksSum = homeState.homeworksSum;
+      this.curHomework = homeState.homework;
+      this.homeworkIsWritten = homeState.homeworkIsWritten;
+      this.isHomeworkEnterMode = homeState.isHomeworkMode;
+    });
+  };
+
+
+  goToCurHomework() {
+    this.store.dispatch(new HomeworkActions.GoToHomework({ homeworkNumber: this.curHomework.homeworkNumber , homeworkIsWritten: this.homeworkIsWritten }))
+  }
+
+  ngOnDestroy() {
+    if(this.routerSub) this.routerSub.unsubscribe();
+    if(this.homeworkSub) this.homeworkSub.unsubscribe();
   }
 
 }

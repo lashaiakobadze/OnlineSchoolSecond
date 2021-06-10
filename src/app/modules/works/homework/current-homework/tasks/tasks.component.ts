@@ -1,8 +1,11 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { HomeworkService } from '../../../homework.service';
+import { Store } from '@ngrx/store';
 import { SolvedTask } from '../../../models/solved-task.model';
 import { Task } from '../../../models/Task.model';
+
+import * as fromApp from '../../../../../store/app.reducer';
+import * as HomeworkActions from '../../../store-homework/homework.actions';
 
 @Component({
   selector: 'app-tasks',
@@ -12,15 +15,15 @@ import { Task } from '../../../models/Task.model';
 export class TasksComponent implements OnInit {
   @Input() curHomework: number;
   @Input() curTask: Task;
-  @Input() curTaskNumber;
+  @Input() curTaskNumber: number;
   @Input() showCorrectAnswer: boolean;
   @ViewChild('answer') answer: ElementRef;
 
-  isAdded: boolean = false; // for disabled button
+  isAdded: boolean = false;
 
   taskForm: FormGroup;
 
-  constructor(private homeworkService: HomeworkService) { }
+  constructor(private store: Store<fromApp.AppState>) { }
 
   ngOnInit(): void {
     this.taskForm = new FormGroup({
@@ -30,20 +33,21 @@ export class TasksComponent implements OnInit {
   }
 
 
-  // Maybe use for put
   submitTask() {
     console.log(this.taskForm);
   }
 
-  // static add task on tasks array for solvedHomework in service.
+
   addTask() {
     this.isAdded = true;
-    this.homeworkService.answeredTasks.push(new SolvedTask(
-      this.curTaskNumber,
-      this.taskForm.value.solve,
-      this.taskForm.value.answer,
-      this.taskForm.value.answer === this.answer.nativeElement.innerHTML ? 2 : 0),
-    )
+    this.store.dispatch(new HomeworkActions.AddAnsweredTask(
+      new SolvedTask(
+        this.curTaskNumber,
+        this.taskForm.value.solve,
+        this.taskForm.value.answer,
+        this.taskForm.value.answer === this.answer.nativeElement.innerHTML ? 2 : 0
+      )
+    ));
   }
 
 }

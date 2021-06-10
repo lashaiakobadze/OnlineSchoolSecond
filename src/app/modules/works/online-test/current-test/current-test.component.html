@@ -1,20 +1,27 @@
-<label class="form-group">Test #{{ test.TestNumber }}</label>
-<span class="about-test">You have 30 minutes and 1 chance.</span>
 
-<app-tests
- *ngFor="let tes of test.tests; let i = index"
- [curTest]="tes"
- [curTestNum]='i+1'
- [showCorrectAnswer]="disabledSuccess"
-></app-tests>
+<span class="inActive" *ngIf="active">{{'onlineTest.curTest.status' | translate}}</span>
 
-<button
- *ngIf="!disabledSuccess"
- type="submit"
- class="btn btn-info"
- (click)="endTest()"
->End of test</button>
+<div *ngIf="!active">
+  <label class="form-group">{{'onlineTest.curTest.onlineTestNumber' | translate}} #{{ test.TestNumber }}</label>
+  <span class="about-test">{{'onlineTest.curTest.about' | translate}}</span>
 
-<span *ngIf="disabledSuccess" class="success"> You got {{ yourScore }} points out of {{ maxScore }}.</span>
+  <app-tests
+  *ngFor="let tes of test.tests; let i = index"
+  [curTest]="tes"
+  [curTestNum]='i+1'
+  [showCorrectAnswer]="disabledSuccess"
+  ></app-tests>
 
-<span *ngIf="errorSuccess" class="danger"> You have not completed all the assignments.</span>
+  <button
+  *ngIf="!disabledSuccess"
+  type="submit"
+  class="btn btn-success"
+  (click)="endTest()"
+  >{{'onlineTest.curTest.btn' | translate}}</button>
+
+  <span *ngIf="disabledSuccess" class="success">{{'assessment.first' | translate}} {{ yourScore }} {{'assessment.second' | translate}} {{ maxScore }} {{'assessment.third' | translate}}</span>
+
+  <span *ngIf="errorSuccess" class="danger">{{'onlineTest.curTest.errorMsg' | translate}}</span>
+</div>
+
+<button class="btn btn-info back" (click)="onNavigateBack()">{{'btnBack' | translate}}</button>

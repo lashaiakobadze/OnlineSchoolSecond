@@ -1,31 +1,55 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivityService } from '../../works/activity.service';
-import { HomeworkService } from '../../works/homework.service';
-import { TestService } from '../../works/test.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+
+import { SolvedHomework } from '../../works/models/solved-homework.model';
+import { SolvedTest } from '../../works/models/solved-test.model';
+
+import * as fromApp from '../../../store/app.reducer';
+import * as HomeworkActions from '../../works/store-homework/homework.actions';
+
 
 @Component({
   selector: 'app-profile-details',
   templateUrl: './profile-details.component.html',
   styleUrls: ['./profile-details.component.scss']
 })
-export class ProfileDetailsComponent implements OnInit {
-  weeks: unknown = [];
+export class ProfileDetailsComponent implements OnInit, OnDestroy {
+  weeksHomework: SolvedHomework[] = [];
+  weeksTest: SolvedTest[] = [];
+  activitiesFirst: number;
+  activitiesSecond: number;
   activitiesSum: number = 0;
   homeworksSum: number = 0;
   testsSum: number = 0;
 
-  constructor(
-    public homeworkService: HomeworkService,
-    public testService: TestService,
-    public activityService: ActivityService
-  ) { }
+  homeworkSub: Subscription;
+  testSub: Subscription;
+
+  constructor(private store: Store<fromApp.AppState>) { }
 
   ngOnInit(): void {
-    if(this.homeworkService.answeredHomework.length == 0) return;
-    this.weeks = this.homeworkService.answeredHomework;
-    this.homeworksSum = this.homeworkService.getAnsweredHomeworksSum();
-    this.activitiesSum = this.activityService.getActivitiesFirstSum() + this.activityService.getActivitiesSecondSum();
-    this.testsSum = this.testService.getSolvedTestsSum();
+    this.store.dispatch(new HomeworkActions.getAnsweredHomeworksSum());
+    this.store.dispatch(new HomeworkActions.getActivitiesFirstSum());
+
+    this.homeworkSub = this.store.select('homeWork').subscribe(homeworkState => {
+      this.weeksHomework = homeworkState.answeredHomeworks;
+      this.homeworksSum = homeworkState.homeworksSum;
+      this.activitiesFirst = homeworkState.firstActivities;
+    });
+
+    this.testSub = this.store.select('OnlineTest').subscribe(testState => {
+      this.weeksTest = testState.solvedTests;
+      this.testsSum = testState.testsSum;
+      this.activitiesSecond = testState.secondActivities;
+    });
+
+    this.activitiesSum = this.activitiesFirst + this.activitiesSecond;
+  }
+
+  ngOnDestroy() {
+    if(this.testSub) this.testSub.unsubscribe();
+    if(this.homeworkSub) this.homeworkSub.unsubscribe();
   }
 
 }
