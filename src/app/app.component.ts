@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
     private translateService: TranslateService,
     private homeworkService: HomeworkService,
     private testService: TestService
-    ) {
+  ) {
     this.translateService.setDefaultLang('en');
     const lang = localStorage.getItem('lang') || 'en';
     this.translateService.use(lang);

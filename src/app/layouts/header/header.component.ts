@@ -4,8 +4,8 @@ import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
-import * as fromApp from '../store/app.reducer';
-import * as AuthActions from '../auth/store/auth.actions';
+import * as fromApp from '../../store/app.reducer';
+import * as AuthActions from '../../auth/store/auth.actions';
 
 @Component({
   selector: 'app-header',
