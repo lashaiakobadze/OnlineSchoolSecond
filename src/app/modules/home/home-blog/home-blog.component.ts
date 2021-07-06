@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { News } from '../news.model';
+import { News } from '../../../shared/modules/home/news.model';
 
 
 @Component({
@@ -25,4 +25,5 @@ export class HomeBlogComponent implements OnInit {
   isCloseModal(isClose: boolean) {
     this.isOpenModal = !isClose;
   }
+
 }

@@ -4,16 +4,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
-import { AlertComponent } from './alert/alert.component';
-import { PlaceholderDirective } from './placeholder/placeholder.directive';
-import { DropdownDirective } from './dropdown/dropdown.directive';
+
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { AlertComponent } from './components/alert/alert.component';
+import { PlaceholderDirective } from './directives/placeholder/placeholder.directive';
+import { DropdownDirective } from './directives/dropdown/dropdown.directive';
+import { ImageUploadComponent } from './components/image-upload/image-upload.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 
 @NgModule({
   declarations: [
     LoadingSpinnerComponent,
+    LoaderComponent,
     AlertComponent,
+    ImageUploadComponent,
     PlaceholderDirective,
     DropdownDirective
   ],
@@ -30,6 +35,8 @@ import { DropdownDirective } from './dropdown/dropdown.directive';
     ReactiveFormsModule,
     LoadingSpinnerComponent,
     AlertComponent,
+    ImageUploadComponent,
+    LoaderComponent,
     PlaceholderDirective,
     DropdownDirective,
     HttpClientModule,

@@ -1,4 +1,4 @@
-import { Contact } from "../contact.model";
+import { Contact } from "../../../shared/modules/contact/contact.model";
 import * as ContactActions from './contact.actions';
 
 export interface State {

@@ -1,10 +1,11 @@
-import { Homework } from "../models/homework.model";
-import { SolvedHomework } from "../models/solved-homework.model";
-import { SolvedTask } from "../models/solved-task.model";
+import { Homework } from "../../../shared/modules/works/models/homework.model";
+import { SolvedHomework } from "../../../shared/modules/works/models/solved-homework.model";
+import { SolvedTask } from "../../../shared/modules/works/models/solved-task.model";
 
 import * as HomeworkActions from './homework.actions';
 
 export interface State {
+  homeworks: Homework[];
   homework: Homework;
   answeredHomeworks: SolvedHomework[];
   answeredTasks: SolvedTask[];
@@ -16,6 +17,7 @@ export interface State {
 };
 
 const initialState: State = {
+  homeworks: [],
   homework: null,
   answeredHomeworks: [],
   answeredTasks: [],
@@ -26,23 +28,29 @@ const initialState: State = {
   isHomeworkMode: false
 };
 
+
 export function homeworkReducer(state = initialState, action: HomeworkActions.HomeworkActions) {
   switch(action.type) {
+    case HomeworkActions.GET_HOMEWORKS:
+      return {
+        ...state,
+        homeworks: [...action.payload]
+      };
     case HomeworkActions.GET_CURRENT_HOMEWORK:
       return {
         ...state,
         homework: {...action.payload}
-      }
+      };
     case HomeworkActions.GET_SOLVED_HOMEWORK:
       return {
         ...state,
         answeredHomeworks: [...action.payload]
-      }
+      };
     case HomeworkActions.ADD_ANSWERED_TASK:
       return {
         ...state,
         answeredTasks: [...state.answeredTasks, action.payload],
-      }
+      };
     case HomeworkActions.ADD_ANSWERED_HOMEWORK:
       return {
         ...state,

@@ -1,11 +1,15 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { SolvedTask } from '../../../models/solved-task.model';
-import { Task } from '../../../models/Task.model';
+
+
+import { SolvedTask } from '../../../../../shared/modules/works/models/solved-task.model';
+import { Task } from '../../../../../shared/modules/works/models/Task.model';
+import { AppValidators } from 'src/app/shared/validators/app-validators';
 
 import * as fromApp from '../../../../../store/app.reducer';
 import * as HomeworkActions from '../../../store-homework/homework.actions';
+
 
 @Component({
   selector: 'app-tasks',
@@ -26,10 +30,7 @@ export class TasksComponent implements OnInit {
   constructor(private store: Store<fromApp.AppState>) { }
 
   ngOnInit(): void {
-    this.taskForm = new FormGroup({
-      'solve': new FormControl(''),
-      'answer': new FormControl('')
-    })
+    this.initForm();
   }
 
 
@@ -48,6 +49,21 @@ export class TasksComponent implements OnInit {
         this.taskForm.value.answer === this.answer.nativeElement.innerHTML ? 2 : 0
       )
     ));
+  }
+
+  errors(controlName: string | (string | number)[]) {
+    return Object.values(this.get(controlName).errors);
+  }
+
+  get(controlName: string | (string | number)[]): AbstractControl {
+    return this.taskForm.get(controlName);
+  }
+
+  initForm(): void {
+    this.taskForm = new FormGroup({
+      'solve': new FormControl('', [AppValidators.required]),
+      'answer': new FormControl('', [AppValidators.required])
+    })
   }
 
 }

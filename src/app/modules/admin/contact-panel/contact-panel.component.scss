@@ -1,0 +1,24 @@
+.contacts {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+
+  .user-contacts, .visitor-contacts {
+    width: 48%;
+
+    h2 {
+      text-align: center;
+    }
+  }
+
+  .vl {
+    border-left: 6px solid #ddd;
+    border-radius: 50%;
+  }
+}
+
+hr {
+  margin-top: 10px;
+}
+

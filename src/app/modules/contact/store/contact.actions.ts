@@ -1,5 +1,5 @@
 import { Action } from "@ngrx/store";
-import { Contact } from "../contact.model";
+import { Contact } from "../../../shared/modules/contact/contact.model";
 
 export const SEND_CONTACT = '[Contact] Send Contact';
 export const FETCH_CONTACTS = '[Contact] Fetch Contacts';

@@ -10,4 +10,12 @@
 
 .footer_copy, .footer_contact {
   cursor: pointer;
+  color: #777;
+
+  &:hover {
+    color: black;
+    transition: color .5s;
+  }
 }
+
+

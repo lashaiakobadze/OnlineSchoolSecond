@@ -1,0 +1,12 @@
+<hr>
+<div class="contacts">
+  <div class="user-contacts">
+    <h2 class="contacts-title">{{'User Contacts' | translate}}</h2>
+    <app-user-contact *ngFor="let contact of userContacts" [contact]="contact"></app-user-contact>
+  </div>
+  <div class="vl"></div>
+  <div class="visitor-contacts">
+    <h2 class="contacts-title">{{'Visitor Contacts' | translate}}</h2>
+    <app-visitor-contact *ngFor="let contact of visitorContacts" [contact]="contact"></app-visitor-contact>
+  </div>
+</div>

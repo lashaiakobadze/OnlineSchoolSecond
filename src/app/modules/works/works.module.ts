@@ -14,6 +14,7 @@ import { CurrentHomeworkComponent } from './homework/current-homework/current-ho
 import { CurrentTestComponent } from './online-test/current-test/current-test.component';
 import { TasksComponent } from './homework/current-homework/tasks/tasks.component';
 import { TestsComponent } from './online-test/current-test/tests/tests.component';
+import { LessonComponent } from './lesson/lesson.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { TestsComponent } from './online-test/current-test/tests/tests.component
     CurrentHomeworkComponent,
     CurrentTestComponent,
     TasksComponent,
-    TestsComponent
+    TestsComponent,
+    LessonComponent
   ],
   imports: [
     CommonModule,

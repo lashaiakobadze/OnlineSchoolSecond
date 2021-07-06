@@ -1,7 +1,10 @@
 import { Action } from "@ngrx/store";
-import { Homework } from "../models/homework.model";
-import { SolvedHomework } from "../models/solved-homework.model";
-import { SolvedTask } from "../models/solved-task.model";
+import { Homework } from "../../../shared/modules/works/models/homework.model";
+import { SolvedHomework } from "../../../shared/modules/works/models/solved-homework.model";
+import { SolvedTask } from "../../../shared/modules/works/models/solved-task.model";
+
+export const FETCH_HOMEWORKS = '[Homework] Fetch Homeworks';
+export const GET_HOMEWORKS = '[Homework] Get Homeworks';
 
 export const GO_TO_HOMEWORK = '[Homework] Go To Homework';
 export const ADD_ANSWERED_TASK = '[Homework] Add Answered Task';
@@ -17,10 +20,15 @@ export const GET_SOLVED_HOMEWORK = '[Homework] Get Solved Homework';
 export const FETCH_SOLVED_HOMEWORK = '[Homework] Fetch Solved Homework';
 export const GET_CURRENT_HOMEWORK = '[Homework] Get Current Homework';
 
-export class GetCurrentHomework implements Action {
-  readonly type = GET_CURRENT_HOMEWORK;
 
-  constructor(public payload: Homework) {}
+export class FetchHomeworks implements Action {
+  readonly type = FETCH_HOMEWORKS;
+}
+
+export class GetHomeworks implements Action {
+  readonly type = GET_HOMEWORKS;
+
+  constructor(public payload: Homework[]) {}
 }
 
 export class GetSolvedHomework implements Action {
@@ -31,6 +39,12 @@ export class GetSolvedHomework implements Action {
 
 export class FetchSolvedHomework implements Action {
   readonly type = FETCH_SOLVED_HOMEWORK;
+}
+
+export class GetCurrentHomework implements Action {
+  readonly type = GET_CURRENT_HOMEWORK;
+
+  constructor(public payload: Homework) {}
 }
 
 export class GoToHomework implements Action {
@@ -80,6 +94,8 @@ export class ClearAnsweredTasks implements Action {
 }
 
 export type HomeworkActions =
+  | FetchHomeworks
+  | GetHomeworks
   | GetCurrentHomework
   | FetchSolvedHomework
   | GetSolvedHomework

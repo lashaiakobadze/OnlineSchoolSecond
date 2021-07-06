@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AppPreloadingService } from './app-preloading.service';
-import { ContactComponent } from './modules/contact/contact.component';
+
+
+import { AppPreloadingService } from './core/app-preloading.service';
 import { ErrorPageComponent } from './layouts/error-page/error-page.component';
 
 
@@ -21,8 +22,17 @@ const appRoutes: Routes = [
     path: 'profile',
     loadChildren: () => import('./modules/profile/profile.module').then(m => m.ProfileModule),
     data: { preload: true },
-   },
-  { path: 'contact', component: ContactComponent },
+  },
+  {
+    path: 'contact',
+    loadChildren: () => import('./modules/contact/contact.module').then(m => m.ContactModule),
+    data: { preload: true },
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),
+    data: { preload: true },
+  },
   { path: 'not-found', component: ErrorPageComponent, data: { message: 'Page not found!' } },
   { path: '**', redirectTo: '/not-found' },
 ];

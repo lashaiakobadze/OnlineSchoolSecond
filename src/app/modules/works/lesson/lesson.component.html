@@ -1,0 +1,19 @@
+<hr>
+<div class="schedule">
+  <div class="schedule_item"><strong>Online Test - </strong>{{ 'Friday' }}: <b>19:00</b>  -  <b>20:00</b>.</div>
+  <div class="schedule_item"><strong>Homework first - </strong>{{ 'Wednesday' }}: from <b>18:00</b>  to  -  {{ 'Saturday' }} <b>21:00</b>.</div>
+  <div class="schedule_item"><strong>Homework second - </strong>{{ 'Sunday' }}: from <b>18:00</b>  to  -  {{ 'Tuesday' }} <b>21:00</b>.</div>
+  <div class="schedule_item"><strong>Lesson first - </strong>{{ 'Wednesday' }}: from <b>14:00</b>  to  - <b>17:00</b>.</div>
+  <div class="schedule_item"><strong>Lesson second - </strong>{{ 'Sunday' }}: from <b>13:00 </b>  to  - <b> 16:00</b>.</div>
+</div>
+<hr>
+<div class="lesson">
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="goToCurLesson()"
+  >
+    <a [href]="LessonLink" target="_blank">{{'Go to online lesson' | translate}}</a>
+  </button>
+</div>
+

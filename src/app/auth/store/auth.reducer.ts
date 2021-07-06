@@ -5,13 +5,11 @@ import * as Authentications from './auth.actions';
 export interface State {
   user: User;
   authError: string;
-  loading: boolean;
 }
 
 const initialState: State = {
   user: null,
   authError: null,
-  loading: false,
 };
 
 export function authReducer(state = initialState, action: Authentications.AuthActions) {
@@ -27,7 +25,7 @@ export function authReducer(state = initialState, action: Authentications.AuthAc
           ...state,
           user: CurUser,
           authError: null,
-          loading: false
+          // loading: false
         }
     case Authentications.LOGOUT:
       return {
@@ -38,20 +36,20 @@ export function authReducer(state = initialState, action: Authentications.AuthAc
       return {
         ...state,
         authError: null,
-        loading: true
+        // loading: true
       };
     case Authentications.SIGNUP_START:
       return {
         ...state,
         authError: null,
-        loading: true
+        // loading: true
       };
     case Authentications.AUTHENTICATE_FAIL:
       return {
         ...state,
         user: null,
         authError: action.payload,
-        loading: false
+        // loading: false
       }
     case Authentications.CLEAR_ERROR:
       return {

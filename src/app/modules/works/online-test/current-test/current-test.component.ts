@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 
-import { Test } from '../../models/test.model';
-import { SolvedTest } from '../../models/solved-test.model';
-import { SolvedTestTask } from '../../models/solved-test-task.model';
+import { Test } from '../../../../shared/modules/works/models/test.model';
+import { SolvedTest } from '../../../../shared/modules/works/models/solved-test.model';
+import { SolvedTestTask } from '../../../../shared/modules/works/models/solved-test-task.model';
 
 import * as fromApp from '../../../../store/app.reducer';
 import * as TestActions from '../../store-test/test.actions';
@@ -48,6 +48,9 @@ export class CurrentTestComponent implements OnInit, OnDestroy {
     ).subscribe(status => {
       this.active = +status;
     });
+
+
+    this.store.dispatch(new TestActions.FetchTests());
 
     this.testSub = this.store.select('OnlineTest').subscribe(testState => {
       this.test = testState.test;

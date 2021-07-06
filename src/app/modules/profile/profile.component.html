@@ -1,10 +1,43 @@
-<div class="profile">
-  <!--  -->
-  <div class="spinner" *ngIf="isLoading">
-    <app-loading-spinner></app-loading-spinner>
+<div *ngIf="!userProfile" class="profile-empty">
+  <p>Your profile is empty, please fill out the profile.</p>
+  <div class="form-group">
+    <button
+      routerLink='/auth/registration'
+      class="btn btn-info"
+    >{{'Complete profile' | translate}}</button>
   </div>
-  <div class="profile_info" *ngIf="!isLoading">
-    <img [src]="userProfile?.imgLink" [alt]="userProfile?.firstName ?  userProfile?.firstName : 'User profile image'" class=" img-circle profile_info_img img-center" >
+</div>
+
+<div class="profile" *ngIf="userProfile">
+  <div class="profile_info">
+    <img
+      *ngIf="img.src"
+      [src]="img.src"
+      [alt]="userProfile?.firstName ?  userProfile?.firstName : 'User profile image'"
+      class="img-circle profile_info_img img-center"
+    >
+    <label *ngIf="!img.src">
+      <div *ngIf="!selectedFile" class="container-upload">
+        <img
+          src="assets/Pupil-avatar.png"
+          class="img-circle profile_info_img img-center upload-img"
+        >
+        <div class="middle">
+          <div class="text">upload</div>
+        </div>
+      </div>
+      <input
+        #imageInput
+        type="file"
+        accept="*.png.jpg"
+        (change)="processFile(imageInput)"
+      >
+      <img
+        *ngIf="selectedFile"
+        class="img-circle profile_info_img img-center"
+        [ngStyle]="{'background-image': 'url('+ selectedFile.src + ')'}"
+      >
+    </label>
     <div class="profile_info_about">
       <div class="student-name"><span>{{'Name' | translate}}: </span>{{ userProfile?.firstName }} {{ userProfile?.lastName }}</div>
       <div class="student-group"><span>{{'Group' | translate}}: </span>{{ userProfile?.group }}</div>
@@ -31,7 +64,7 @@
   </div>
   <!-- Table -->
   <div class="profile_details">
-    <!-- <div class="subject-title">Subjects</div> -->
     <app-profile-details></app-profile-details>
   </div>
 </div>
+

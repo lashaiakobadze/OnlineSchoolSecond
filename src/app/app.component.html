@@ -9,5 +9,11 @@
 </div>
 </div>
 <app-footer></app-footer>
+<app-alert
+  *ngIf="errorService.errorMessage"
+  [message]="errorService.errorMessage"
+  (closeAlert)="errorService.errorMessage = null"
+></app-alert>
+<app-loader></app-loader>
 
 

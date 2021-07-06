@@ -5,9 +5,9 @@ import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 
-import { Homework } from '../../models/homework.model';
-import { SolvedHomework } from '../../models/solved-homework.model';
-import { SolvedTask } from '../../models/solved-task.model';
+import { Homework } from '../../../../shared/modules/works/models/homework.model';
+import { SolvedHomework } from '../../../../shared/modules/works/models/solved-homework.model';
+import { SolvedTask } from '../../../../shared/modules/works/models/solved-task.model';
 
 import * as fromApp from '../../../../store/app.reducer';
 import * as HomeworkActions from '../../store-homework/homework.actions';
@@ -49,6 +49,8 @@ export class CurrentHomeworkComponent implements OnInit, OnDestroy {
       this.active = +status;
     });
 
+    this.store.dispatch(new HomeworkActions.FetchHomeworks());
+
     this.homeworkSub = this.store.select('homeWork').subscribe(homeworkState => {
       this.curHomework = homeworkState.homework;
       this.answeredTasks = homeworkState.answeredTasks;
@@ -73,6 +75,7 @@ export class CurrentHomeworkComponent implements OnInit, OnDestroy {
           this.curHomework.homeworkNumber,
           this.answeredTasks)
       ));
+
     };
 
     this.yourScore = this.answeredHomeworks[this.curHomework.homeworkNumber - 1]?.getScore;

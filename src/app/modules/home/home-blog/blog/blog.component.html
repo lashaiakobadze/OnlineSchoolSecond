@@ -4,6 +4,7 @@
     <div class="blog-item_title">{{ blogNews.title }}</div>
     <img class="blog-item_img" [src]="blogNews.imgPath" alt="news-post">
     <p class="blog-item_info">{{ blogNews.info }}</p>
+    <span>{{ blogNews.date }}</span>
     <div class="blog-box-actions">
       <button class="btn btn-danger" (click)="onCloseAlert()">{{'Close' | translate }}</button>
     </div>

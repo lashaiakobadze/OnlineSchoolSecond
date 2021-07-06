@@ -5,23 +5,22 @@
   <label class="form-group">{{'Homework' | translate}} #{{ curHomework.homeworkNumber }}</label>
 
   <app-tasks
-  *ngFor="let task of curHomework.tasks; let i = index"
-  [curHomework]="curHomework.homeworkNumber"
-  [curTaskNumber] = 'i+1'
-  [curTask]="task"
-  [showCorrectAnswer]="disabledSuccess"
+    *ngFor="let task of curHomework.tasks; let i = index"
+    [curHomework]="curHomework.homeworkNumber"
+    [curTaskNumber] = 'i+1'
+    [curTask]="task"
+    [showCorrectAnswer]="disabledSuccess"
   ></app-tasks>
 
   <button
-  *ngIf="!disabledSuccess"
-  type="submit"
-  class="btn btn-success"
-  (click)="endHomework()"
+    *ngIf="!disabledSuccess"
+    type="submit"
+    class="btn btn-success"
+    (click)="endHomework()"
   >{{'homework.curHomework.btn' | translate}}</button>
 
 
   <span *ngIf="disabledSuccess"  class="success"> {{'assessment.first' | translate}} {{ yourScore }} {{'assessment.second' | translate}} {{ maxScore }} {{'assessment.third' | translate}}</span>
-
   <span *ngIf="errorSuccess" class="danger">{{'homework.curHomework.errorMsg' | translate}}</span>
 </div>
 

@@ -1,0 +1,102 @@
+<hr>
+<h2>Creation and add new homework</h2>
+<form [formGroup]="homeworkForm" class="form-group">
+  <label for="homeworkNumber">Homework number</label>
+  <input
+    type="number"
+    name="homeworkNumber"
+    formControlName="homeworkNumber"
+    class="form-control homework-number"
+    placeholder="№"
+  />
+  <p class="required" *ngIf="get('homeworkNumber').invalid && get('homeworkNumber').touched">
+    <ng-container *ngFor="let errorMessage of errors('homeworkNumber')">
+      <span *ngIf="errorMessage !== true">{{ errorMessage }}</span>
+    </ng-container>
+  </p>
+  <div formArrayName="tasks"
+    *ngFor="let item of homeworkForm.get('tasks')['controls']; let i = index;"
+  >
+    <div [formGroupName]="i" class="form-group">
+      <label for="Task">Task: {{ i + 1 }}</label>
+      <div class="form-group">
+        <textarea
+          name="conditions"
+          formControlName="conditions"
+          placeholder="Task description"
+          class="form-control"
+        ></textarea>
+      </div>
+
+      <div class="form-group solve">
+        <textarea
+          name="solve"
+          formControlName="solve"
+          placeholder="Task solve"
+          class="form-control"
+        ></textarea>
+      </div>
+
+      <div class="form-group answer">
+        <input
+          formControlName="answer"
+          placeholder="Task answer"
+          class="form-control"
+        />
+      </div>
+    </div>
+    <div class="form-group delete">
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="deleteTaskGroup(i)"
+      >Delete - {{ i + 1 }} task</button>
+    </div>
+  </div>
+</form>
+<div class="form-group add">
+  <button
+    type="button"
+    class="btn btn-success"
+    (click)="addTask()"
+  >New task</button>
+</div>
+
+<pre>
+  {{ homeworkForm.value | json }}
+</pre>
+
+<div class="form-group">
+  <button
+    type="button"
+    class="btn btn-success"
+    [disabled]="!homeworkForm.valid"
+    (click)="onSubmitHomework()"
+  >Add Created homework</button>
+</div>
+
+<hr>
+<form [formGroup]="curHomeworkForm" class="form-group">
+  <h2>Choose current homework</h2>
+  <label for="curHomeworkNumber">Current homework number</label>
+  <input
+    type="number"
+    name="curHomeworkNumber"
+    formControlName="curHomeworkNumber"
+    class="form-control homework-number"
+    placeholder="№"
+  />
+  <p class="required" *ngIf="get('curHomeworkNumber').invalid && get('curHomeworkNumber').touched">
+    <ng-container *ngFor="let errorMessage of errors('curHomeworkNumber')">
+      <span *ngIf="errorMessage !== true">{{ errorMessage }}</span>
+    </ng-container>
+  </p>
+  <div class="form-group">
+    <button
+      type="button"
+      class="btn btn-success"
+      [disabled]="!curHomeworkForm.valid"
+      (click)="onSubmitCurHomework()"
+    >Submit current homework</button>
+  </div>
+</form>

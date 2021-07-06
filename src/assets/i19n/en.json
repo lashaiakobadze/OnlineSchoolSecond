@@ -1,0 +1,90 @@
+{
+  "contact": {
+    "title": "If you have any questions, You can write to us and the administration will reply to you in the near future.",
+    "btn-msg": "Send your message",
+    "email-msg": "Write your email",
+    "msg-msg": "Write your message here"
+  },
+  "activity": {
+    "title": "Maximum score 10.",
+    "about": "An activity that includes 1 week of answering questions in class and challenging yourself.",
+    "firstScore": "first part",
+    "secondScore": "second part",
+    "sum": "sum"
+  },
+  "homework": {
+    "title": "Maximum score 10.",
+    "about": "Assess homework challenges, a total of 5 challenges are each assessed with 2 point.",
+    "homeworkScore": "Homework score",
+    "sum": "sum",
+    "btn": "Go to current homework",
+    "curHomework": {
+      "status": "You have been written this homework in this week. Wait for the next homework ✌✌✌.",
+      "btn": "End of homework",
+      "errorMsg": "You have not completed all the homework assignments."
+    },
+    "task": {
+      "taskNumber": "task",
+      "title": "Solve the task Enter here",
+      "answer": "Final answer",
+      "corAnswer": "Correct answer",
+      "solutionPlaceholder": "Write the solution of the task here",
+      "answerPlaceholder": "Write your answer here",
+      "btn": "Submit task"
+    }
+  },
+  "onlineTest": {
+    "title": "Maximum score 10.",
+    "about": "The test consists of 5 tasks with 5 possible answers for each, 1 task is evaluated with 2 points.",
+    "testScore": "Test score",
+    "sum": "sum",
+    "btn": "Go to current test",
+    "curTest": {
+      "status": "You have been solved this test in this week. Wait for the next test. 👏👏👏",
+      "onlineTestNumber": "Online test",
+      "about": "You have 30 minutes and 1 chance.",
+      "btn": "End of test",
+      "errorMsg": "You have not completed all the test assignments."
+    },
+    "test": {
+      "testNumber": "test",
+      "corAnswer": "Correct answer",
+      "btn": "Submit test"
+    }
+  },
+  "admin" : {
+    "blog": {
+      "title": "Blog panel"
+    },
+    "contact": {
+      "title": "Contact panel"
+    },
+    "homework": {
+      "title": "Homework panel"
+    },
+    "test": {
+      "title": "Online test panel"
+    }
+  },
+  "assessment" : {
+    "first": "You got",
+    "second": "points out of",
+    "third": "."
+  },
+  "btnBack": "Go to back",
+  "Authenticate": "Authenticate",
+  "Contact": "Contact",
+  "Works": "Works",
+  "Profile": "Profile",
+  "Home": "Home",
+  "Online School": "Online School",
+  "guardMsg": "If you leave before saving, your changes will be lost!",
+  "auth": {
+    "emailExists": "The email address is already in use by another account.",
+    "operationNotAllowed": "Password sign-in is disabled for this project.",
+    "tooManyAttemptsTryLater": "We have blocked all requests from this device due to unusual activity. Try again later.",
+    "emailNotFound": "There is no user record corresponding to this identifier. The user may have been deleted.",
+    "invalidPassword": "The password is invalid or the user does not have a password.",
+    "userDisabled": "The user account has been disabled by an administrator."
+  }
+}

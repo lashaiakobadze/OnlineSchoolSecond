@@ -5,18 +5,28 @@
     <div class="form-group">
       <label for="comment">{{'homework.task.title' | translate}}:</label>
       <textarea
-       formControlName='solve'
-       class="form-control" rows="5"
-       placeholder="{{'homework.task.solutionPlaceholder' | translate}}"
-       >{{ curTask.solve }}</textarea>
+        formControlName='solve'
+        class="form-control" rows="5"
+        placeholder="{{'homework.task.solutionPlaceholder' | translate}}"
+      >{{ curTask.solve }}</textarea>
+      <p class="required" *ngIf="get('solve').invalid && get('solve').touched">
+        <ng-container *ngFor="let errorMessage of errors('solve')">
+          <span *ngIf="errorMessage !== true">{{ errorMessage }}</span>
+        </ng-container>
+      </p>
     </div>
     <div class="form-group answer">
       <label for="comment">{{'homework.task.answer' | translate}}: </label>
       <input
-       class="form-control"
-       placeholder="{{'homework.task.answerPlaceholder' | translate}}"
-       formControlName='answer'
-       >
+        class="form-control"
+        placeholder="{{'homework.task.answerPlaceholder' | translate}}"
+        formControlName='answer'
+      >
+      <p class="required" *ngIf="get('answer').invalid && get('answer').touched">
+        <ng-container *ngFor="let errorMessage of errors('answer')">
+          <span *ngIf="errorMessage !== true">{{ errorMessage }}</span>
+        </ng-container>
+      </p>
     </div>
     <div class="form-group answer correct-answer" [ngStyle]="{'display': showCorrectAnswer ? 'block' : 'none' }">
       <label for="comment">{{'homework.task.corAnswer' | translate}}: </label>
@@ -24,12 +34,12 @@
     </div>
   </div>
   <button
-   *ngIf="!showCorrectAnswer"
-   [disabled]="isAdded"
-   type="button"
-   class="btn"
-   [ngClass]="{'btn-danger': !isAdded, 'btn-success': isAdded }"
-   (click)="addTask()"
+    *ngIf="!showCorrectAnswer"
+    [disabled]="isAdded || !taskForm.valid"
+    type="button"
+    class="btn"
+    [ngClass]="{'btn-danger': !isAdded, 'btn-success': isAdded }"
+    (click)="addTask()"
   >{{'homework.task.btn' | translate}}</button>
 </form>
 <hr>

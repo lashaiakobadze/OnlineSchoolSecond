@@ -1,0 +1,30 @@
+
+.blog {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+
+  &:hover {
+    background-color: #ddd;
+    transition: background-color .5s;
+  }
+
+  &__title, &__option, &__info, &__img {
+    margin: 10px 0;
+  }
+
+  &__option {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+
+    img:hover {
+      background-color: gray;
+      border-radius: 50%;
+      transition: background-color,border-radius .5s;
+    }
+  }
+}

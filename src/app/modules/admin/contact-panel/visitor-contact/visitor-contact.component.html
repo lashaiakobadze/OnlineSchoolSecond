@@ -1,0 +1,29 @@
+<div class="contacts__item">
+  <div class="contact">
+    <div class="contact-item contact__title"><b>Email:</b> {{ contact.email }}</div>
+    <div class="contact-item contact__message"><b>Message:</b>
+      <p>{{ contact.message }}</p>
+    </div>
+    <div class="contact-item contact__title"><b>User ID:</b> {{ contact.uId }}</div>
+    <form [formGroup]="answerForm">
+      <div class="form-group">
+        <label for="message" class="contact-item">{{'Message' | translate}}:</label>
+        <textarea
+          formControlName='message'
+          class="form-control contact-item" rows="5"
+          placeholder="{{'contact.msg-msg' | translate}}"
+        ></textarea>
+        <p class="required contact-item" *ngIf="get('message').invalid && get('message').touched">
+          <ng-container *ngFor="let errorMessage of errors('message')">
+            <span *ngIf="errorMessage !== true">{{ errorMessage }}</span>
+          </ng-container>
+        </p>
+      </div>
+      <button
+        class="btn btn-primary contact-item"
+        [disabled]="!answerForm.valid"
+        (click)="onAnswerVisitor(contact.email)"
+      >Send</button>
+    </form>
+  </div>
+</div>

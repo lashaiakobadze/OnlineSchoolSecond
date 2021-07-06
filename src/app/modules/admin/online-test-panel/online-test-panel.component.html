@@ -1,0 +1,125 @@
+<hr>
+<h2>Test Creation and Add</h2>
+<form class="form-group" [formGroup]="testForm">
+  <label for="testNumber">Homework number</label>
+  <input
+    type="number"
+    name="testNumber"
+    formControlName="testNumber"
+    class="form-control test-number"
+    placeholder="№"
+  />
+  <p class="required" *ngIf="get('testNumber').invalid && get('testNumber').touched">
+    <ng-container *ngFor="let errorMessage of errors('testNumber')">
+      <span *ngIf="errorMessage !== true">{{ errorMessage }}</span>
+    </ng-container>
+  </p>
+
+  <div class="form-group" formArrayName="tasks">
+    <div *ngFor="let group of tasksArray.controls; let i = index;" [formGroupName]="i">
+      <label for="Task">Task: {{ i + 1 }}</label>
+      <div class="form-group">
+        <textarea
+          type="text"
+          name="conditions"
+          formControlName="conditions"
+          placeholder="Task description"
+          class="form-control"
+        ></textarea>
+      </div>
+
+      <div class="form-group answer">
+        <textarea
+          type="text"
+          name="answer"
+          formControlName="answer"
+          placeholder="Task answer"
+          class="form-control"
+        ></textarea>
+      </div>
+
+      <div formArrayName='options'>
+        <div
+          *ngFor="let subgroup of group['controls'].options.controls;
+          let idx = index;"
+          [formGroupName]="idx"
+        >
+          <div class="form-group option">
+            <input
+              placeholder="test option"
+              formControlName="option"
+              class="form-control"
+            />
+          </div>
+        </div>
+        <div class="form-group add">
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="deleteOption(i)"
+          >Delete Option</button>
+        </div>
+        <div class="form-group add">
+          <button
+            type="button"
+            class="btn btn-success"
+            (click)="addOption(i)"
+          >Add Option</button>
+        </div>
+      </div>
+      <div class="form-group delete">
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="deleteTask(i)"
+        >Delete - {{ i + 1 }} task</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <button
+        type="button"
+        class="btn btn-success"
+        (click)="addTasks()"
+      >Add more tasks</button>
+    </div>
+  </div>
+</form>
+
+<pre>
+  {{ testForm.value | json }}
+</pre>
+
+<div class="form-group">
+  <button
+    type="button"
+    class="btn btn-success"
+    [disabled]="!testForm.valid"
+    (click)="onSubmitTest()"
+  >Add Created Test</button>
+</div>
+
+<hr>
+<form [formGroup]="curTestForm" class="form-group">
+  <h2>Choose current Test</h2>
+  <label for="curTestNumber">Current Test number</label>
+  <input
+    type="number"
+    name="curTestNumber"
+    formControlName="curTestNumber"
+    class="form-control test-number"
+    placeholder="№"
+  />
+  <p class="required" *ngIf="get('curTestNumber').invalid && get('curTestNumber').touched">
+    <ng-container *ngFor="let errorMessage of errors('curTestNumber')">
+      <span *ngIf="errorMessage !== true">{{ errorMessage }}</span>
+    </ng-container>
+  </p>
+  <div class="form-group">
+    <button
+      type="button"
+      class="btn btn-success"
+      [disabled]="!curTestForm.valid"
+      (click)="onSubmitCurTest()"
+    >Submit current Test</button>
+  </div>
+</form>

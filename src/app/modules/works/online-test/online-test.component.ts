@@ -4,8 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
-import { Test } from '../models/test.model';
-import { SolvedTest } from '../models/solved-test.model';
+import { Test } from '../../../shared/modules/works/models/test.model';
+import { SolvedTest } from '../../../shared/modules/works/models/solved-test.model';
 
 import * as fromApp from '../../../store/app.reducer';
 import * as TestActions from '../store-test/test.actions';

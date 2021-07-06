@@ -1,7 +1,10 @@
 import { Action } from "@ngrx/store";
-import { SolvedTestTask } from "../models/solved-test-task.model";
-import { SolvedTest } from "../models/solved-test.model";
-import { Test } from "../models/test.model";
+import { SolvedTestTask } from "../../../shared/modules/works/models/solved-test-task.model";
+import { SolvedTest } from "../../../shared/modules/works/models/solved-test.model";
+import { Test } from "../../../shared/modules/works/models/test.model";
+
+export const FETCH_TESTS = '[Test] Fetch Tests';
+export const GET_TESTS = '[Test] Get Tests';
 
 export const GET_CURRENT_ONLINE_TEST = '[TEST] Get Current Online test';
 export const GET_SOLVED_TESTS = '[TEST] Get Solved Tests';
@@ -14,12 +17,29 @@ export const GET_ACTIVITIES_SECOND_SUM = '[TEST] Get Activities Second Sum';
 export const GET_TEST_MODE = '[TEST] Get Test mode';
 export const GET_TEST_MODE_BACK = '[TEST] Get Test mode Back';
 export const GO_TO_TEST = '[TEST] Go To Test';
-export const CLEAR_ANSWERED_TASKS = '[Homework] Clear Answered Tasks';
+export const CLEAR_ANSWERED_TASKS = '[TEST] Clear Answered Tasks';
 
+export const GET_SOLVED_TEST = '[TEST] Get Solved Test';
+export const FETCH_SOLVED_TEST = '[TEST] Fetch Solved Test';
+
+
+export class FetchTests implements Action {
+  readonly type = FETCH_TESTS;
+}
+
+export class GetTests implements Action {
+  readonly type = GET_TESTS;
+
+  constructor(public payload: Test[]) {}
+}
 export class GetCurrentOnlineTest implements Action {
   readonly type = GET_CURRENT_ONLINE_TEST;
 
   constructor(public payload: Test) {}
+}
+
+export class FetchSolvedTest implements Action {
+  readonly type = FETCH_SOLVED_TEST;
 }
 
 export class GetSolvedTests implements Action {
@@ -74,7 +94,9 @@ export class ClearAnsweredTasks implements Action {
   readonly type = CLEAR_ANSWERED_TASKS;
 }
 
+
 export type TestActions =
+  | GetTests
   | GetCurrentOnlineTest
   | GetSolvedTests
   | AddAnsweredTestTask

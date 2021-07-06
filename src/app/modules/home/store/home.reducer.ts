@@ -1,4 +1,4 @@
-import { News } from "../news.model";
+import { News } from "../../../shared/modules/home/news.model";
 import { Slide } from "../slides.model";
 import * as HomeActions from './home.actions';
 

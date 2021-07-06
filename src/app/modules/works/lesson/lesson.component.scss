@@ -1,0 +1,20 @@
+@import '../../../../scss/mixins';
+
+.schedule {
+  @include flexColumn(flex-start, flex-start);
+
+  .schedule_item {
+    margin: 10px 0;
+  }
+}
+
+.lesson {
+  @include flexCenter;
+  margin: 50px;
+
+  a {
+    color: #fff;
+  }
+}
+
+

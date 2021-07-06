@@ -1,8 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, VERSION } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Subscription } from 'rxjs';
-import { News } from './news.model';
+
+
+import { News } from '../../shared/modules/home/news.model';
 import { Slide } from './slides.model';
 
 import * as fromApp from '../../store/app.reducer';
@@ -19,9 +21,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   slideObjects: Slide[] = [];
   newsObjects: News[] = [];
   homeSub: Subscription;
+  public filterData = null;
 
-  constructor(private stor: Store<fromApp.AppState>,
-    ) { }
+  constructor(
+    private stor: Store<fromApp.AppState>
+  ) { }
 
   ngOnInit() {
     this.stor.dispatch(new HomeActions.FetchSlides());
@@ -32,7 +36,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.isLoading = homeState.loading;
       this.slideObjects = homeState.slides;
       this.newsObjects = homeState.news;
-    })
+    });
   };
 
 
@@ -65,6 +69,28 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     },
     nav: false
+  }
+
+  // pagination
+  name = 'Angular ' + VERSION.major;
+  startIndex = 0;
+  endIndex = 2;
+
+  getArrayLength(length){
+    return new Array(length/2);
+  }
+
+  getIndex(pageIndex){
+    this.startIndex = pageIndex * 2;
+   this.endIndex = this.startIndex + 2;
+  }
+
+  prevIndex(length){
+    this.startIndex = length * 0;
+  }
+
+  nextIndex(endIndex){
+    this.endIndex++;
   }
 
 }

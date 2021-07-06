@@ -2,8 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
-import { SolvedHomework } from '../../works/models/solved-homework.model';
-import { SolvedTest } from '../../works/models/solved-test.model';
+
+import { SolvedHomework } from '../../../shared/modules/works/models/solved-homework.model';
+import { SolvedTest } from '../../../shared/modules/works/models/solved-test.model';
 
 import * as fromApp from '../../../store/app.reducer';
 import * as HomeworkActions from '../../works/store-homework/homework.actions';
@@ -48,8 +49,8 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if(this.testSub) this.testSub.unsubscribe();
-    if(this.homeworkSub) this.homeworkSub.unsubscribe();
+    this.testSub?.unsubscribe();
+    this.homeworkSub?.unsubscribe();
   }
 
 }

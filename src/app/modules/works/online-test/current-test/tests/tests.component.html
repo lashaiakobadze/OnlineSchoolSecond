@@ -5,7 +5,6 @@
   </div>
 
   <form [formGroup]="testForm">
-
     <div class="form-group list-group">
       <div class="list-group-item" *ngFor="let option of curTest.options">
         <input type="radio" [value]="option" formControlName="option">
@@ -18,14 +17,14 @@
     </div>
 
     <button
-     *ngIf="!showCorrectAnswer"
-     [disabled]="isAdded"
-     class="btn"
-     [ngClass]="{'btn-danger': !isAdded, 'btn-success': isAdded }"
-     type="submit"
-     [disabled]="!testForm.valid"
-     (click)="addTestTask()"
-     >{{'onlineTest.test.btn' | translate}}</button>
+      *ngIf="!showCorrectAnswer"
+      [disabled]="isAdded || !testForm.valid"
+      class="btn"
+      [ngClass]="{'btn-danger': !isAdded, 'btn-success': isAdded }"
+      type="submit"
+      [disabled]="!testForm.valid"
+      (click)="addTestTask()"
+    >{{'onlineTest.test.btn' | translate}}</button>
   </form>
 </div>
 

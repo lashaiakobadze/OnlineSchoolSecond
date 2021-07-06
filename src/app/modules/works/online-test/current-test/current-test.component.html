@@ -6,21 +6,20 @@
   <span class="about-test">{{'onlineTest.curTest.about' | translate}}</span>
 
   <app-tests
-  *ngFor="let tes of test.tests; let i = index"
-  [curTest]="tes"
-  [curTestNum]='i+1'
-  [showCorrectAnswer]="disabledSuccess"
+    *ngFor="let tes of test.tests; let i = index"
+    [curTest]="tes"
+    [curTestNum]='i+1'
+    [showCorrectAnswer]="disabledSuccess"
   ></app-tests>
 
   <button
-  *ngIf="!disabledSuccess"
-  type="submit"
-  class="btn btn-success"
-  (click)="endTest()"
+    *ngIf="!disabledSuccess"
+    type="submit"
+    class="btn btn-success"
+    (click)="endTest()"
   >{{'onlineTest.curTest.btn' | translate}}</button>
 
   <span *ngIf="disabledSuccess" class="success">{{'assessment.first' | translate}} {{ yourScore }} {{'assessment.second' | translate}} {{ maxScore }} {{'assessment.third' | translate}}</span>
-
   <span *ngIf="errorSuccess" class="danger">{{'onlineTest.curTest.errorMsg' | translate}}</span>
 </div>
 

@@ -1,10 +1,11 @@
 import { Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { AlertComponent } from 'src/app/shared/alert/alert.component';
-import { PlaceholderDirective } from 'src/app/shared/placeholder/placeholder.directive';
+import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
+import { PlaceholderDirective } from 'src/app/shared/directives/placeholder/placeholder.directive';
 
+import { AppValidators } from '../../shared/validators/app-validators';
 import * as fromApp from '../../store/app.reducer';
 import * as AuthActions from '../store/auth.actions';
 
@@ -14,7 +15,7 @@ import * as AuthActions from '../store/auth.actions';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  isLoading: boolean;
+  loginForm: FormGroup;
   error: string = null;
   @ViewChild(PlaceholderDirective, { static: false}) alertHost: PlaceholderDirective;
 
@@ -27,23 +28,24 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.initForm();
+
     this.authSub =  this.store.select('auth').subscribe(authState => {
-      this.isLoading = authState.loading;
       this.error = authState.authError;
-      if(this.error) {
+      if (this.error) {
         this.showErrorAlert(this.error);
       }
     });
   }
 
 
-  onLogin(form: NgForm) {
-    if (!form.valid) {
+  onLogin() {
+    if (!this.loginForm.valid) {
      return;
     }
 
-    const email = form.value.email;
-    const password = form.value.password;
+    const email = this.loginForm.value.email;
+    const password = this.loginForm.value.password;
     this.store.dispatch(
       new AuthActions.LoginStart({email: email, password: password})
     );
@@ -51,8 +53,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 
   // Method for create dynamic DOM elements
-  private showErrorAlert(message: string) {
-    // const alertCmp = new AlertComponent(); // This method don't work for angular
+  private showErrorAlert(message: string): void {
     const alertCmpFactory = this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
     const hostViewContainerRef = this.alertHost.viewContainerRef;
     hostViewContainerRef.clear();
@@ -67,15 +68,33 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
+  errors(controlName: string | (string | number)[]) {
+    return Object.values(this.get(controlName).errors);
+  }
+
+  get(controlName: string | (string | number)[]): AbstractControl {
+    return this.loginForm.get(controlName);
+  }
+
+  initForm() {
+    this.loginForm = new FormGroup({
+      email: new FormControl(null, [
+        AppValidators.required,
+        AppValidators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", "ემაილის მისამართის"),
+        AppValidators.cannotContainSpace
+      ]),
+      password: new FormControl(null, [
+        AppValidators.required,
+        AppValidators.minLength(6)
+      ])
+    })
+  }
+
 
   // Deleted Created element from DOM
-  ngOnDestroy() {
-    if(this.closeSub) {
-      this.closeSub.unsubscribe();
-    }
-    if(this.authSub) {
-      this.authSub.unsubscribe();
-    }
+  ngOnDestroy(): void {
+    this.closeSub?.unsubscribe();
+    this.authSub?.unsubscribe();
   }
 
 }

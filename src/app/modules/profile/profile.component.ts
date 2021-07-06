@@ -1,11 +1,17 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { Registration } from 'src/app/auth/registration/registration.model';
+import { AngularFireStorage } from "@angular/fire/storage";
+
+
+import { Registration } from 'src/app/shared/auth/registration.model';
+import { ErrorService } from 'src/app/shared/services/error.service';
+import { RegistrationService } from 'src/app/shared/auth/registration.service';
 
 import * as fromApp from '../../store/app.reducer';
 import * as HomeworkActions from '../works/store-homework/homework.actions';
 import * as TestActions from '../works/store-test/test.actions';
+
 
 @Component({
   selector: 'app-profile',
@@ -13,13 +19,10 @@ import * as TestActions from '../works/store-test/test.actions';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent {
-  userProfiles: Registration[] = [];
-  userEmail: string = '';
-  userProfile: Registration;
-  isLoading: boolean;
+  userId: string;
+  userProfile: Registration = null;
 
   authSub: Subscription;
-  registrationSub: Subscription;
   homeworkSub: Subscription;
   testSub: Subscription;
 
@@ -33,24 +36,29 @@ export class ProfileComponent {
   activitiesScoreFirst: number = null;
   activitiesScoreSecond: number = null;
 
-  constructor(public store: Store<fromApp.AppState>) { }
+  constructor(
+    private store: Store<fromApp.AppState>,
+    private angularFirebaseStorage: AngularFireStorage,
+    private errorService: ErrorService,
+    private registerService: RegistrationService
+  ) { }
 
   ngOnInit() {
+    this.registerService.getProfiles();
+
     this.authSub = this.store.select('auth')
     .subscribe(data => {
-      if(!data) return;
-      this.userEmail = data.user?.email;
+      if(!data) {
+        return;
+      }
+      this.userId = data.user?.id;
     });
 
-    this.registrationSub = this.store.select('registration')
-    .subscribe(userState => {
-      this.userProfiles = userState.users;
-      this.isLoading = userState.loading;
-    })
-    this.userProfile = this.userProfiles.find(dataFromEmail => dataFromEmail.email === this.userEmail);
+    this.userProfile = this.registerService.userProfile;
 
     this.store.dispatch(new HomeworkActions.getActivitiesFirstSum());
     this.store.dispatch(new HomeworkActions.getAnsweredHomeworksPercentage());
+
     this.homeworkSub = this.store.select('homeWork').subscribe(homeworkState => {
       this.homeworkPercentage = homeworkState.homeworksPercentage;
       this.activitiesHomework = homeworkState.answeredHomeworks.length;
@@ -59,6 +67,7 @@ export class ProfileComponent {
 
     this.store.dispatch(new TestActions.getActivitiesSecondSum());
     this.store.dispatch(new TestActions.getAnsweredTestsPercentage());
+
     this.testSub = this.store.select('OnlineTest').subscribe(testState => {
       this.testPercentage = testState.testsPercentage;
       this.activitiesTest = testState.solvedTests.length;
@@ -66,15 +75,58 @@ export class ProfileComponent {
     });
 
     this.activityPercentage = (this.activitiesScoreFirst/this.activitiesHomework + this.activitiesScoreSecond/this.activitiesTest) * 10;
-
     this.averagePercentage = Math.round((this.homeworkPercentage + this.activityPercentage + this.testPercentage)/3);
+
+    this.angularFirebaseStorage.ref('users/' + this.userId + '/profile.jpg').getDownloadURL()
+    .subscribe(imgUrl => {
+        this.img.src = imgUrl;
+      }
+    )
+  }
+
+
+  // Upload avatar
+  file: string;
+  img = {
+    src: null
+  };
+
+  upload(imageInput) {
+    this.file = imageInput.target.files[0];
+  }
+
+  selectedFile: ImageSnippet;
+
+  processFile(imageInput: any): void {
+    const file: File = imageInput.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener('load', (event: any) => {
+      this.selectedFile = new ImageSnippet(event.target.result, file);
+      this.selectedFile.pending = true;
+    });
+
+    reader.readAsDataURL(file);
+
+    this.angularFirebaseStorage.ref('users/' + this.userId + '/profile.jpg')
+    .put(file).then(() => {
+        this.errorService.errorMessage = 'Success upload profile images.';
+      }
+    ).catch (error => {
+      this.errorService.errorMessage = error;
+    });
   }
 
   ngOnDestroy() {
-    if(this.registrationSub) this.registrationSub.unsubscribe();
-    if(this.authSub) this.authSub.unsubscribe();
-    if(this.homeworkSub) this.homeworkSub.unsubscribe();
-    if(this.testSub) this.testSub.unsubscribe();
+    this.authSub?.unsubscribe();
+    this.homeworkSub?.unsubscribe();
+    this.testSub?.unsubscribe();
   }
+}
 
+class ImageSnippet {
+  pending = false;
+  status = 'init';
+
+  constructor(public src: string, public file: File) {}
 }

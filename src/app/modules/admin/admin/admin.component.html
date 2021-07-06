@@ -1,0 +1,45 @@
+<div class="row" *ngIf="!adminService.isAdminMode">
+  <div class="col-xs-12 col-md-6 col-md-offset-3">
+    <h2>{{ 'Admin panel' }}</h2>
+    <hr>
+    <form [formGroup]="adminForm" (ngSubmit)="onLogin()">
+      <div class="form-group">
+        <label for="password">{{'Password' | translate}}</label>
+        <input
+          type="password"
+          formControlName="password"
+          class="form-control"
+        />
+      </div>
+      <div class="form-group">
+        <button
+          type="submit"
+          class="btn btn-success"
+          [disabled]="!adminForm.valid"
+        >{{'LogIn' | translate}}</button>
+      </div>
+    </form>
+  </div>
+</div>
+<ul class="nav nav-tabs" *ngIf="adminService.isAdminMode">
+  <li role="presentation" routerLinkActive="active">
+    <a routerLink='/admin/blogPanel'>{{'admin.blog.title' | translate}}</a>
+  </li>
+  <li role="presentation" routerLinkActive="active">
+    <a routerLink='/admin/contactPanel'>{{'admin.contact.title' | translate}}</a>
+  </li>
+  <li role="presentation" routerLinkActive="active">
+    <a routerLink='/admin/homeworkPanel'>{{'admin.homework.title' | translate}}</a>
+  </li>
+  <li role="presentation" routerLinkActive="active">
+    <a routerLink='/admin/onlineTestPanel'>{{'admin.test.title' | translate}}</a>
+  </li>
+</ul>
+<button
+  *ngIf="adminService.isAdminMode"
+  type="button"
+  class="btn btn-danger logout"
+  (click)="onLogout()"
+>{{'Logout' | translate}}</button>
+<router-outlet *ngIf="adminService.isAdminMode"></router-outlet>
+

@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from './auth.guard';
-import { CanDeactivateGuard } from './registration/registration.guard';
+import { AuthGuard } from '../shared/guards/auth.guard';
+import { CanDeactivateGuard } from '../shared/guards/registration.guard';
 
 import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { RegistrationComponent } from './registration/registration.component';
-import { RegistrationResolverService } from './registration/registration-resolver.service';
+import { RegistrationResolverService } from '../shared/guards/registration-resolver.service';
 
 const routes: Routes = [
   {
@@ -27,7 +27,7 @@ const routes: Routes = [
       }
     ]
   }
-]
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

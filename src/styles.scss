@@ -7,11 +7,7 @@
 
 
 * {
-  // margin: 0;
-  // padding: 0;
   outline: none;
-  // box-sizing: border-box;
-  // border: none;
   font-family: 'Rubik', sans-serif;
 }
 
@@ -27,6 +23,7 @@ a {
 html, body {
   height: 100%;
   width: 100%;
+  overflow-x: hidden;
 }
 
 .section {
@@ -45,4 +42,21 @@ html, body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
+}
+
+$red: #db2828;
+
+input.ng-touched.ng-invalid,
+select.ng-touched.ng-invalid,
+textarea.ng-touched.ng-invalid {
+  border-color: $red !important;
+}
+
+.required {
+  color: $red;
+  @include flexColumn(flex-start, flex-start);
+}
+
+li > a {
+  color: #777;
 }

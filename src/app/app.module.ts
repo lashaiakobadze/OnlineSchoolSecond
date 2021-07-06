@@ -8,16 +8,17 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { HttpClient } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireModule } from '@angular/fire';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './modules/home/home.module';
-import { CoreModule } from './core.module';
+import { LayoutsModule } from './layouts/layouts.module';
+import { CoreModule } from './core/core.module';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './layouts/header/header.component';
-import { FooterComponent } from './layouts/footer/footer.component';
-import { ErrorPageComponent } from './layouts/error-page/error-page.component';
 
 import { environment } from 'src/environments/environment';
 
@@ -27,29 +28,29 @@ import { registrationEffects } from './auth/registration/store/registration.effe
 import { homeEffects } from './modules/home/store/home.effects';
 import { HomeworkEffects } from './modules/works/store-homework/homework.effects';
 import { TestEffects } from './modules/works/store-test/test.effects';
-import { ContactComponent } from './modules/contact/contact.component';
 import { ContactsEffects } from './modules/contact/store/contact.effects';
-
+import { AdminEffects } from './modules/admin/store/admin.effects';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, "assets/i18n/", ".json");
+  return new TranslateHttpLoader(http, "assets/i19n/", ".json");
 }
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    ErrorPageComponent,
-    ContactComponent,
   ],
   imports: [
     BrowserModule,
+    NgxPaginationModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireStorageModule,
     SharedModule,
+    LayoutsModule,
     HomeModule,
     AppRoutingModule,
     CoreModule,
+    LayoutsModule,
     StoreModule.forRoot(fromApp.appReducer),
     EffectsModule.forRoot([
       AuthEffects,
@@ -57,7 +58,8 @@ export function HttpLoaderFactory(http: HttpClient) {
       homeEffects,
       HomeworkEffects,
       TestEffects,
-      ContactsEffects
+      ContactsEffects,
+      AdminEffects
     ]),
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot(),

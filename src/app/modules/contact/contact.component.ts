@@ -1,11 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { Contact } from './contact.model';
+
+
+import { AppValidators } from 'src/app/shared/validators/app-validators';
+import { Contact } from '../../shared/modules/contact/contact.model';
 
 import * as fromApp from '../../store/app.reducer';
 import * as ContactActions from './store/contact.actions';
+
 
 @Component({
   selector: 'app-contact',
@@ -14,23 +18,43 @@ import * as ContactActions from './store/contact.actions';
 })
 export class ContactComponent implements OnInit, OnDestroy {
   newMessage: Contact;
-  contactForm: FormGroup;
   contacts: Contact[];
+  curUserId: string = 'visitor';
+  curUserEmail: string = null;
+
+  contactForm: FormGroup;
+  authSub: Subscription;
   contactSub: Subscription;
-  constructor(private store: Store<fromApp.AppState>) { }
+
+  constructor(
+    private store: Store<fromApp.AppState>,
+  ) { }
 
   ngOnInit(): void {
-    this.contactForm = new FormGroup({
-      'email': new FormControl(null, [Validators.required, Validators.email]),
-      'message': new FormControl(null, [Validators.required])
+    this.initForm();
+    this.authSub = this.store.select('auth').subscribe(curUser => {
+      if (!curUser.user) {
+        return;
+      }
+      this.curUserId = curUser.user.id;
+      this.curUserEmail = curUser.user.email;
     });
+    this.store.dispatch(new ContactActions.FetchContacts());
   };
 
 
-  messageSubmit(){
+  messageSubmit() {
+    let email = this.contactForm.value.email;
+    const msg = this.contactForm.value.message;
+
+    if (this.curUserEmail) {
+      email = this.curUserEmail;
+    }
+
     this.newMessage = new Contact(
-      this.contactForm.value.email,
-      this.contactForm.value.message,
+      email,
+      msg || 'empty',
+      this.curUserId || 'visitor'
     );
 
     this.contactSub = this.store.select('contact').subscribe(contactState => {
@@ -41,8 +65,32 @@ export class ContactComponent implements OnInit, OnDestroy {
     this.contactForm.reset();
   };
 
+
+  errors(controlName: string | (string | number)[]) {
+    return Object.values(this.get(controlName).errors);
+  }
+
+  get(controlName: string | (string | number)[]): AbstractControl {
+    return this.contactForm.get(controlName);
+  }
+
+  initForm() {
+    this.contactForm = new FormGroup({
+      'email': new FormControl(null, [
+        AppValidators.required,
+        AppValidators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", "ემაილის მისამართის"),
+        AppValidators.cannotContainSpace
+      ]),
+      'message': new FormControl(null, [
+        AppValidators.required,
+        AppValidators.minLength(2)
+      ])
+    });
+  };
+
   ngOnDestroy() {
-    if(this.contactSub) this.contactSub.unsubscribe();
+    this.authSub?.unsubscribe();
+    this.contactSub?.unsubscribe();
   };
 
 }

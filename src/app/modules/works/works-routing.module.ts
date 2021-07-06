@@ -7,8 +7,9 @@ import { HomeworkComponent } from './homework/homework.component';
 import { OnlineTestComponent } from './online-test/online-test.component';
 import { CurrentHomeworkComponent } from './homework/current-homework/current-homework.component';
 import { CurrentTestComponent } from './online-test/current-test/current-test.component';
-import { AuthGuard } from 'src/app/auth/auth.guard';
-import { CanDeactivateGuardWorks } from './works.guard';
+import { AuthGuard } from 'src/app/shared/guards/auth.guard';
+import { CanDeactivateGuardWorks } from '../../shared/guards/works.guard';
+import { LessonComponent } from './lesson/lesson.component';
 
 const workRoutes: Routes = [
   {
@@ -27,6 +28,10 @@ const workRoutes: Routes = [
         path: 'online-test',
         component: OnlineTestComponent,
         children: [ { path: ':id', component: CurrentTestComponent, canDeactivate: [CanDeactivateGuardWorks] } ]
+      },
+      {
+        path: 'lesson',
+        component: LessonComponent
       }
     ]
   }

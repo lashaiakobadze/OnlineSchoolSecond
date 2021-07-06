@@ -36,15 +36,11 @@
         </li>
       </ul>
 
-      <!-- <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown" appDropdown>
-          <a style="cursor: pointer;" class="dropdown-toggle" role="button">Language<span class="caret"></span></a>
-          <ul class="dropdown-menu" style="width: 50%;">
-            <li style="cursor: pointer; text-align: center;" value="en" (click)="changeLang($event.target.value)">EN</li>
-            <li style="cursor: pointer; text-align: center;" value="ge" (click)="changeLang($event.target.value)">GE</li>
-          </ul>
+      <ul class="nav navbar-nav">
+        <li routerLinkActive="active">
+          <a routerLink="admin">admin</a>
         </li>
-      </ul> -->
+      </ul>
 
       <ul class="nav navbar-nav navbar-right ">
         <li class="dropdown" appDropdown>
@@ -57,16 +53,22 @@
 
       <ul class="nav navbar-nav navbar-right">
         <li routerLinkActive="active" *ngIf="!isAuthenticated">
-          <a routerLink="/auth/login">{{'Authenticate' | translate }}</a>
+          <a routerLink="/auth/login">
+            <img src="../../../assets/svg/login_black_18dp.svg" alt="login">
+          </a>
         </li>
         <li *ngIf="isAuthenticated">
-          <a
-           routerLink='../auth'
-           style="cursor: pointer;"
-           (click)="onLogout()"
-           >{{'Logout' | translate }}</a>
+          <a routerLink='../auth' (click)="onLogout()">
+            <img src="../../../assets/svg/logout_black_18dp.svg" alt="logout">
+          </a>
+        </li>
+        <li routerLinkActive="active" *ngIf="isAuthenticated">
+          <a routerLink='/auth/registration'>
+            <img src="../../../assets/svg/manage_accounts_black_18dp.svg" alt="menage-account">
+          </a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
+

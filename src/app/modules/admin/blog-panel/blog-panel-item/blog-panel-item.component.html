@@ -1,0 +1,48 @@
+<form [formGroup]="blogForm" class="blog form-group">
+  <div class="blog__option">
+    <img
+      src="assets/svg/edit_black_18dp.svg"
+      alt="edit"
+      (click)="onEditBlog()"
+    />
+    <span>{{ blog.date }}</span>
+    <img
+      src="assets/svg/delete_outline_black_18dp.svg"
+      alt="delete"
+      (click)="onDeleteBlog()"
+    />
+  </div>
+  <input
+    class="blog__title form-control"
+    formControlName="title"
+  />
+  <p class="required" *ngIf="get('title').invalid && get('title').touched">
+    <ng-container *ngFor="let errorMessage of errors('title')">
+      <span *ngIf="errorMessage !== true">{{ errorMessage }}</span>
+    </ng-container>
+  </p>
+  <input
+    class="blog__img form-control"
+    formControlName='imgPath'
+  />
+  <p class="required" *ngIf="get('imgPath').invalid && get('imgPath').touched">
+    <ng-container *ngFor="let errorMessage of errors('imgPath')">
+      <span *ngIf="errorMessage !== true">{{ errorMessage }}</span>
+    </ng-container>
+  </p>
+  <textarea
+    class="blog__info form-control"
+    formControlName='info'
+  >{{ blog.info }}</textarea>
+  <p class="required" *ngIf="get('info').invalid && get('info').touched">
+    <ng-container *ngFor="let errorMessage of errors('info')">
+      <span *ngIf="errorMessage !== true">{{ errorMessage }}</span>
+    </ng-container>
+  </p>
+  <button
+    type="submit"
+    class="btn btn-success"
+    [disabled]="!updateMode || !blogForm.valid"
+    (click)="onUpdateBlog()"
+  >{{'Update' | translate}}</button>
+</form>

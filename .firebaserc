@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "onlineschool-bee89": {
+      "hosting": {
+        "OnlineSchool": [
+          "onlineschool-bee89"
+        ]
+      }
+    }
+  }
+}

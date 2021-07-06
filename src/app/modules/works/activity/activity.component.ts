@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { SolvedHomework } from '../models/solved-homework.model';
-import { SolvedTest } from '../models/solved-test.model';
+import { SolvedHomework } from '../../../shared/modules/works/models/solved-homework.model';
+import { SolvedTest } from '../../../shared/modules/works/models/solved-test.model';
 
 import * as fromApp from '../../../store/app.reducer';
 import * as HomeworkActions from '../store-homework/homework.actions';
@@ -24,17 +24,21 @@ export class ActivityComponent implements OnInit, OnDestroy {
   activitiesHomework: SolvedHomework[] = [];
   activitiesTest: SolvedTest[] = [];
 
-  constructor(private store: Store<fromApp.AppState>) { }
+  constructor(
+    private store: Store<fromApp.AppState>
+  ) { }
 
   ngOnInit(): void {
     this.store.dispatch(new HomeworkActions.getActivitiesFirstSum());
-    this.homeworkSub = this.store.select('homeWork').subscribe(homeworkState => {
+    this.homeworkSub = this.store.select('homeWork')
+    .subscribe(homeworkState => {
       this.activitiesHomework = homeworkState.answeredHomeworks;
       this.activitiesScoreFirst = homeworkState.firstActivities;
     });
 
     this.store.dispatch(new TestActions.getActivitiesSecondSum());
-    this.testSub = this.store.select('OnlineTest').subscribe(testState => {
+    this.testSub = this.store.select('OnlineTest')
+    .subscribe(testState => {
       this.activitiesTest = testState.solvedTests;
       this.activitiesScoreSecond = testState.secondActivities;
     });

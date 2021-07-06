@@ -11,31 +11,38 @@
 
 <div class="blog">
   <div class="blog_header">{{'Blog' | translate }}</div>
+  <div class="form-group">
+    <input
+    class="form-control"
+    style="margin-top:20px"
+    type="text"
+    name="search"
+    placeholder="{{'Enter Search Text' | translate }}"
+    [(ngModel)]="filterData">
+  </div>
   <div class="blog_items">
-    <app-home-blog *ngFor="let newsObj of newsObjects" [news]="newsObj"></app-home-blog>
+    <app-home-blog
+      *ngFor="let  newsObj of newsObjects | filter: filterData | slice:startIndex:endIndex; let odd = odd; let even = even;"
+      [news]="newsObj"
+    ></app-home-blog>
 
     <nav aria-label="Page navigation">
       <ul class="pagination">
-        <li>
-          <a aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
+        <li class="page-item">
+          <a (click)="prevIndex(newsObjects.length)" class="page-link">{{'Previous' | translate }}</a>
         </li>
-        <li><a>1</a></li>
-        <li><a>2</a></li>
-        <li><a>3</a></li>
-        <li><a>4</a></li>
-        <li><a>5</a></li>
-        <li>
-          <a aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
+        <li class="page-item" *ngFor="let i of getArrayLength(newsObjects.length) let n = index">
+          <a class="page-link"  (click)="getIndex(n)" >{{n+1}}</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" (click)="nextIndex(newsObjects.length)">{{'Next' | translate }}</a>
         </li>
       </ul>
     </nav>
-
   </div>
 </div>
+
+
 
 
 

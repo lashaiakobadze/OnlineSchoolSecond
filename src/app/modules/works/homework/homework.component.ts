@@ -4,8 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
-import { SolvedHomework } from '../models/solved-homework.model';
-import { Homework } from '../models/homework.model';
+import { SolvedHomework } from '../../../shared/modules/works/models/solved-homework.model';
+import { Homework } from '../../../shared/modules/works/models/homework.model';
 
 import * as fromApp from '../../../store/app.reducer';
 import * as HomeworkActions from '../store-homework/homework.actions';
@@ -40,8 +40,10 @@ export class HomeworkComponent implements OnInit, OnDestroy {
       })
     ).subscribe(status => {
       if(status.isWritten) {
-        this.store.dispatch(new HomeworkActions.GetHomeworkMode());      }
+        this.store.dispatch(new HomeworkActions.GetHomeworkMode());
+      }
     });
+
 
     this.store.dispatch(new HomeworkActions.getAnsweredHomeworksPercentage());
     this.store.dispatch(new HomeworkActions.getAnsweredHomeworksSum());

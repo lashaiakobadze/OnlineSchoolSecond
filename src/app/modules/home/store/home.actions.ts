@@ -1,6 +1,7 @@
 import { Action } from "@ngrx/store";
-import { News } from "../news.model";
+import { News } from "../../../shared/modules/home/news.model";
 import { Slide } from "../slides.model";
+
 
 export const GET_SLIDES = '[Home] Get Slides';
 export const Fetch_SLIDES = '[Home] Fetch Slides';
