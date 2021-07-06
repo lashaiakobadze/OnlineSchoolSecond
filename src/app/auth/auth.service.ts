@@ -15,6 +15,7 @@ import { LoaderService } from '../shared/components/loader/loader.service';
 import * as fromApp from '../store/app.reducer';
 import * as AuthActions from './store/auth.actions';
 
+const Url = 'https://identitytoolkit.googleapis.com/v1/accounts';
 
 export interface AuthResponseData {
   kind: string,
@@ -63,7 +64,7 @@ export class AuthService {
 
   authSignup(signupAction: AuthActions.SignupStart) {
     return this.http.post<AuthResponseData>(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseAPIKey}`,
+      `${Url}:signUp?key=${environment.firebaseConfig.apiKey}`,
       {
         email: signupAction.payload.email,
         password: signupAction.payload.password,
@@ -94,7 +95,7 @@ export class AuthService {
   authLogin(authData: AuthActions.LoginStart) {
     return this.http
     .post<AuthResponseData>(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseAPIKey}`,
+      `${Url}:signInWithPassword?key=${environment.firebaseConfig.apiKey}`,
       {
         email: authData.payload.email,
         password: authData.payload.password,

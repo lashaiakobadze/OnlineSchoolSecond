@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { Homework } from './models/homework.model';
 import { SolvedHomework } from './models/solved-homework.model';
@@ -6,13 +7,15 @@ import { SolvedTask } from './models/solved-task.model';
 import { Task } from './models/Task.model';
 import { Observable } from 'rxjs';
 
-import { HttpClient } from '@angular/common/http';
+
 import { LoaderService } from '../../components/loader/loader.service';
+import { CurrentHomework } from 'src/app/modules/admin/models/current-homework.model';
 
 import * as fromApp from '../../../store/app.reducer';
 import * as HomeworkActions from '../../../modules/works/store-homework/homework.actions';
 
-
+import { environment } from 'src/environments/environment';
+const Url = environment.firebaseConfig.databaseURL;
 
 @Injectable({
   providedIn: 'root'
@@ -34,14 +37,28 @@ export class HomeworkService {
   getHomeworks(): Observable<Homework[]> {
     return this.http
       .get<Homework[]>(
-        'https://onlineschool-bee89-default-rtdb.firebaseio.com/homeworks.json'
+        `${Url}/homeworks.json`
       ).pipe(this.loaderService.useLoader);
   };
 
   getSolvedHomeworks(): Observable<SolvedHomework[]> {
     return this.http
       .get<SolvedHomework[]>(
-        'https://onlineschool-bee89-default-rtdb.firebaseio.com/solvedHomework.json'
+        `${Url}/solvedHomework.json`
+      ).pipe(this.loaderService.useLoader);
+  };
+
+  storeSolvedHomeworks(solvedHomeworks: SolvedHomework[]): Observable<SolvedHomework[]> {
+    return this.http
+      .put<SolvedHomework[]>(
+        `${Url}/solvedHomework.json`, solvedHomeworks
+      ).pipe(this.loaderService.useLoader);
+  };
+
+  getCurrentTestIndex(): Observable<CurrentHomework> {
+    return this.http
+      .get<CurrentHomework>(
+        `${Url}/currentHomework.json`
       ).pipe(this.loaderService.useLoader);
   };
 

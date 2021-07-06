@@ -2,12 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-
+import { environment } from 'src/environments/environment';
 import { LoaderService } from 'src/app/shared/components/loader/loader.service';
 import { Homework } from 'src/app/shared/modules/works/models/homework.model';
 import { Test } from 'src/app/shared/modules/works/models/test.model';
 import { News } from '../../shared/modules/home/news.model';
+import { CurrentTest } from './models/current-test.model';
+import { CurrentHomework } from './models/current-homework.model';
 
+const Url = environment.firebaseConfig.databaseURL;
 
 @Injectable({
   providedIn: 'root'
@@ -24,21 +27,42 @@ export class AdminService {
   storeBlogs(blogs: News[]): Observable<News[]> {
     return this.http
       .put<News[]>(
-        'https://onlineschool-bee89-default-rtdb.firebaseio.com/news.json', blogs
+        `${Url}/news.json`, blogs
       ).pipe(this.loaderService.useLoader);
   };
 
   storeHomework(homeworks: Homework[]): Observable<Homework[]> {
     return this.http
       .put<Homework[]>(
-        'https://onlineschool-bee89-default-rtdb.firebaseio.com/homeworks.json', homeworks
+        `${Url}/homeworks.json`, homeworks
+      ).pipe(this.loaderService.useLoader);
+  };
+
+  storeCurrentHomework(curHomework: CurrentHomework): Observable<CurrentHomework> {
+    return this.http
+      .put<CurrentHomework>(
+        `${Url}/currentHomework.json`, curHomework
       ).pipe(this.loaderService.useLoader);
   };
 
   storeTest(test: Test[]): Observable<Test[]> {
     return this.http
       .put<Test[]>(
-        'https://onlineschool-bee89-default-rtdb.firebaseio.com/tests.json', test
+        `${Url}/tests.json`, test
       ).pipe(this.loaderService.useLoader);
   };
+
+  storeCurrentTest(curTest: CurrentTest): Observable<CurrentTest> {
+    return this.http
+      .put<CurrentTest>(
+        `${Url}/currentTest.json`, curTest
+      ).pipe(this.loaderService.useLoader);
+  };
+
+  // storeCurrentHomework(curHomework: CurrentHomework): Observable<CurrentHomework> {
+  //   return this.http
+  //     .put<CurrentHomework>(
+  //       `${Url}/currentHomework.json`, curHomework
+  //     ).pipe(this.loaderService.useLoader);
+  // };
 }

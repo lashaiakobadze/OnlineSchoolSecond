@@ -43,6 +43,8 @@ export class OnlineTestComponent implements OnInit, OnDestroy {
       }
     });
 
+    this.store.dispatch(new TestActions.FetchCurTestId());
+
     this.store.dispatch(new TestActions.getAnsweredTestsPercentage());
     this.testSub = this.store.select('OnlineTest').subscribe(testState => {
       this.solvedTests = testState.solvedTests;

@@ -23,9 +23,10 @@ export function homeReducer(state = initialState, action: HomeActions.HomeAction
         loading: false
       }
     case HomeActions.GET_NEWS:
+      let news = [...action.payload].reverse();
       return {
         ...state,
-        news: [...action.payload]
+        news: news,
       }
     default:
       return {

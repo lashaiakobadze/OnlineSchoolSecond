@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { LoaderService } from 'src/app/shared/components/loader/loader.service';
 import { Contact } from './contact.model';
 
+import { environment } from 'src/environments/environment';
+const Url = environment.firebaseConfig.databaseURL;
 
 @Injectable({
   providedIn: 'root'
@@ -20,14 +22,14 @@ export class ContactService {
   getContacts(): Observable<Contact[]> {
     return this.http
     .get<Contact[]>(
-      'https://onlineschool-bee89-default-rtdb.firebaseio.com/contacts.json'
+      `${Url}/contacts.json`
     ).pipe(this.loaderService.useLoader);
   };
 
   storeContact(contactData: Contact[]): Observable<Contact[]> {
     return this.http
     .put<Contact[]>(
-      'https://onlineschool-bee89-default-rtdb.firebaseio.com/contacts.json',
+      `${Url}/contacts.json`,
       contactData
     ).pipe(this.loaderService.useLoader)
   }

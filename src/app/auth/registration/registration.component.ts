@@ -121,7 +121,7 @@ export class RegistrationComponent implements OnInit, CanComponentDeactivate, On
       'group': new FormControl(profile?.group || null, [AppValidators.required]),
       'email': new FormControl(profile?.email || null, [
         AppValidators.required,
-        AppValidators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", "ემაილის მისამართის"),
+        AppValidators.email,
         AppValidators.cannotContainSpace,
       ]),
     });

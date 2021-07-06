@@ -83,7 +83,9 @@ export class OnlineTestPanelComponent implements OnInit {
   };
 
   onSubmitCurTest(): void {
-    console.log(this.curTestForm.value);
+    const currentTest = this.curTestForm.value;
+    this.store.dispatch(AdminActions.storeCurrentTest({ currentTest }));
+    this.store.dispatch(AdminActions.fetchCurTest());
   };
 
   errors(controlName: string | (string | number)[]) {

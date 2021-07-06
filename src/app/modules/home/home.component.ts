@@ -37,6 +37,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.slideObjects = homeState.slides;
       this.newsObjects = homeState.news;
     });
+
+
   };
 
 

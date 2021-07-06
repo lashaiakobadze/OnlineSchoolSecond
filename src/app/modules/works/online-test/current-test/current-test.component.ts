@@ -49,7 +49,6 @@ export class CurrentTestComponent implements OnInit, OnDestroy {
       this.active = +status;
     });
 
-
     this.store.dispatch(new TestActions.FetchTests());
 
     this.testSub = this.store.select('OnlineTest').subscribe(testState => {

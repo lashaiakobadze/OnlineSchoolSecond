@@ -78,7 +78,7 @@ export class ContactComponent implements OnInit, OnDestroy {
     this.contactForm = new FormGroup({
       'email': new FormControl(null, [
         AppValidators.required,
-        AppValidators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", "ემაილის მისამართის"),
+        AppValidators.email,
         AppValidators.cannotContainSpace
       ]),
       'message': new FormControl(null, [

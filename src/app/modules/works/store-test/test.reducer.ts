@@ -1,11 +1,13 @@
 import { SolvedTestTask } from "../../../shared/modules/works/models/solved-test-task.model";
 import { SolvedTest } from "../../../shared/modules/works/models/solved-test.model";
 import { Test } from "../../../shared/modules/works/models/test.model";
+import { CurrentTest } from "../../admin/models/current-test.model";
 
 import * as TestActions from './test.actions';
 
 export interface State {
   tests: Test[];
+  curTestNumber: CurrentTest;
   test: Test;
   solvedTests: SolvedTest[];
   solvedTestTasks: SolvedTestTask[];
@@ -19,6 +21,7 @@ export interface State {
 const initialState: State = {
   tests: [],
   test: null,
+  curTestNumber: null,
   solvedTests: [],
   solvedTestTasks: [],
   testsPercentage: null,
@@ -41,13 +44,18 @@ export function homeworkReducer(state = initialState, action: TestActions.TestAc
         ...state,
         solvedTests: [...action.payload]
       };
+    case TestActions.GET_CURRENT_TEST:
+      return {
+        ...state,
+        curTestNumber: {...action.payload}
+      }
     case TestActions.ADD_ANSWERED_TEST_TASK:
       return {
         ...state,
         solvedTestTasks: [...state.solvedTestTasks, action.payload],
       };
     case TestActions.GET_CURRENT_ONLINE_TEST:
-      const curTest = action.payload;
+      const curTest = {...action.payload};
       return {
         ...state,
         test: curTest

@@ -45,6 +45,7 @@ export class HomeworkComponent implements OnInit, OnDestroy {
     });
 
 
+    this.store.dispatch(new HomeworkActions.FetchCurTestIndex());
     this.store.dispatch(new HomeworkActions.getAnsweredHomeworksPercentage());
     this.store.dispatch(new HomeworkActions.getAnsweredHomeworksSum());
     this.homeworkSub = this.store.select('homeWork').subscribe(homeState => {

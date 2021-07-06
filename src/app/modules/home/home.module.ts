@@ -6,12 +6,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HomeResolverService } from '../../shared/guards/home-resolver.service';
 import { ShortenPipe } from '../../shared/pipes/shorten.pipe';
+import { FilterPipe } from '../../shared/pipes/filter.pipe';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 import { HomeComponent } from './home.component';
 import { HomeBlogComponent } from './home-blog/home-blog.component';
 import { BlogComponent } from './home-blog/blog/blog.component';
-import { FilterPipe } from '../../shared/pipes/filter.pipe';
 
 
 @NgModule({
@@ -32,6 +32,6 @@ import { FilterPipe } from '../../shared/pipes/filter.pipe';
       resolve: [HomeResolverService],
       component: HomeComponent
     }]),
-  ]
+  ],
 })
 export class HomeModule { }

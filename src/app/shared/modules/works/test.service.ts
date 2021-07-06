@@ -8,10 +8,16 @@ import { SolvedTest } from './models/solved-test.model';
 import { SolvedTestTask } from './models/solved-test-task.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+
+
 import { LoaderService } from '../../components/loader/loader.service';
+import { CurrentTest } from 'src/app/modules/admin/models/current-test.model';
 
 import * as fromApp from '../../../store/app.reducer';
 import * as TestActions from '../../../modules/works/store-test/test.actions';
+
+import { environment } from 'src/environments/environment';
+const Url = environment.firebaseConfig.databaseURL;
 
 
 @Injectable({
@@ -30,17 +36,30 @@ export class TestService {
   getTests(): Observable<Test[]> {
     return this.http
       .get<Test[]>(
-        'https://onlineschool-bee89-default-rtdb.firebaseio.com/tests.json'
+        `${Url}/tests.json`
       ).pipe(this.loaderService.useLoader);
   };
 
   getSolvedTests(): Observable<SolvedTest[]> {
     return this.http
       .get<SolvedTest[]>(
-        'https://onlineschool-bee89-default-rtdb.firebaseio.com/solvedTest.json'
+        `${Url}/solvedTest.json`
       ).pipe(this.loaderService.useLoader);
   };
 
+  storeSolvedTests(solvedTests: SolvedTest[]): Observable<SolvedTest[]> {
+    return this.http
+      .put<SolvedTest[]>(
+        `${Url}/solvedTest.json`, solvedTests
+      ).pipe(this.loaderService.useLoader);
+  };
+
+  getCurrentTestIndex(): Observable<CurrentTest> {
+    return this.http
+      .get<CurrentTest>(
+        `${Url}/currentTest.json`
+      ).pipe(this.loaderService.useLoader);
+  };
 
   fetchCurTests(curTestIndex: number): void {
     this.store.dispatch(new TestActions.FetchTests());
@@ -70,10 +89,10 @@ export class TestService {
   currentTest = new Test(2,
     [
       new TestTask('5 * 5', ['10', '15', '20', '25', '30'], '25'),
-      // new TestTask('25 * 25', ['425', '225', '755', '650', '625'], '625'),
-      // new TestTask('30 * 30', ['10', '900', '20', '25', '30'], '900'),
-      // new TestTask('15 * 15', ['125', '225', '755', '650', '625'], '225'),
-      // new TestTask('17 * 17', ['100', '115', '249', '289', '329'], '289'),
+      new TestTask('25 * 25', ['425', '225', '755', '650', '625'], '625'),
+      new TestTask('30 * 30', ['10', '900', '20', '25', '30'], '900'),
+      new TestTask('15 * 15', ['125', '225', '755', '650', '625'], '225'),
+      new TestTask('17 * 17', ['100', '115', '249', '289', '329'], '289'),
     ]
   );
 

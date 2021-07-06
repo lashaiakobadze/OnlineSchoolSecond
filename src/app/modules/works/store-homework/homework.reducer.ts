@@ -1,11 +1,13 @@
 import { Homework } from "../../../shared/modules/works/models/homework.model";
 import { SolvedHomework } from "../../../shared/modules/works/models/solved-homework.model";
 import { SolvedTask } from "../../../shared/modules/works/models/solved-task.model";
+import { CurrentHomework } from "../../admin/models/current-homework.model";
 
 import * as HomeworkActions from './homework.actions';
 
 export interface State {
   homeworks: Homework[];
+  curHomeworkNumber: CurrentHomework;
   homework: Homework;
   answeredHomeworks: SolvedHomework[];
   answeredTasks: SolvedTask[];
@@ -18,6 +20,7 @@ export interface State {
 
 const initialState: State = {
   homeworks: [],
+  curHomeworkNumber: null,
   homework: null,
   answeredHomeworks: [],
   answeredTasks: [],
@@ -40,6 +43,11 @@ export function homeworkReducer(state = initialState, action: HomeworkActions.Ho
       return {
         ...state,
         homework: {...action.payload}
+      };
+    case HomeworkActions.GET_CURRENT_HOMEWORK_INDEX:
+      return {
+        ...state,
+        curHomeworkNumber: {...action.payload}
       };
     case HomeworkActions.GET_SOLVED_HOMEWORK:
       return {

@@ -64,7 +64,9 @@ export class HomeworkPanelComponent implements OnInit {
   };
 
   onSubmitCurHomework(): void {
-    console.log(this.curHomeworkForm.value);
+    const currentHomework = this.curHomeworkForm.value;
+    this.store.dispatch(AdminActions.storeCurrentHomework({ currentHomework }));
+    this.store.dispatch(AdminActions.fetchCurHomework());
   };
 
   errors(controlName: string | (string | number)[]) {
@@ -93,7 +95,7 @@ export class HomeworkPanelComponent implements OnInit {
         AppValidators.required,
         AppValidators.minNumber
       ]),
-    })
+    });
   };
 
 }

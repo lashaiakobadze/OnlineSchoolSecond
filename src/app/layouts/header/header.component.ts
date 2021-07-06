@@ -13,6 +13,7 @@ import * as AuthActions from '../../auth/store/auth.actions';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  collapsed = true;
   isAuthenticated = false;
   lang: string;
   private userSub: Subscription;

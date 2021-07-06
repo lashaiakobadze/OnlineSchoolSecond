@@ -4,6 +4,8 @@ import { Test } from 'src/app/shared/modules/works/models/test.model';
 
 import { Contact } from '../../../shared/modules/contact/contact.model';
 import { News } from '../../../shared/modules/home/news.model';
+import { CurrentHomework } from '../models/current-homework.model';
+import { CurrentTest } from '../models/current-test.model';
 
 import * as AdminActions from './admin.actions';
 
@@ -12,6 +14,8 @@ export interface State {
   blogs: News[];
   homeworks: Homework[];
   tests: Test[];
+  curTest: CurrentTest;
+  curHomework: CurrentHomework;
 };
 
 const initialState: State = {
@@ -19,6 +23,8 @@ const initialState: State = {
   blogs: [],
   homeworks: [],
   tests: [],
+  curTest: null,
+  curHomework: null
 };
 
 const adminReducer = createReducer(
@@ -27,7 +33,10 @@ const adminReducer = createReducer(
   on(AdminActions.getContacts, (state, { contacts }) => ({ ...state, messages: [...contacts] })),
 
   on(AdminActions.addNewBlog, (state, { blog } ) => ({ ...state, blogs: [...state.blogs, blog ] })),
-  on(AdminActions.getBlogs, (state, { blogs }) => ({ ...state, blogs: [...blogs] })),
+  on(AdminActions.getBlogs, (state, { blogs }) => {
+    let reversedBlogs = [...blogs].reverse();
+    return { ...state, blogs: reversedBlogs };
+  }),
   on(AdminActions.deleteBlog, (state, blog) => {
     let blogs = [...state.blogs];
     let updatedBlogs = blogs.filter(blogItem => { return blogItem.id !== blog.blog.id } );
@@ -45,6 +54,9 @@ const adminReducer = createReducer(
 
   on(AdminActions.getTests, (state, { tests }) => ({ ...state, tests: [...tests] })),
   on(AdminActions.addNewTest, (state, { test } ) => ({ ...state, tests: [...state.tests, test ] })),
+
+  on(AdminActions.storeCurrentTest, (state, { currentTest }) => ({ ...state, curTest: { ...currentTest }})),
+  on(AdminActions.storeCurrentHomework, (state, { currentHomework }) => ({ ...state, curHomework: { ...currentHomework }})),
 );
 
 export function reducer(state: State | undefined, action: Action) {

@@ -10,6 +10,9 @@ import { LoaderService } from '../components/loader/loader.service';
 import * as fromApp from '../../store/app.reducer';
 import * as RegistrationActions from '../../auth/registration/store/registration.actions';
 
+import { environment } from 'src/environments/environment';
+const Url = environment.firebaseConfig.databaseURL;
+
 
 @Injectable({
   providedIn: 'root'
@@ -31,15 +34,14 @@ export class RegistrationService implements OnInit {
   getUsersProfiles(): Observable<Registration[]> {
     return this.http
     .get<Registration[]>(
-      'https://onlineschool-bee89-default-rtdb.firebaseio.com/profiles.json'
+      `${Url}/profiles.json`
     ).pipe(this.loaderService.useLoader);
   };
 
   addUserProfile(users: Registration[]): Observable<Registration[]> {
     return this.http
     .put<Registration[]>(
-      'https://onlineschool-bee89-default-rtdb.firebaseio.com/profiles.json',
-      users
+      `${Url}/profiles.json`, users
     ).pipe(this.loaderService.useLoader);
   };
 

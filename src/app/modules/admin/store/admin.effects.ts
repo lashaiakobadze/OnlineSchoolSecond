@@ -7,10 +7,10 @@ import { AdminService } from "../admin.service";
 import { HomeService } from "src/app/shared/modules/home/home.service";
 import { ContactService } from "../../../shared/modules/contact/contact.service";
 import { HomeworkService } from "src/app/shared/modules/works/homework.service";
+import { TestService } from "src/app/shared/modules/works/test.service";
 
 import * as AdminAction from "./admin.actions";
 import * as fromApp from '../../../store/app.reducer';
-import { TestService } from "src/app/shared/modules/works/test.service";
 
 
 @Injectable()
@@ -122,16 +122,40 @@ export class AdminEffects {
   );
 
 
-storeTests = createEffect(() =>
-  this.action$.pipe(
-    ofType(AdminAction.STORE_TESTS),
-    withLatestFrom(this.store.select('admin')),
-    switchMap(([actionData, adminState]) => {
-      return this.adminService.storeTest(adminState.tests);
-    }),
-  ),
-  { dispatch: false }
-);
+  storeTests = createEffect(() =>
+    this.action$.pipe(
+      ofType(AdminAction.STORE_TESTS),
+      withLatestFrom(this.store.select('admin')),
+      switchMap(([actionData, adminState]) => {
+        return this.adminService.storeTest(adminState.tests);
+      }),
+    ),
+    { dispatch: false }
+  );
+
+
+  storeCurTest = createEffect(() =>
+    this.action$.pipe(
+      ofType(AdminAction.storeCurrentTest),
+      withLatestFrom(this.store.select('admin')),
+      switchMap(([actionData, adminState]) => {
+        return this.adminService.storeCurrentTest(adminState.curTest);
+      }),
+    ),
+    { dispatch: false }
+  );
+
+
+  storeCurHomework = createEffect(() =>
+    this.action$.pipe(
+      ofType(AdminAction.storeCurrentHomework),
+      withLatestFrom(this.store.select('admin')),
+      switchMap(([actionData, adminState]) => {
+        return this.adminService.storeCurrentHomework(adminState.curHomework);
+      }),
+    ),
+    { dispatch: false }
+  );
 
   constructor(
     private action$: Actions,

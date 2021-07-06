@@ -4,6 +4,8 @@ import { News } from "../../../shared/modules/home/news.model";
 import { Contact } from "../../../shared/modules/contact/contact.model";
 import { Homework } from 'src/app/shared/modules/works/models/homework.model';
 import { Test } from 'src/app/shared/modules/works/models/test.model';
+import { CurrentTest } from '../models/current-test.model';
+import { CurrentHomework } from '../models/current-homework.model';
 
 
 export const GET_CONTACTS = '[Admin] Get Contacts';
@@ -45,3 +47,9 @@ export const fetchTests = createAction(FETCH_TESTS)
 export const getTests = createAction(GET_TESTS, props<{ tests: Test[] }>());
 export const storeTests = createAction(STORE_TESTS);
 export const addNewTest = createAction(ADD_NEW_TEST, props<{ test: Test }>());
+
+export const fetchCurTest = createAction('[Admin] Fetch Current test');
+export const storeCurrentTest = createAction('[Admin] Store Current test', props<{ currentTest: CurrentTest }>());
+
+export const fetchCurHomework = createAction('[Admin] Fetch Current Homework');
+export const storeCurrentHomework = createAction('[Admin] Store Current Homework', props<{ currentHomework: CurrentHomework }>());

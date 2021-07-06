@@ -1,11 +1,12 @@
 import { Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, NgForm } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+
 import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
 import { PlaceholderDirective } from 'src/app/shared/directives/placeholder/placeholder.directive';
-
 import { AppValidators } from '../../shared/validators/app-validators';
+
 import * as fromApp from '../../store/app.reducer';
 import * as AuthActions from '../store/auth.actions';
 
@@ -80,7 +81,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginForm = new FormGroup({
       email: new FormControl(null, [
         AppValidators.required,
-        AppValidators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", "ემაილის მისამართის"),
+        AppValidators.email,
         AppValidators.cannotContainSpace
       ]),
       password: new FormControl(null, [

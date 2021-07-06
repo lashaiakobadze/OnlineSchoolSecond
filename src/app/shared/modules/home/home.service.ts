@@ -7,6 +7,9 @@ import { News } from './news.model';
 import { Slide } from 'src/app/modules/home/slides.model';
 import { LoaderService } from '../../components/loader/loader.service';
 
+import { environment } from 'src/environments/environment';
+const Url = environment.firebaseConfig.databaseURL;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,14 +23,14 @@ export class HomeService {
   getSlides(): Observable<Slide[]> {
     return this.http
     .get<Slide[]>(
-      'https://onlineschool-bee89-default-rtdb.firebaseio.com/slides.json'
+      `${Url}/slides.json`
     ).pipe(this.loaderService.useLoader);
   };
 
   getBlogs(): Observable<News[]> {
     return this.http
     .get<News[]>(
-      'https://onlineschool-bee89-default-rtdb.firebaseio.com/news.json'
+      `${Url}/news.json`
     ).pipe(this.loaderService.useLoader);
   };
 }

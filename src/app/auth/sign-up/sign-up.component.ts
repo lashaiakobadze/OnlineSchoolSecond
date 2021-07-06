@@ -54,7 +54,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.signupForm = new FormGroup({
       email: new FormControl(null, [
         AppValidators.required,
-        AppValidators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", "ემაილის მისამართის"),
+        AppValidators.email,
         AppValidators.cannotContainSpace
       ]),
       password: new FormControl(null, [

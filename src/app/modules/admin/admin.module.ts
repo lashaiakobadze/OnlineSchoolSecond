@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AdminRoutingModule } from './admin-routing.module';
+
 import { AdminComponent } from './admin/admin.component';
 import { BlogPanelComponent } from './blog-panel/blog-panel.component';
 import { ContactPanelComponent } from './contact-panel/contact-panel.component';
