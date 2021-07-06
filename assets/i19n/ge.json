@@ -52,6 +52,20 @@
       "btn": "ტესტის შეყვანა"
     }
   },
+  "admin" : {
+    "blog": {
+      "title": "ბლოგის პანელი"
+    },
+    "contact": {
+      "title": "კონტაქტის პანელი"
+    },
+    "homework": {
+      "title": "საშინაოს პანელი"
+    },
+    "test": {
+      "title": "ტესტის პანელი"
+    }
+  },
   "assessment" : {
     "first": "თქვენ მიიღეთ",
     "second": "ქულა",
@@ -98,7 +112,22 @@
   "Activity": "აქტიურობა",
   "Homework": "საშინაო დავალება",
   "Online test": "ონლაინ ტესტი",
+  "Lesson and schedule": "გაკვეთილი და ცხრილი",
   "Week": "კვირა",
   "Week sum": "კვირის ჯამი",
-  "Sum": "ჯამი"
+  "Sum": "ჯამი",
+  "Update": "განახლება",
+  "Title": "სახელწოდება",
+  "title": "სახელწოდება",
+  "Information": "ინფორმაცია",
+  "information": "ინფორმაცია",
+  "Write here blog information": "ჩაწერეთ ბლოგის ინფორმაცია",
+  "Submit": "წარდგენა",
+  "User Contacts": "მომხმარებლების კონტაქტები",
+  "Visitor Contacts": "ვიზიტორის კონტაქტები",
+  "User ID": "მომხმარებლის ID",
+  "Send": "გაგზავნა",
+  "Previous": "წინა",
+  "Next": "შემდეგი",
+  "Enter Search Text": "შეიყავნე საძებნი ტექსტი"
 }

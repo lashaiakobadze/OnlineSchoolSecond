@@ -52,6 +52,20 @@
       "btn": "Submit test"
     }
   },
+  "admin" : {
+    "blog": {
+      "title": "Blog panel"
+    },
+    "contact": {
+      "title": "Contact panel"
+    },
+    "homework": {
+      "title": "Homework panel"
+    },
+    "test": {
+      "title": "Online test panel"
+    }
+  },
   "assessment" : {
     "first": "You got",
     "second": "points out of",
