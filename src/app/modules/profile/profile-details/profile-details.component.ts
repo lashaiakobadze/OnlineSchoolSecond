@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Subscription, throwError } from 'rxjs';
 
 
 import { SolvedHomework } from '../../../shared/modules/works/models/solved-homework.model';
@@ -37,13 +37,13 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
       this.weeksHomework = homeworkState.answeredHomeworks;
       this.homeworksSum = homeworkState.homeworksSum;
       this.activitiesFirst = homeworkState.firstActivities;
-    });
+    }, error => throwError(error));
 
     this.testSub = this.store.select('OnlineTest').subscribe(testState => {
       this.weeksTest = testState.solvedTests;
       this.testsSum = testState.testsSum;
       this.activitiesSecond = testState.secondActivities;
-    });
+    }, error => throwError(error));
 
     this.activitiesSum = this.activitiesFirst + this.activitiesSecond;
   }

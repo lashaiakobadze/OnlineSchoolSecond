@@ -6,13 +6,11 @@
       (click)="onEditBlog()"
     />
     <span>{{ blog.date }}</span>
-    <button [disabled]="updateMode">
-      <img
-        src="assets/svg/delete_outline_black_18dp.svg"
-        alt="delete"
-        (click)="onDeleteBlog()"
-      />
-    </button>
+    <img
+      src="assets/svg/delete_outline_black_18dp.svg"
+      alt="delete"
+      (click)="onDeleteBlog()"
+    />
   </div>
   <input
     class="blog__title form-control"

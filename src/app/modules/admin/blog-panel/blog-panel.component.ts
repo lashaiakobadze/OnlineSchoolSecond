@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { AppValidators } from 'src/app/shared/validators/app-validators';
 
 import { News } from '../../../shared/modules/home/news.model';
@@ -13,11 +14,13 @@ import * as AdminActions from '../store/admin.actions';
   templateUrl: './blog-panel.component.html',
   styleUrls: ['./blog-panel.component.scss']
 })
-export class BlogPanelComponent implements OnInit {
+export class BlogPanelComponent implements OnInit, OnDestroy {
   blogPanelForm: FormGroup;
   blogs: News[] = [];
   blogId: string;
   blogDate: string;
+
+  blogsSub: Subscription;
 
   constructor(
     private store: Store<fromApp.AppState>
@@ -36,7 +39,7 @@ export class BlogPanelComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.store.dispatch(AdminActions.fetchBlogs());
-    this.store.select('admin').subscribe(adminData => {
+    this.blogsSub = this.store.select('admin').subscribe(adminData => {
       this.blogs = adminData.blogs;
     });
   }
@@ -72,6 +75,10 @@ export class BlogPanelComponent implements OnInit {
       'imgPath': new FormControl(null, [AppValidators.required]),
       'info': new FormControl(null, [AppValidators.required]),
     });
+  };
+
+  ngOnDestroy(): void {
+    this.blogsSub?.unsubscribe();
   }
 
 }

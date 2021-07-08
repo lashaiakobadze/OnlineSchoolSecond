@@ -1,0 +1,41 @@
+<hr>
+<form [formGroup]="curLessonForm" class="form-group">
+  <h2>Choose current online lessen link</h2>
+  <div class="form-group">
+    <label for="curLessonLink">Current link</label>
+    <input
+      type="url"
+      name="curLessonLink"
+      formControlName="curLessonLink"
+      class="form-control"
+      placeholder="Enter lessen link"
+    />
+    <p class="required" *ngIf="get('curLessonLink').invalid && get('curLessonLink').touched">
+      <ng-container *ngFor="let errorMessage of errors('curLessonLink')">
+        <span *ngIf="errorMessage !== true">{{ errorMessage }}</span>
+      </ng-container>
+    </p>
+  </div>
+  <div class="form-group group">
+    <label for="sel1">{{'Group' | translate}}</label>
+    <select formControlName="group" class="form-control">
+      <option>A</option>
+      <option>B</option>
+      <option>C</option>
+      <option>D</option>
+    </select>
+    <p class="required" *ngIf="get('group').invalid && get('group').touched">
+      <ng-container *ngFor="let errorMessage of errors('group')">
+        <span *ngIf="errorMessage !== true">{{ errorMessage }}</span>
+      </ng-container>
+    </p>
+  </div>
+  <div class="form-group">
+    <button
+      type="button"
+      class="btn btn-success"
+      [disabled]="!curLessonForm.valid"
+      (click)="onSubmitCurLesson()"
+    >Submit current lessen</button>
+  </div>
+</form>

@@ -11,6 +11,7 @@ import { OnlineTestPanelComponent } from './online-test-panel/online-test-panel.
 import { UserContactComponent } from './contact-panel/user-contact/user-contact.component';
 import { VisitorContactComponent } from './contact-panel/visitor-contact/visitor-contact.component';
 import { BlogPanelItemComponent } from './blog-panel/blog-panel-item/blog-panel-item.component';
+import { LessonPanelComponent } from './lesson-panel/lesson-panel.component';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { BlogPanelItemComponent } from './blog-panel/blog-panel-item/blog-panel-
     UserContactComponent,
     VisitorContactComponent,
     BlogPanelItemComponent,
+    LessonPanelComponent,
   ],
   imports: [
     SharedModule,

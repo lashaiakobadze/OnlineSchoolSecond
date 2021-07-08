@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { Subscription, throwError } from 'rxjs';
 
 import { Test } from '../../../shared/modules/works/models/test.model';
 import { SolvedTest } from '../../../shared/modules/works/models/solved-test.model';
@@ -41,7 +41,7 @@ export class OnlineTestComponent implements OnInit, OnDestroy {
       if(status.isSolved) {
         this.store.dispatch(new TestActions.GetTestMode());
       }
-    });
+    }, error => throwError(error));
 
     this.store.dispatch(new TestActions.FetchCurTestId());
 
@@ -53,7 +53,7 @@ export class OnlineTestComponent implements OnInit, OnDestroy {
       this.curTest = testState.test;
       this.isSolved = testState.testIsWritten;
       this.isTestMode = testState.isTestMode;
-    });
+    }, error => throwError(error));
   }
 
   goToCurTest() {
@@ -62,8 +62,8 @@ export class OnlineTestComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if(this.routerSub) this.routerSub.unsubscribe();
-    if(this.testSub) this.testSub.unsubscribe();
+    this.routerSub?.unsubscribe();
+    this.testSub?.unsubscribe();
   }
 
 }

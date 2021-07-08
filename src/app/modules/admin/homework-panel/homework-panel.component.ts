@@ -1,22 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Homework } from 'src/app/shared/modules/works/models/homework.model';
 import { AppValidators } from 'src/app/shared/validators/app-validators';
 import { Store } from '@ngrx/store';
+import { Subscription, throwError } from 'rxjs';
+
 
 import * as fromApp from '../../../store/app.reducer';
 import * as AdminActions from '../store/admin.actions';
+
 
 @Component({
   selector: 'app-homework-panel',
   templateUrl: './homework-panel.component.html',
   styleUrls: ['./homework-panel.component.scss']
 })
-export class HomeworkPanelComponent implements OnInit {
+export class HomeworkPanelComponent implements OnInit, OnDestroy {
   homeworkForm: FormGroup;
   curHomeworkForm: FormGroup;
   tasks: FormArray;
   homeworks: Homework[];
+
+  homeworksSub: Subscription;
 
   constructor(
     private store: Store<fromApp.AppState>,
@@ -28,7 +33,7 @@ export class HomeworkPanelComponent implements OnInit {
     this.store.dispatch(AdminActions.fetchHomeworks());
     this.store.select('admin').subscribe(adminState => {
       this.homeworks = adminState.homeworks;
-    });
+    }, error => throwError(error));
   };
 
   createTask(): FormGroup {
@@ -96,6 +101,10 @@ export class HomeworkPanelComponent implements OnInit {
         AppValidators.minNumber
       ]),
     });
+  };
+
+  ngOnDestroy(): void {
+    this.homeworksSub?.unsubscribe();
   };
 
 }

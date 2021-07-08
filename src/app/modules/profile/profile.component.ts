@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Subscription, throwError } from 'rxjs';
 import { AngularFireStorage } from "@angular/fire/storage";
 
 
@@ -52,7 +52,7 @@ export class ProfileComponent {
         return;
       }
       this.userId = data.user?.id;
-    });
+    }, error => throwError(error));
 
     this.userProfile = this.registerService.userProfile;
 
@@ -63,7 +63,7 @@ export class ProfileComponent {
       this.homeworkPercentage = homeworkState.homeworksPercentage;
       this.activitiesHomework = homeworkState.answeredHomeworks.length;
       this.activitiesScoreFirst = homeworkState.firstActivities;
-    });
+    }, error => throwError(error));
 
     this.store.dispatch(new TestActions.getActivitiesSecondSum());
     this.store.dispatch(new TestActions.getAnsweredTestsPercentage());
@@ -80,7 +80,7 @@ export class ProfileComponent {
     this.angularFirebaseStorage.ref('users/' + this.userId + '/profile.jpg').getDownloadURL()
     .subscribe(imgUrl => {
         this.img.src = imgUrl;
-      }
+      },error => throwError(error.error),
     )
   }
 

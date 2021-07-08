@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Subscription, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       map(userState => userState.user)
     ).subscribe(user => {
       this.isAuthenticated = !!user;
-    })
+    }, error => throwError(error));
   }
 
   changeLang(lang){

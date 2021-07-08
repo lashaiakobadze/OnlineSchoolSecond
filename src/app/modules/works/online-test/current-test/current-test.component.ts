@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, throwError } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -47,7 +47,7 @@ export class CurrentTestComponent implements OnInit, OnDestroy {
       })
     ).subscribe(status => {
       this.active = +status;
-    });
+    }, error => throwError(error));
 
     this.store.dispatch(new TestActions.FetchTests());
 
@@ -57,7 +57,7 @@ export class CurrentTestComponent implements OnInit, OnDestroy {
       this.solvedTests = testState.solvedTests;
       this.testMode = testState.isTestMode;
       this.testIsWritten = testState.testIsWritten;
-    });
+    }, error => throwError(error));
   };
 
   endTest() {
@@ -78,8 +78,10 @@ export class CurrentTestComponent implements OnInit, OnDestroy {
       ));
     };
 
-    this.yourScore = this.solvedTests[this.test.TestNumber - 1].getTestScore;
-    this.maxScore = this.solvedTestTasks.length * 2;
+    if (this.solvedTests[this.test.TestNumber - 1]) {
+      this.yourScore = this.solvedTests[this.test.TestNumber - 1].getTestScore;
+      this.maxScore = this.solvedTestTasks.length * 2;
+    }
   };
 
   onNavigateBack() {
@@ -97,9 +99,9 @@ export class CurrentTestComponent implements OnInit, OnDestroy {
   };
 
   ngOnDestroy() {
-    if(this.routerSub) this.routerSub.unsubscribe();
-    if(this.testSub) this.testSub.unsubscribe();
-    if(this.solvedTestTasks.length !== this.test.tests.length) {
+    this.routerSub?.unsubscribe();
+    this.testSub?.unsubscribe();
+    if (this.solvedTestTasks.length !== this.test.tests.length) {
       this.store.dispatch(new TestActions.ClearAnsweredTasks());
     }
   };

@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Resolve } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { throwError } from 'rxjs';
+
+
 import { News } from '../modules/home/news.model';
 import * as fromApp from '../../store/app.reducer';
 
@@ -19,7 +22,7 @@ export class HomeResolverService implements Resolve<News[]> {
     this.store.select('home')
     .subscribe(homeState => {
       news = homeState.news;
-    })
+    }, error => throwError(error));
 
     // To prevent update bugs
     if(news.length === 0) {

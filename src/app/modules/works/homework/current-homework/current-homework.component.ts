@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, throwError } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -47,7 +47,7 @@ export class CurrentHomeworkComponent implements OnInit, OnDestroy {
       })
     ).subscribe(status => {
       this.active = +status;
-    });
+    }, error => throwError(error));
 
     this.store.dispatch(new HomeworkActions.FetchHomeworks());
 
@@ -57,7 +57,7 @@ export class CurrentHomeworkComponent implements OnInit, OnDestroy {
       this.answeredHomeworks = homeworkState.answeredHomeworks;
       this.homeworkMode = homeworkState.isHomeworkMode;
       this.homeworkIsWritten = homeworkState.homeworkIsWritten;
-    });
+    }, error => throwError(error));
   };
 
   endHomework() {
@@ -97,8 +97,8 @@ export class CurrentHomeworkComponent implements OnInit, OnDestroy {
   };
 
   ngOnDestroy() {
-    if(this.routerSub) this.routerSub.unsubscribe();
-    if(this.homeworkSub) this.homeworkSub.unsubscribe();
+    this.routerSub?.unsubscribe();
+    this.homeworkSub?.unsubscribe();
     if(this.answeredTasks.length !== this.curHomework.tasks.length) {
       this.store.dispatch(new HomeworkActions.ClearAnsweredTasks());
     }

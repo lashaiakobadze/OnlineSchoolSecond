@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Subscription, throwError } from 'rxjs';
 import { SolvedHomework } from '../../../shared/modules/works/models/solved-homework.model';
 import { SolvedTest } from '../../../shared/modules/works/models/solved-test.model';
 
@@ -34,14 +34,14 @@ export class ActivityComponent implements OnInit, OnDestroy {
     .subscribe(homeworkState => {
       this.activitiesHomework = homeworkState.answeredHomeworks;
       this.activitiesScoreFirst = homeworkState.firstActivities;
-    });
+    }, error => throwError(error));
 
     this.store.dispatch(new TestActions.getActivitiesSecondSum());
     this.testSub = this.store.select('OnlineTest')
     .subscribe(testState => {
       this.activitiesTest = testState.solvedTests;
       this.activitiesScoreSecond = testState.secondActivities;
-    });
+    }, error => throwError(error));
 
     this.activityPercentage = (this.activitiesScoreFirst/this.activitiesHomework.length + this.activitiesScoreSecond/this.activitiesTest.length) * 10;
   }

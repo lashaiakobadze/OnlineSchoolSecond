@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, VERSION } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { Subscription } from 'rxjs';
+import { Subscription, throwError } from 'rxjs';
 
 
 import { News } from '../../shared/modules/home/news.model';
@@ -36,9 +36,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.isLoading = homeState.loading;
       this.slideObjects = homeState.slides;
       this.newsObjects = homeState.news;
-    });
-
-
+    }, error => throwError(error));
   };
 
 

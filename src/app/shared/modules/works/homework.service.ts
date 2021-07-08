@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
+import { Observable, throwError } from 'rxjs';
+
+
 import { Homework } from './models/homework.model';
 import { SolvedHomework } from './models/solved-homework.model';
 import { SolvedTask } from './models/solved-task.model';
 import { Task } from './models/Task.model';
-import { Observable } from 'rxjs';
 
 
 import { LoaderService } from '../../components/loader/loader.service';
@@ -67,7 +69,7 @@ export class HomeworkService {
     this.store.select('homeWork').subscribe(
       state => {
         this.currentHomework = state.homeworks[curHomeworkIndex];
-      }
+      }, error => throwError(error)
     );
   };
 
@@ -76,7 +78,7 @@ export class HomeworkService {
     this.store.select('homeWork').subscribe(
       state => {
         this.solvedHomeworks = state.answeredHomeworks;
-      }
+      }, error => throwError(error)
     );
   };
 

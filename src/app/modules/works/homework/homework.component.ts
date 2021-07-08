@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { Subscription, throwError } from 'rxjs';
 
 import { SolvedHomework } from '../../../shared/modules/works/models/solved-homework.model';
 import { Homework } from '../../../shared/modules/works/models/homework.model';
@@ -42,7 +42,7 @@ export class HomeworkComponent implements OnInit, OnDestroy {
       if(status.isWritten) {
         this.store.dispatch(new HomeworkActions.GetHomeworkMode());
       }
-    });
+    }, error => throwError(error));
 
 
     this.store.dispatch(new HomeworkActions.FetchCurTestIndex());
@@ -55,17 +55,20 @@ export class HomeworkComponent implements OnInit, OnDestroy {
       this.curHomework = homeState.homework;
       this.homeworkIsWritten = homeState.homeworkIsWritten;
       this.isHomeworkEnterMode = homeState.isHomeworkMode;
-    });
+    }, error => throwError(error));
   };
 
 
   goToCurHomework() {
-    this.store.dispatch(new HomeworkActions.GoToHomework({ homeworkNumber: this.curHomework.homeworkNumber , homeworkIsWritten: this.homeworkIsWritten }))
+    this.store.dispatch(new HomeworkActions.GoToHomework({
+      homeworkNumber: this.curHomework.homeworkNumber,
+      homeworkIsWritten: this.homeworkIsWritten
+    }));
   }
 
   ngOnDestroy() {
-    if(this.routerSub) this.routerSub.unsubscribe();
-    if(this.homeworkSub) this.homeworkSub.unsubscribe();
+    this.routerSub?.unsubscribe();
+    this.homeworkSub?.unsubscribe();
   }
 
 }

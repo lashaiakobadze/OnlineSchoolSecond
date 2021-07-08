@@ -40,13 +40,16 @@ export class AppValidators extends NGValidators {
     return (control.value as string)?.indexOf(' ') !== -1 ? { cannotContainSpace: 'Spaces are not allowed' } : undefined;
   };
 
+
   static minNumber(control: AbstractControl): ValidationErrors | null {
     return (control.value as number) < 1 ? { minValue: 'Please enter at least 1' } : undefined;
   };
 
+
   static email(control: AbstractControl) {
     return super.email(control) ? { required: 'Please enter the correct email' } : undefined;
-  }
+  };
+
 
   static matchValues(matchTo: string): (AbstractControl) => ValidationErrors | null {
     return (control: AbstractControl): ValidationErrors | null => {

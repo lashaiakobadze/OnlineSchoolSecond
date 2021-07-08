@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { Subscription, throwError } from 'rxjs';
 import { Test } from 'src/app/shared/modules/works/models/test.model';
 import { AppValidators } from 'src/app/shared/validators/app-validators';
 
@@ -12,10 +13,12 @@ import * as AdminActions from '../store/admin.actions';
   templateUrl: './online-test-panel.component.html',
   styleUrls: ['./online-test-panel.component.scss']
 })
-export class OnlineTestPanelComponent implements OnInit {
+export class OnlineTestPanelComponent implements OnInit, OnDestroy {
   public testForm: FormGroup;
   public curTestForm: FormGroup;
   public tests: Test[];
+
+  testsSub: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,9 +29,9 @@ export class OnlineTestPanelComponent implements OnInit {
   ngOnInit() {
     this.initForm();
     this.store.dispatch(AdminActions.fetchTests());
-    this.store.select('admin').subscribe(adminState => {
+    this.testsSub = this.store.select('admin').subscribe(adminState => {
       this.tests = adminState.tests;
-    });
+    }, error => throwError(error));
   }
 
   private tasksGroup(): FormGroup {
@@ -111,6 +114,10 @@ export class OnlineTestPanelComponent implements OnInit {
         AppValidators.minNumber
       ]),
     });
+  };
+
+  ngOnDestroy(): void {
+    this.testsSub?.unsubscribe();
   }
 
 }

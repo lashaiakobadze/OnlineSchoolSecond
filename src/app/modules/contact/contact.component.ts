@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, throwError } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 
@@ -38,7 +38,7 @@ export class ContactComponent implements OnInit, OnDestroy {
       }
       this.curUserId = curUser.user.id;
       this.curUserEmail = curUser.user.email;
-    });
+    }, error => throwError(error));
     this.store.dispatch(new ContactActions.FetchContacts());
   };
 
@@ -59,7 +59,8 @@ export class ContactComponent implements OnInit, OnDestroy {
 
     this.contactSub = this.store.select('contact').subscribe(contactState => {
       this.contacts = contactState.messages;
-    });
+    }, error => throwError(error));
+
     this.store.dispatch(new ContactActions.SendContact(this.newMessage));
     this.store.dispatch(new ContactActions.StoreContacts());
     this.contactForm.reset();

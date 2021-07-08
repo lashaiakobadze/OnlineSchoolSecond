@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 
 import { TestTask } from './models/test-task.model';
 import { Test } from './models/test.model';
 import { SolvedTest } from './models/solved-test.model';
 import { SolvedTestTask } from './models/solved-test-task.model';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-
-
 import { LoaderService } from '../../components/loader/loader.service';
 import { CurrentTest } from 'src/app/modules/admin/models/current-test.model';
 
@@ -66,7 +64,7 @@ export class TestService {
     this.store.select('OnlineTest').subscribe(
       state => {
         this.currentTest = state.tests[curTestIndex];
-      }
+      }, error => throwError(error)
     );
   };
 
@@ -75,7 +73,7 @@ export class TestService {
     this.store.select('OnlineTest').subscribe(
       state => {
         this.solvedTests = state.solvedTests;
-      }
+      }, error => throwError(error)
     );
   };
 

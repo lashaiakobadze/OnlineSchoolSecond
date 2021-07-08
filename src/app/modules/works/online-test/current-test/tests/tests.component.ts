@@ -29,7 +29,7 @@ export class TestsComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-   }
+  }
 
   addTestTask() {
     this.isAdded = true;
@@ -47,6 +47,5 @@ export class TestsComponent implements OnInit {
     this.testForm = new FormGroup({
       option: new FormControl('', AppValidators.required)
     });
-  }
-
+  };
 }

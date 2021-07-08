@@ -18,7 +18,7 @@ export class AdminEffects {
 
   getContactsMsg = createEffect(() =>
     this.action$.pipe(
-      ofType(AdminAction.FETCH_CONTACTS),
+      ofType(AdminAction.fetchContacts),
       switchMap(() => {
         return this.contactService.getContacts();
       }),
@@ -30,7 +30,7 @@ export class AdminEffects {
         });
       }),
       map((contacts) => {
-        return AdminAction.getContacts({contacts});
+        return AdminAction.getContacts({ contacts });
       })
     )
   );
@@ -38,7 +38,7 @@ export class AdminEffects {
 
   getBlogs = createEffect(() =>
     this.action$.pipe(
-      ofType(AdminAction.FETCH_BLOGS),
+      ofType(AdminAction.fetchBlogs),
       switchMap(() => {
         return this.homeService.getBlogs();
       }),
@@ -58,7 +58,7 @@ export class AdminEffects {
 
   storeBlogs = createEffect(() =>
     this.action$.pipe(
-      ofType(AdminAction.STORE_BLOGS),
+      ofType(AdminAction.storeBlogs),
       withLatestFrom(this.store.select('admin')),
       switchMap(([actionData, adminState]) => {
         return this.adminService.storeBlogs(adminState.blogs);
@@ -70,7 +70,7 @@ export class AdminEffects {
 
   getHomeworks = createEffect(() =>
     this.action$.pipe(
-      ofType(AdminAction.FETCH_HOMEWORKS),
+      ofType(AdminAction.fetchHomeworks),
       switchMap(() => {
         return this.homeworkService.getHomeworks();
       }),
@@ -91,7 +91,7 @@ export class AdminEffects {
 
   storeHomeworks = createEffect(() =>
     this.action$.pipe(
-      ofType(AdminAction.STORE_HOMEWORKS),
+      ofType(AdminAction.storeHomeworks),
       withLatestFrom(this.store.select('admin')),
       switchMap(([actionData, adminState]) => {
         return this.adminService.storeHomework(adminState.homeworks);
@@ -103,7 +103,7 @@ export class AdminEffects {
 
   getTests = createEffect(() =>
     this.action$.pipe(
-      ofType(AdminAction.FETCH_TESTS),
+      ofType(AdminAction.fetchTests),
       switchMap(() => {
         return this.testService.getTests();
       }),
@@ -124,7 +124,7 @@ export class AdminEffects {
 
   storeTests = createEffect(() =>
     this.action$.pipe(
-      ofType(AdminAction.STORE_TESTS),
+      ofType(AdminAction.storeTests),
       withLatestFrom(this.store.select('admin')),
       switchMap(([actionData, adminState]) => {
         return this.adminService.storeTest(adminState.tests);
@@ -152,6 +152,32 @@ export class AdminEffects {
       withLatestFrom(this.store.select('admin')),
       switchMap(([actionData, adminState]) => {
         return this.adminService.storeCurrentHomework(adminState.curHomework);
+      }),
+    ),
+    { dispatch: false }
+  );
+
+
+  getLessons = createEffect(() =>
+    this.action$.pipe(
+      ofType(AdminAction.fetchCurLessen),
+      switchMap(() => {
+        return this.adminService.getCurrentLesson();
+      }),
+      map((currentLesson) => {
+        return AdminAction.getCurrentLesson({ currentLesson });
+      }),
+    ),
+    { dispatch: true }
+  );
+
+
+  storeCurLessen = createEffect(() =>
+    this.action$.pipe(
+      ofType(AdminAction.storeCurrentLesson),
+      withLatestFrom(this.store.select('admin')),
+      switchMap(([actionData, adminState]) => {
+        return this.adminService.storeCurrentLesson(adminState.curLesson);
       }),
     ),
     { dispatch: false }

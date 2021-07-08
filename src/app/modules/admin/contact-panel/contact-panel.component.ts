@@ -1,21 +1,25 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Subscription, throwError } from 'rxjs';
+
 
 import { Contact } from '../../../shared/modules/contact/contact.model';
 
 import * as fromApp from '../../../store/app.reducer';
 import * as AdminActions from '../store/admin.actions';
 
+
 @Component({
   selector: 'app-contact-panel',
   templateUrl: './contact-panel.component.html',
   styleUrls: ['./contact-panel.component.scss']
 })
-export class ContactPanelComponent implements OnInit {
+export class ContactPanelComponent implements OnInit, OnDestroy {
   @Output() userContacts: Contact[] = [];
   @Output() visitorContacts: Contact[] = [];
   contacts: Contact[] = [];
 
+  messagesSub: Subscription;
 
   constructor(
     private store: Store<fromApp.AppState>
@@ -23,7 +27,7 @@ export class ContactPanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(AdminActions.fetchContacts());
-    this.store.select('admin').subscribe(adminData => {
+    this.messagesSub = this.store.select('admin').subscribe(adminData => {
       this.contacts = adminData.messages;
       for(let contact of this.contacts) {
         if (contact.uId === 'visitor') {
@@ -32,7 +36,11 @@ export class ContactPanelComponent implements OnInit {
           this.userContacts.push(contact);
         }
       }
-    })
+    }, error => throwError(error));
+  };
+
+  ngOnDestroy(): void {
+    this.messagesSub?.unsubscribe();
   }
 
 }

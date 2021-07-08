@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, throwError } from 'rxjs';
 import { CanComponentDeactivate } from '../../shared/guards/registration.guard';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
@@ -51,12 +51,12 @@ export class RegistrationComponent implements OnInit, CanComponentDeactivate, On
       if (!data) return 'user is null';
       this.profilesEmail = data.user.email;
       this.userId = data.user?.id;
-    });
+    }, error => throwError(error));
 
     this.registrationSub = this.store.select('registration')
     .subscribe(usersData => {
       this.curRegister = usersData.curUserRegistration;
-    });
+    }, error => throwError(error));
     this.initForm(this.curRegister);
   }
 

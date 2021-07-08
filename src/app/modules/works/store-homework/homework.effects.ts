@@ -31,6 +31,7 @@ export class HomeworkEffects {
     { dispatch: false }
   );
 
+
   getHomeworks = createEffect(() =>
     this.actions$.pipe(
       ofType(HomeworkActions.FETCH_HOMEWORKS),
@@ -51,6 +52,7 @@ export class HomeworkEffects {
     { dispatch: false }
   );
 
+
   getSolvedHomework = createEffect(() =>
     this.actions$.pipe(
       ofType(HomeworkActions.FETCH_SOLVED_HOMEWORK),
@@ -64,6 +66,7 @@ export class HomeworkEffects {
     { dispatch: false }
   );
 
+
   storeSolvedHomework = createEffect(() =>
     this.actions$.pipe(
       ofType(HomeworkActions.STORE_SOLVED_HOMEWORK),
@@ -75,6 +78,7 @@ export class HomeworkEffects {
     { dispatch: false }
   );
 
+  
   getCurHomeworkIndex = createEffect(() =>
     this.actions$.pipe(
       ofType(HomeworkActions.FETCH_CURRENT_HOMEWORK_INDEX),

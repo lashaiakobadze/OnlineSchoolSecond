@@ -1,13 +1,15 @@
 import { Action, createReducer, on } from '@ngrx/store';
+
 import { Homework } from 'src/app/shared/modules/works/models/homework.model';
 import { Test } from 'src/app/shared/modules/works/models/test.model';
-
 import { Contact } from '../../../shared/modules/contact/contact.model';
 import { News } from '../../../shared/modules/home/news.model';
 import { CurrentHomework } from '../models/current-homework.model';
+import { CurrentLesson } from '../../../shared/modules/lesson/current-lessen.model';
 import { CurrentTest } from '../models/current-test.model';
 
 import * as AdminActions from './admin.actions';
+
 
 export interface State {
   messages: Contact[];
@@ -16,6 +18,7 @@ export interface State {
   tests: Test[];
   curTest: CurrentTest;
   curHomework: CurrentHomework;
+  curLesson: CurrentLesson;
 };
 
 const initialState: State = {
@@ -24,7 +27,8 @@ const initialState: State = {
   homeworks: [],
   tests: [],
   curTest: null,
-  curHomework: null
+  curHomework: null,
+  curLesson: null,
 };
 
 const adminReducer = createReducer(
@@ -57,6 +61,9 @@ const adminReducer = createReducer(
 
   on(AdminActions.storeCurrentTest, (state, { currentTest }) => ({ ...state, curTest: { ...currentTest }})),
   on(AdminActions.storeCurrentHomework, (state, { currentHomework }) => ({ ...state, curHomework: { ...currentHomework }})),
+
+  on(AdminActions.getCurrentLesson, (state, { currentLesson }) => ({ ...state, curLesson: { ...currentLesson } })),
+  on(AdminActions.storeCurrentLesson, (state, { currentLesson }) => ({ ...state, curLesson: { ...currentLesson }})),
 );
 
 export function reducer(state: State | undefined, action: Action) {

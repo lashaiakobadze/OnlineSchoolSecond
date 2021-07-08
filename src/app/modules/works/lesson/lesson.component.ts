@@ -1,21 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+
+
+import * as fromApp from '../../../store/app.reducer';
+import * as AdminActions from '../../admin/store/admin.actions';
+
 
 @Component({
   selector: 'app-lesson',
   templateUrl: './lesson.component.html',
   styleUrls: ['./lesson.component.scss']
 })
-export class LessonComponent implements OnInit {
-  LessonLink: string = null;
+export class LessonComponent implements OnInit, OnDestroy {
+  lessonLink: string = null;
 
-  constructor() { }
+  lessenSub: Subscription;
+
+  constructor(
+    private store: Store<fromApp.AppState>,
+  ) { }
+
 
   ngOnInit(): void {
-  }
+    this.store.dispatch(AdminActions.fetchCurLessen());
+    this.lessenSub = this.store.select('admin').subscribe(
+      adminState => {
+        this.lessonLink = adminState.curLesson?.curLessenLink;
+      }
+    );
+  };
+
 
   goToCurLesson() {
-    // i will come out this link from environments
-    this.LessonLink = 'https://www.facebook.com/profile.php?id=100057484148115'
-  }
+    this.lessonLink = this.lessonLink;
 
+  };
+
+
+  ngOnDestroy(): void {
+    this.lessenSub?.unsubscribe();
+  };
 }

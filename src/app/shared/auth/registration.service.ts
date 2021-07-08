@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
 
 import { Registration } from 'src/app/shared/auth/registration.model';
@@ -50,12 +50,12 @@ export class RegistrationService implements OnInit {
     this.store.select('auth')
     .subscribe(userData => {
       this.curUserId = userData.user?.id;
-    });
+    }, error => throwError(error));
 
     this.store.select('registration')
     .subscribe(userState => {
       this.userProfiles = userState.users;
-    });
+    }, error => throwError(error));
 
     this.userProfile = this.userProfiles.find(profile => profile.userId === this.curUserId);
     this.store.dispatch(new RegistrationActions.CurRegistration(this.userProfile));
