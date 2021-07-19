@@ -9,6 +9,7 @@ import { News } from '../../../shared/modules/home/news.model';
 import * as fromApp from '../../../store/app.reducer';
 import * as AdminActions from '../store/admin.actions';
 
+
 @Component({
   selector: 'app-blog-panel',
   templateUrl: './blog-panel.component.html',
@@ -23,18 +24,18 @@ export class BlogPanelComponent implements OnInit, OnDestroy {
   blogsSub: Subscription;
 
   constructor(
-    private store: Store<fromApp.AppState>
+    private store: Store<fromApp.AppState>,
   ) { }
 
   get curDate() {
     const d = new Date();
     return `${('0' + d.getDate()).slice(-2)}/${('0' + (d.getMonth() + 1)).slice(-2)}/${d.getFullYear()}`;
-  }
+  };
 
   get curId() {
     const d = new Date();
     return (Date.now() + '').slice(-10);
-  }
+  };
 
   ngOnInit(): void {
     this.initForm();
@@ -42,32 +43,36 @@ export class BlogPanelComponent implements OnInit, OnDestroy {
     this.blogsSub = this.store.select('admin').subscribe(adminData => {
       this.blogs = adminData.blogs;
     });
-  }
+  };
+
 
   onSubmitBlog(): void {
-    this.blogDate = this.curDate;
-    this.blogId = this.curId;
+    if (confirm('Are you sure?')) {
+      this.blogDate = this.curDate;
+      this.blogId = this.curId;
 
-    const blog = new News(
-      this.blogId,
-      this.blogDate,
-      this.blogPanelForm.value.title,
-      this.blogPanelForm.value.imgPath,
-      this.blogPanelForm.value.info,
-    );
+      const blog = new News(
+        this.blogId,
+        this.blogDate,
+        this.blogPanelForm.value.title,
+        this.blogPanelForm.value.imgPath,
+        this.blogPanelForm.value.info,
+      );
 
-    this.store.dispatch(AdminActions.addNewBlog({ blog }));
-    this.store.dispatch(AdminActions.storeBlogs());
-    this.blogPanelForm.reset();
+      this.store.dispatch(AdminActions.addNewBlog({ blog }));
+      this.store.dispatch(AdminActions.storeBlogs());
+      this.blogs.push(blog);
+      this.blogPanelForm.reset();
+    }
   };
 
   errors(controlName: string | (string | number)[]) {
     return Object.values(this.get(controlName).errors);
-  }
+  };
 
   get(controlName: string | (string | number)[]): AbstractControl {
     return this.blogPanelForm.get(controlName);
-  }
+  };
 
   initForm() {
     this.blogPanelForm = new FormGroup({
@@ -79,6 +84,6 @@ export class BlogPanelComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.blogsSub?.unsubscribe();
-  }
+  };
 
 }

@@ -78,7 +78,7 @@ export class HomeworkEffects {
     { dispatch: false }
   );
 
-  
+
   getCurHomeworkIndex = createEffect(() =>
     this.actions$.pipe(
       ofType(HomeworkActions.FETCH_CURRENT_HOMEWORK_INDEX),

@@ -1,12 +1,15 @@
 <form [formGroup]="blogForm" class="blog form-group">
   <div class="blog__option">
     <img
+      class="edit"
       src="assets/svg/edit_black_18dp.svg"
       alt="edit"
       (click)="onEditBlog()"
     />
     <span>{{ blog.date }}</span>
+
     <img
+      class="delete"
       src="assets/svg/delete_outline_black_18dp.svg"
       alt="delete"
       (click)="onDeleteBlog()"

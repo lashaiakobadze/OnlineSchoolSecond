@@ -25,42 +25,47 @@ export class BlogPanelItemComponent implements OnInit {
   ngOnInit(): void {
     this.updateMode = false;
     this.initForm(this.blog);
-  }
-
+  };
 
   onDeleteBlog(): void {
-    const blog = this.blog;
-    this.store.dispatch(AdminActions.deleteBlog({ blog }));
-    this.store.dispatch(AdminActions.storeBlogs());
-  }
+    if (confirm('Are you sure?')) {
+      const blog = this.blog;
+      this.store.dispatch(AdminActions.deleteBlog({ blog }));
+      this.store.dispatch(AdminActions.storeBlogs());
+      this.blog = null;
+    }
+  };
 
   onEditBlog(): void {
     this.updateMode = !this.updateMode;
-  }
+  };
 
   onUpdateBlog(): void {
-    this.updateMode = false;
+    if (confirm('Are you sure?')) {
+      this.updateMode = false;
 
-    const updatedBlog = new News(
-      this.blog.id,
-      this.blog.date,
-      this.blogForm.value.title,
-      this.blogForm.value.imgPath,
-      this.blogForm.value.info,
-    );
-    const blog = updatedBlog;
+      const updatedBlog = new News(
+        this.blog.id,
+        this.blog.date,
+        this.blogForm.value.title,
+        this.blogForm.value.imgPath,
+        this.blogForm.value.info,
+      );
+      const blog = updatedBlog;
 
-    this.store.dispatch(AdminActions.updateBlog({ blog }));
-    this.store.dispatch(AdminActions.storeBlogs());
-  }
+      this.store.dispatch(AdminActions.updateBlog({ blog }));
+      this.store.dispatch(AdminActions.storeBlogs());
+      this.blog = updatedBlog;
+    }
+  };
 
   errors(controlName: string | (string | number)[]) {
     return Object.values(this.get(controlName).errors);
-  }
+  };
 
   get(controlName: string | (string | number)[]): AbstractControl {
     return this.blogForm.get(controlName);
-  }
+  };
 
   initForm(blog: News) {
     this.blogForm = new FormGroup({
@@ -73,5 +78,5 @@ export class BlogPanelItemComponent implements OnInit {
     //   'imgPath': new FormControl({ value: blog?.imgPath, disabled: !this.updateMode }, [AppValidators.required]),
     //   'info': new FormControl({ value: blog?.info, disabled: !this.updateMode }, [AppValidators.required]),
     // });
-  }
+  };
 }

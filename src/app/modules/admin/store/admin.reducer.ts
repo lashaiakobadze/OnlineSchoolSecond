@@ -21,7 +21,7 @@ export interface State {
   curLesson: CurrentLesson;
 };
 
-const initialState: State = {
+export const initialState: State = {
   messages: [],
   blogs: [],
   homeworks: [],
@@ -31,9 +31,8 @@ const initialState: State = {
   curLesson: null,
 };
 
-const adminReducer = createReducer(
+export const adminReducer = createReducer(
   initialState,
-  on(AdminActions.fetchContacts, (state) => ({ ...state })),
   on(AdminActions.getContacts, (state, { contacts }) => ({ ...state, messages: [...contacts] })),
 
   on(AdminActions.addNewBlog, (state, { blog } ) => ({ ...state, blogs: [...state.blogs, blog ] })),

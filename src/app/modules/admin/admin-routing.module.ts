@@ -9,7 +9,7 @@ import { LessonPanelComponent } from './lesson-panel/lesson-panel.component';
 import { OnlineTestPanelComponent } from './online-test-panel/online-test-panel.component';
 
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
     component: AdminComponent,

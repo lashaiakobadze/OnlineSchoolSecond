@@ -9,6 +9,7 @@ import { LoaderService } from 'src/app/shared/components/loader/loader.service';
 import { ErrorService } from 'src/app/shared/services/error.service';
 import { AdminService } from '../admin.service';
 
+
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -32,13 +33,6 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.initForm();
   }
 
-  initForm(): void {
-    this.adminForm = new FormGroup({
-      'password': new FormControl(null, Validators.required)
-    })
-  };
-
-
   onLogin(): void {
     const password = this.adminForm.value.password;
 
@@ -46,7 +40,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.passwordSub =  this.http.get(
+    this.passwordSub = this.http.get(
       'https://onlineschool-bee89-default-rtdb.firebaseio.com/passwords.json'
     ).pipe(this.loaderService.useLoader).subscribe(pas => {
       this.pass = pas[0];
@@ -69,6 +63,12 @@ export class AdminComponent implements OnInit, OnDestroy {
     }
 
     this.adminService.isAdminMode = false;
+  };
+
+  initForm(): void {
+    this.adminForm = new FormGroup({
+      'password': new FormControl(null, Validators.required)
+    })
   };
 
   ngOnDestroy() {
