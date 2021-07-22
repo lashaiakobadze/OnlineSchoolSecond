@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
-
-import { HttpClient } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AngularFireStorageModule } from '@angular/fire/storage';
@@ -30,6 +31,7 @@ import { HomeworkEffects } from './modules/works/store-homework/homework.effects
 import { TestEffects } from './modules/works/store-test/test.effects';
 import { ContactsEffects } from './modules/contact/store/contact.effects';
 import { AdminEffects } from './modules/admin/store/admin.effects';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -70,7 +72,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       },
       extend: true
-    })
+    }),
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    RouterModule
   ],
   bootstrap: [AppComponent]
 })

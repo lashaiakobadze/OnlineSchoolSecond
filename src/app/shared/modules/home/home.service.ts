@@ -34,3 +34,18 @@ export class HomeService {
     ).pipe(this.loaderService.useLoader);
   };
 }
+
+// "dataGroups": [
+//   {
+//     "name": "home",
+//     "urls": [
+//       "https://onlineschool-bee89-default-rtdb.firebaseio.com/*.json"
+//     ],
+//     "cacheConfig": {
+//       "maxSize": 5,
+//       "maxAge": "6h",
+//       "timeout": "20s",
+//       "strategy": "freshness"
+//     }
+//   }
+// ]

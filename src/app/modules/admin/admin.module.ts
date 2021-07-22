@@ -12,6 +12,8 @@ import { UserContactComponent } from './contact-panel/user-contact/user-contact.
 import { VisitorContactComponent } from './contact-panel/visitor-contact/visitor-contact.component';
 import { BlogPanelItemComponent } from './blog-panel/blog-panel-item/blog-panel-item.component';
 import { LessonPanelComponent } from './lesson-panel/lesson-panel.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from 'src/environments/environment';
 
 
 @NgModule({
@@ -28,7 +30,8 @@ import { LessonPanelComponent } from './lesson-panel/lesson-panel.component';
   ],
   imports: [
     SharedModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
 })
 export class AdminModule { }

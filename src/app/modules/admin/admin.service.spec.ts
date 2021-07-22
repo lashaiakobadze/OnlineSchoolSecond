@@ -19,7 +19,7 @@ describe('AdminService (with mocks)', () => {
   let httpTestingController: HttpTestingController;
   let adminService: AdminService;
   let httpClient: HttpClient;
-  let loaderService: LoaderService
+  let loaderService: LoaderService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
