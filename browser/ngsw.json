@@ -1,0 +1,141 @@
+{
+  "configVersion": 1,
+  "timestamp": 1626975082249,
+  "index": "https://lashaiakobadze.github.io/OnlineSchoolSecond/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/5.ab478108c0b0173bac5a.js",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/6.8bcea9cd8212ad035d93.js",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/7.998f946617f90e42c554.js",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/8.692d05a6c1163e55fdd9.js",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/9.353bf9fc3640c361a072.js",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/common.36eff66f591222f3f4b9.js",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/favicon.ico",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/index.html",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/main.728d02a403145b105eaf.js",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/manifest.webmanifest",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/polyfills.1ca29b41bb685c8a1f00.js",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/runtime.fba2c27ead2e88a06fdc.js",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/scripts.e02445dce1207aafba3d.js",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/styles.99c2a72ae02c28c3029b.css"
+      ],
+      "patterns": [
+        "https:\\/\\/fonts\\.googleapis\\.com\\/.*"
+      ]
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/Pupil-avatar.png",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/i19n/en.json",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/i19n/ge.json",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/icons/icon-128x128.png",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/icons/icon-144x144.png",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/icons/icon-152x152.png",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/icons/icon-192x192.png",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/icons/icon-384x384.png",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/icons/icon-512x512.png",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/icons/icon-72x72.png",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/icons/icon-96x96.png",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/svg/delete_outline_black_18dp.svg",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/svg/edit_black_18dp.svg",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/svg/login_black_18dp.svg",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/svg/logout_black_18dp.svg",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/svg/manage_accounts_black_18dp.svg",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/glyphicons-halflings-regular.060b2710bdbbe3dfe48b.svg",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/glyphicons-halflings-regular.4692b9ec53fd5972caa2.ttf",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/glyphicons-halflings-regular.5be1347c682810f199c7.eot",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/glyphicons-halflings-regular.82b1212e45a2bc35dd73.woff",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/glyphicons-halflings-regular.be810be3a3e14c682a25.woff2",
+        "https://lashaiakobadze.github.io/OnlineSchoolSecond/owl.video.play.7f01b07148f205f6e825.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "online-school",
+      "patterns": [
+        "https:\\/\\/onlineschool-bee89-default-rtdb\\.firebaseio\\.com\\/[^/]*[^/]*\\.json",
+        "https:\\/\\/firebasestorage\\.googleapis\\.com\\/v0\\/b\\/onlineschool-bee89\\.appspot\\.com\\/o\\/users%2FpXsJnKS1mRPWyz4Y1SUp7CkiTnr1%2Fprofile\\.jpg"
+      ],
+      "strategy": "freshness",
+      "maxSize": 15,
+      "maxAge": 21600000,
+      "timeoutMs": 10000,
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "version": 1
+    }
+  ],
+  "hashTable": {
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/5.ab478108c0b0173bac5a.js": "674dd8c0468058f1c04b090cac9a7a822f69e503",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/6.8bcea9cd8212ad035d93.js": "9d56d56267d00939e60b44bfa78da6777bda9411",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/7.998f946617f90e42c554.js": "c7d97d2e9e7c5a01272676aac79c70918e67fbea",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/8.692d05a6c1163e55fdd9.js": "9e640d070a46145276a6388887f9989ec2e101d5",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/9.353bf9fc3640c361a072.js": "8b63fbd173f9f6012beb2cad6a1d4e2263818480",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/Pupil-avatar.png": "497d67ebcbf0f87792b2fd27aa8c8a38773e3eed",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/i19n/en.json": "a3529858194d3b68dce326e0febccb8618b44e9e",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/i19n/ge.json": "684183c6f9caebc9729776ffd5861f952276149d",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/svg/delete_outline_black_18dp.svg": "72145183dd82176db224254a144f9e675c10fb94",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/svg/edit_black_18dp.svg": "afbb8fb1572ff9faa32627aaed3217f88ef03543",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/svg/login_black_18dp.svg": "8728fd3fd35f2cde65cda4c8236c87fdf6d449b6",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/svg/logout_black_18dp.svg": "e969ce58b005887c89679d7cab2eaa1f7d59306a",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/assets/svg/manage_accounts_black_18dp.svg": "cc0eac7abd0e0a8649602af9c7f771c6e80e8dfe",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/common.36eff66f591222f3f4b9.js": "92d34eea3d524bbd0d2c8e41f56e5f4bccf087e2",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/glyphicons-halflings-regular.060b2710bdbbe3dfe48b.svg": "de51a8494180a6db074af2dee2383f0a363c5b08",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/glyphicons-halflings-regular.4692b9ec53fd5972caa2.ttf": "44bc1850f570972267b169ae18f1cb06b611ffa2",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/glyphicons-halflings-regular.5be1347c682810f199c7.eot": "86b6f62b7853e67d3e635f6512a5a5efc58ea3c3",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/glyphicons-halflings-regular.82b1212e45a2bc35dd73.woff": "278e49a86e634da6f2a02f3b47dd9d2a8f26210f",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/glyphicons-halflings-regular.be810be3a3e14c682a25.woff2": "ca35b697d99cae4d1b60f2d60fcd37771987eb07",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/index.html": "c38c819cbbae07718e48407eeaa23a10dbff5af3",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/main.728d02a403145b105eaf.js": "ea085b9888669166f165575cdb2c3e0a6f7f18a4",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/manifest.webmanifest": "a275a55de3518e1c8fa7a8db0da3e001104db088",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/owl.video.play.7f01b07148f205f6e825.png": "c0d64356ec2758cb280d183b4829c923e5ff61e5",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/polyfills.1ca29b41bb685c8a1f00.js": "4596c7334262a9085d4500e3d6e5df378206aeb6",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/runtime.fba2c27ead2e88a06fdc.js": "3fa091b77b0325f181389cb83e7648b5818f678a",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/scripts.e02445dce1207aafba3d.js": "28cd034af85416174d589b89593115b288d80815",
+    "https://lashaiakobadze.github.io/OnlineSchoolSecond/styles.99c2a72ae02c28c3029b.css": "127a30f0eaacd5e0cffbb454269d2cbf6a822f26"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
