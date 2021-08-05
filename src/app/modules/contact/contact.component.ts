@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 
 
 import { AppValidators } from 'src/app/shared/validators/app-validators';
+import { ErrorService } from 'src/app/shared/services/error.service';
 import { Contact } from '../../shared/modules/contact/contact.model';
 
 import * as fromApp from '../../store/app.reducer';
@@ -28,6 +29,7 @@ export class ContactComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store<fromApp.AppState>,
+    private errorService: ErrorService
   ) { }
 
   ngOnInit(): void {
@@ -59,7 +61,7 @@ export class ContactComponent implements OnInit, OnDestroy {
 
     this.contactSub = this.store.select('contact').subscribe(contactState => {
       this.contacts = contactState.messages;
-    }, error => throwError(error));
+    }, error => this.errorService.errorMessage = error);
 
     this.store.dispatch(new ContactActions.SendContact(this.newMessage));
     this.store.dispatch(new ContactActions.StoreContacts());

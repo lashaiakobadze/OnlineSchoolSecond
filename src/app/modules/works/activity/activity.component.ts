@@ -1,6 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription, throwError } from 'rxjs';
+
+import { stagger, group, animateChild, query, useAnimation, animate, style, transition, trigger } from '@angular/animations';
+import { fadeInAnimation, progressInAnimation } from '../../../shared/animations/animation';
+
 import { SolvedHomework } from '../../../shared/modules/works/models/solved-homework.model';
 import { SolvedTest } from '../../../shared/modules/works/models/solved-test.model';
 
@@ -11,7 +15,37 @@ import * as TestActions from '../store-test/test.actions';
 @Component({
   selector: 'app-activity',
   templateUrl: './activity.component.html',
-  styleUrls: ['./activity.component.scss']
+  styleUrls: ['./activity.component.scss'],
+  animations: [
+    trigger('activitiesAnimation', [
+      transition(':enter', [
+        group([
+          query('.panel-heading', [
+            style({ opacity: 0 }),
+            animate(1000)
+          ]),
+          query('.panel-body', [
+            style({  opacity: 0 }),
+            animate(1000)
+          ]),
+          query('@activityAnimation',
+            stagger(400, animateChild()))
+        ]),
+      ])
+    ]),
+
+    trigger('activityAnimation', [
+      transition(':enter', [
+        useAnimation(fadeInAnimation)
+      ]),
+    ]),
+
+    trigger('progressBarAnimation', [
+      transition(':enter', [
+        useAnimation(progressInAnimation)
+      ]),
+    ])
+  ]
 })
 export class ActivityComponent implements OnInit, OnDestroy {
   activityPercentage: number = 0;

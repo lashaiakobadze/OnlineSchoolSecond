@@ -1,16 +1,18 @@
 
 <span class="inActive" *ngIf="active">{{'homework.curHomework.status' | translate}}</span>
 
-<div *ngIf="!active">
+<div *ngIf="!active" @homeworksAnimation>
   <label class="form-group">{{'Homework' | translate}} #{{ curHomework.homeworkNumber }}</label>
 
-  <app-tasks
-    *ngFor="let task of curHomework.tasks; let i = index"
-    [curHomework]="curHomework.homeworkNumber"
-    [curTaskNumber] = 'i+1'
-    [curTask]="task"
-    [showCorrectAnswer]="disabledSuccess"
-  ></app-tasks>
+  <div @homeworkAnimation>
+    <app-tasks
+      *ngFor="let task of curHomework.tasks; let i = index"
+      [curHomework]="curHomework.homeworkNumber"
+      [curTaskNumber] = 'i+1'
+      [curTask]="task"
+      [showCorrectAnswer]="disabledSuccess"
+    ></app-tasks>
+  </div>
 
   <button
     *ngIf="!disabledSuccess"

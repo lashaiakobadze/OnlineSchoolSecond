@@ -4,6 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Subscription, throwError } from 'rxjs';
 
+import { stagger, group, animateChild, query, useAnimation, animate, style, transition, trigger } from '@angular/animations';
+import { fadeInAnimation, progressInAnimation } from '../../../shared/animations/animation';
+
 import { Test } from '../../../shared/modules/works/models/test.model';
 import { SolvedTest } from '../../../shared/modules/works/models/solved-test.model';
 
@@ -14,7 +17,37 @@ import * as TestActions from '../store-test/test.actions';
 @Component({
   selector: 'app-online-test',
   templateUrl: './online-test.component.html',
-  styleUrls: ['./online-test.component.scss']
+  styleUrls: ['./online-test.component.scss'],
+  animations: [
+    trigger('testsAnimation', [
+      transition(':enter', [
+        group([
+          query('.panel-heading', [
+            style({ opacity: 0 }),
+            animate(1000)
+          ]),
+          query('.panel-body', [
+            style({ opacity: 0 }),
+            animate(1000)
+          ]),
+          query('@testAnimation',
+            stagger(400, animateChild()))
+        ]),
+      ])
+    ]),
+
+    trigger('testAnimation', [
+      transition(':enter', [
+        useAnimation(fadeInAnimation)
+      ]),
+    ]),
+
+    trigger('progressBarAnimation', [
+      transition(':enter', [
+        useAnimation(progressInAnimation)
+      ]),
+    ])
+  ]
 })
 export class OnlineTestComponent implements OnInit, OnDestroy {
   testsPercentage: number = null;
@@ -43,7 +76,7 @@ export class OnlineTestComponent implements OnInit, OnDestroy {
       }
     }, error => throwError(error));
 
-    this.store.dispatch(new TestActions.FetchCurTestId());
+    // this.store.dispatch(new TestActions.FetchCurTestId());
 
     this.store.dispatch(new TestActions.getAnsweredTestsPercentage());
     this.testSub = this.store.select('OnlineTest').subscribe(testState => {

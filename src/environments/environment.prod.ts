@@ -12,3 +12,19 @@ export const environment = {
     measurementId: "G-BYSYK4X73V"
   }
 };
+
+
+        // "app-shell": {
+        //   "builder": "@angular-devkit/build-angular:app-shell",
+        //   "options": {
+        //     "browserTarget": "OnlineSchool:build",
+        //     "serverTarget": "OnlineSchool:server",
+        //     "route": "shell"
+        //   },
+        //   "configurations": {
+        //     "production": {
+        //       "browserTarget": "OnlineSchool:build:production",
+        //       "serverTarget": "OnlineSchool:server:production"
+        //     }
+        //   }
+        // }

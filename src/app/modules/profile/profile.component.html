@@ -48,17 +48,17 @@
   <hr>
   <!-- Progress bar -->
   <div class="progress">
-    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" [style.width.%]="activityPercentage">
+    <div @progressBarAnimation class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" [style.width.%]="activityPercentage">
       <span class="sr-only">{{'Activity' | translate}}</span>
     </div>
   </div>
   <div class="progress">
-    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" [style.width.%]="homeworkPercentage">
+    <div @progressBarAnimation class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" [style.width.%]="homeworkPercentage">
       <span class="sr-only">{{'Homework' | translate}}</span>
     </div>
   </div>
   <div class="progress">
-    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [style.width.%]="testPercentage">
+    <div @progressBarAnimation class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [style.width.%]="testPercentage">
       <span class="sr-only">{{'Online test' | translate}}</span>
     </div>
   </div>

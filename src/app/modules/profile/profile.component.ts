@@ -3,6 +3,8 @@ import { Store } from '@ngrx/store';
 import { Subscription, throwError } from 'rxjs';
 import { AngularFireStorage } from "@angular/fire/storage";
 
+import { useAnimation, transition, trigger } from '@angular/animations';
+import { progressInAnimation } from '../../shared/animations/animation';
 
 import { Registration } from 'src/app/shared/auth/registration.model';
 import { ErrorService } from 'src/app/shared/services/error.service';
@@ -16,7 +18,14 @@ import * as TestActions from '../works/store-test/test.actions';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrls: ['./profile.component.scss'],
+  animations: [
+    trigger('progressBarAnimation', [
+      transition(':enter', [
+        useAnimation(progressInAnimation)
+      ]),
+    ])
+  ]
 })
 export class ProfileComponent {
   userId: string;

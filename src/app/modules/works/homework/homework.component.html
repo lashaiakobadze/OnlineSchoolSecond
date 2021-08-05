@@ -1,26 +1,25 @@
 <hr>
-<div class="panel panel-default" *ngIf="!isHomeworkEnterMode">
+<div class="panel panel-default" *ngIf="!isHomeworkEnterMode" @homeworksAnimation>
   <!-- Default panel contents -->
   <div class="panel-heading">{{'homework.title' | translate}}</div>
   <div class="panel-body">
     <p>{{'homework.about' | translate}}</p>
   </div>
-
   <!-- Table -->
   <table class="table table-striped">
-    <thead>
+    <thead @homeworkAnimation>
       <tr>
         <th scope="col">#</th>
         <th scope="col">{{'homework.homeworkScore' | translate}}</th>
       </tr>
     </thead>
-    <tbody *ngFor="let homework of solvedHomeworks">
+    <tbody *ngFor="let homework of solvedHomeworks" @homeworkAnimation>
       <tr>
         <th scope="row">{{ homework.homeworkNum }}</th>
         <td>{{ homework.getScore }}</td>
       </tr>
     </tbody>
-    <tfoot>
+    <tfoot @homeworkAnimation>
       <tr>
         <th scope="col">{{'homework.sum' | translate}}</th>
         <th scope="col">{{ homeworksSum }}</th>
@@ -32,7 +31,7 @@
 <hr>
 
 <div class="progress" *ngIf="!isHomeworkEnterMode">
-  <div class="progress-bar" role="progressbar" aria-valuenow="proc" aria-valuemin="0" aria-valuemax="100" [style.width.%]="homeworksPercentage">
+  <div @progressBarAnimation class="progress-bar" role="progressbar" aria-valuenow="proc" aria-valuemin="0" aria-valuemax="100" [style.width.%]="homeworksPercentage">
     {{ homeworksPercentage }}%
   </div>
 </div>

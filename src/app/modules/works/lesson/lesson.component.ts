@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
+import { lessonAnimation } from './lesson.component.animations';
 
 import * as fromApp from '../../../store/app.reducer';
 import * as AdminActions from '../../admin/store/admin.actions';
@@ -10,7 +11,8 @@ import * as AdminActions from '../../admin/store/admin.actions';
 @Component({
   selector: 'app-lesson',
   templateUrl: './lesson.component.html',
-  styleUrls: ['./lesson.component.scss']
+  styleUrls: ['./lesson.component.scss'],
+  animations: [ lessonAnimation ]
 })
 export class LessonComponent implements OnInit, OnDestroy {
   lessonLink: string = null;
@@ -23,7 +25,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.store.dispatch(AdminActions.fetchCurLessen());
+    // this.store.dispatch(AdminActions.fetchCurLessen());
     this.lessenSub = this.store.select('admin').subscribe(
       adminState => {
         this.lessonLink = adminState.curLesson?.curLessenLink;

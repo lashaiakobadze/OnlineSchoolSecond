@@ -1,16 +1,21 @@
 
 <span class="inActive" *ngIf="active">{{'onlineTest.curTest.status' | translate}}</span>
 
-<div *ngIf="!active">
-  <label class="form-group">{{'onlineTest.curTest.onlineTestNumber' | translate}} #{{ test.TestNumber }}</label>
-  <span class="about-test">{{'onlineTest.curTest.about' | translate}}</span>
+<div *ngIf="!active" @testsAnimation>
+  <div class="about">
+    <label class="form-group">{{'onlineTest.curTest.onlineTestNumber' | translate}} #{{ test.TestNumber }}</label>
+    <span class="about-test">{{'onlineTest.curTest.about' | translate}}</span>
+  </div>
 
-  <app-tests
-    *ngFor="let tes of test.tests; let i = index"
-    [curTest]="tes"
-    [curTestNum]='i+1'
-    [showCorrectAnswer]="disabledSuccess"
-  ></app-tests>
+
+  <div @testAnimation>
+    <app-tests
+      *ngFor="let tes of test.tests; let i = index"
+      [curTest]="tes"
+      [curTestNum]='i+1'
+      [showCorrectAnswer]="disabledSuccess"
+    ></app-tests>
+  </div>
 
   <button
     *ngIf="!disabledSuccess"
